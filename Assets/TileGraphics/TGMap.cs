@@ -138,6 +138,14 @@ public class TGMap : MonoBehaviour {
 
 		GameObject truck = (GameObject)Instantiate (firetruckPrefab);
 		truck.transform.position = truckPos;
+
+		//TODO store this firetruck for 
+		EGFiretruck firetruck = truck.GetComponent<EGFiretruck>();
+		firetruck.SetPosition (truckPos);
+		Vector3 truckDest = GetPositionForTile (x, -z);
+		truckDest.x += 0.5f;
+		truckDest.z += 0.5f;
+		firetruck.SetDestination(truckDest);
 	}
 
 	Vector3 GetPositionForTile(int x, int z){

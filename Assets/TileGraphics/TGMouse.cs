@@ -31,7 +31,7 @@ public class TGMouse : MonoBehaviour {
 
 			selectionCube.transform.position = currentTileCoord;
 
-			bool clicked = false;//Input.GetMouseButtonDown(0);
+			bool clicked = Input.GetMouseButtonDown(0);
 			if(!clicked){
 				for(int i=0; i<Input.touchCount; i++){
 					Debug.Log ("Checking a touch: " + i);
@@ -47,7 +47,8 @@ public class TGMouse : MonoBehaviour {
 
 			if (clicked) {
 				//Clicked a tile!?
-
+				Debug.Log("Clicked tile: " + x + ", " + z);
+				//Negate the z
 				_tileMap.SpawnFireTruck(x, z);
 			}
 		} else {
