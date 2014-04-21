@@ -139,16 +139,24 @@ public class TGMap : MonoBehaviour {
 		GameObject truck = (GameObject)Instantiate (firetruckPrefab);
 		truck.transform.position = truckPos;
 
-		//TODO store this firetruck for 
+		//TODO store this firetruck for queueing
 		EGFiretruck firetruck = truck.GetComponent<EGFiretruck>();
 		firetruck.SetPosition (truckPos);
+
 		Vector3 truckDest = GetPositionForTile (x, -z);
 		truckDest.x += 0.5f;
 		truckDest.z += 0.5f;
-		firetruck.SetDestination(truckDest);
+
+		TDPath truckPath = new TDPath ();
+		firetruck.SetMap (this);
+		truckPath.BuildPath (_map,
+		                     _map.GetTile(Mathf.FloorToInt(fireHouseTilePos.x), Mathf.FloorToInt(fireHouseTilePos.y)),
+		                     _map.GetTile (x, -z));
+		
+		firetruck.SetPath (truckPath);
 	}
 
-	Vector3 GetPositionForTile(int x, int z){
+	public Vector3 GetPositionForTile(int x, int z){
 		Vector3 pos = new Vector3 ();
 		pos.x = tileSize * x;
 		pos.y = 0;

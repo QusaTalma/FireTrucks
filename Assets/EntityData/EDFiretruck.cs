@@ -1,9 +1,6 @@
-﻿using UnityEngine;
-
-public class EDFiretruck{
-	Vector3 position;
-	Vector3 destination;
+﻿public class EDFiretruck{
 	float speed;
+	TDPath path;
 
 	public float GetSpeed(){
 		return speed;
@@ -13,23 +10,11 @@ public class EDFiretruck{
 		this.speed = speed;
 	}
 
-	public void SetPosition(Vector3 position){
-		this.position = position;
+	public void SetPath(TDPath path){
+		this.path = path;
 	}
 
-	public Vector3 GetPosition(){
-		return position;
-	}
-
-	public void SetDestination(Vector3 destination){
-		this.destination = destination;
-	}
-
-	public Vector3 GetDestination(){
-		return destination;
-	}
-
-	public void Update(float deltaTime){
-		position = Vector3.Lerp (position, destination, speed * deltaTime);
+	public TDStep PopPathStep(){
+		return path.PopStep ();
 	}
 }
