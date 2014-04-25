@@ -27,6 +27,13 @@ public class TDPath {
 	}
 
 	public void BuildPath(TDMap map, TDTile start, TDTile end){
+		if (end.type != TDTile.TILE_STREET) {
+			List<TDTile> nearbyStreets = map.FindAdjacentTilesOfType(end, TDTile.TILE_STREET);
+			if(nearbyStreets.Count > 0){
+				end = nearbyStreets[0];
+			}
+		}
+		Debug.Log ("Building path from " + start.ToString () + " to " + end.ToString ());
 		List<TDTile> closed = new List<TDTile> ();
 		List<TDTile> open = new List<TDTile> ();
 		open.Add (start);
@@ -37,6 +44,12 @@ public class TDPath {
 
 			if(current.Equals(end)){
 				steps = ReconstructPath(cameFrom, end);
+
+				Debug.Log("Final path:");
+
+				for(int i=0; i<steps.Count; i++){
+					Debug.Log("Step #"+i+": " + steps[i].ToString());
+				}
 				break;
 			}
 

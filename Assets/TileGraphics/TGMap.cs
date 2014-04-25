@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(MeshRenderer))]
@@ -16,10 +16,39 @@ public class TGMap : MonoBehaviour {
 
 	TDMap _map;
 
+	//Requested locations for new trucks to go to
+	List<Vector2> _truckSpawnQueue;
+
+	//Actual trucks that exist
+	List<EGFiretruck> _activeTrucks;
+	List<EGFiretruck> _idleTrucks;
+
 	// Use this for initialization
 	void Start () {
 		BuildMesh ();
 		BuildTexture ();
+		
+		_activeTrucks = new List<EGFiretruck> ();
+		_truckSpawnQueue = new List<Vector2> ();
+		_idleTrucks = new List<EGFiretruck> ();
+	}
+
+	void Update(){
+		List<EGFiretruck> toMoveToIdle = new List<EGFiretruck> ();
+		for (int i=0; i<_activeTrucks.Count; i++) {
+			EGFiretruck truck = _activeTrucks[i];
+			if(!truck.IsActive()){
+				toMoveToIdle.Add(truck);
+			}
+		}
+
+		for (int i=0; i<toMoveToIdle.Count; i++) {
+			EGFiretruck truck = toMoveToIdle[i];
+			SetTruckIdle(truck);
+		}
+
+		//TODO only spawn when there's space for the truck
+		SpawnNextTruck ();
 	}
 
 	Color[][] ChopUpTiles(){
@@ -63,8 +92,6 @@ public class TGMap : MonoBehaviour {
 		
 		MeshRenderer mesh_rendererer = GetComponent<MeshRenderer> ();
 		mesh_rendererer.sharedMaterials [0].mainTexture = texture;
-
-		Debug.Log ("Texture!");
 	}
 
 	public TDTile GetTileAt(int x, int z){
@@ -139,13 +166,8 @@ public class TGMap : MonoBehaviour {
 		GameObject truck = (GameObject)Instantiate (firetruckPrefab);
 		truck.transform.position = truckPos;
 
-		//TODO store this firetruck for queueing
 		EGFiretruck firetruck = truck.GetComponent<EGFiretruck>();
 		firetruck.SetPosition (truckPos);
-
-		Vector3 truckDest = GetPositionForTile (x, -z);
-		truckDest.x += 0.5f;
-		truckDest.z += 0.5f;
 
 		TDPath truckPath = new TDPath ();
 		firetruck.SetMap (this);
@@ -154,6 +176,7 @@ public class TGMap : MonoBehaviour {
 		                     _map.GetTile (x, -z));
 		
 		firetruck.SetPath (truckPath);
+		_activeTrucks.Add (firetruck);
 	}
 
 	public Vector3 GetPositionForTile(int x, int z){
@@ -163,5 +186,50 @@ public class TGMap : MonoBehaviour {
 		pos.z = tileSize * -z;
 
 		return pos;
+	}
+	
+	public void AddPositionToSpawnQueue(Vector2 truckPosition){
+		_truckSpawnQueue.Add (truckPosition);
+	}
+
+	public void SendIdleToPosition(int x, int z){
+		if (_idleTrucks.Count > 0) {
+			EGFiretruck truck = _idleTrucks[0];
+			_idleTrucks.Remove(truck);
+
+			TDPath truckPath = new TDPath ();
+			truckPath.BuildPath (_map,
+			                     _map.GetTile(Mathf.FloorToInt(truck.GetPosition().x), Mathf.FloorToInt(truck.GetPosition().y)),
+			                     _map.GetTile (x, -z));
+
+			truck.SetPath(truckPath);
+
+			_activeTrucks.Add(truck);
+		}
+	}
+	
+	public void SpawnNextTruck(){
+		if (_truckSpawnQueue.Count > 0) {
+			Vector2 truckPos = _truckSpawnQueue[0];
+			_truckSpawnQueue.Remove(truckPos);
+			SpawnFireTruck((int)truckPos.x, (int)truckPos.y);
+		}
+	}
+	
+	public EGFiretruck PopIdleTruck(){
+		EGFiretruck poppedTruck = null;
+		if (_idleTrucks.Count > 0) {
+			poppedTruck = _idleTrucks[0];
+			_idleTrucks.Remove(poppedTruck);
+		}
+		
+		return poppedTruck;
+	}
+	
+	public void SetTruckIdle(EGFiretruck truck){
+		if(truck != null){
+			_activeTrucks.Remove(truck);
+			_idleTrucks.Add(truck);
+		}
 	}
 }

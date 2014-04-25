@@ -24,32 +24,31 @@ public class TGMouse : MonoBehaviour {
 			//transform.localToWorldMatrix
 			int x = Mathf.FloorToInt (hitInfo.point.x / _tileMap.tileSize);
 			int z = Mathf.FloorToInt (hitInfo.point.z / _tileMap.tileSize);
+			z += 1;
 
 			currentTileCoord.x = x + 0.5f;
 			currentTileCoord.y = 0;
-			currentTileCoord.z = z + 0.5f;
+			currentTileCoord.z = z - 0.5f;
 
 			selectionCube.transform.position = currentTileCoord;
 
 			bool clicked = Input.GetMouseButtonDown(0);
 			if(!clicked){
 				for(int i=0; i<Input.touchCount; i++){
-					Debug.Log ("Checking a touch: " + i);
 					Touch touch = Input.touches[i];
 					if (touch.phase == TouchPhase.Ended){
 						clicked = true;
 						break;
 					}
 				}
-			}else{
-				Debug.Log ("Mouse button down...");
 			}
 
 			if (clicked) {
 				//Clicked a tile!?
 				Debug.Log("Clicked tile: " + x + ", " + z);
 				//Negate the z
-				_tileMap.SpawnFireTruck(x, z);
+				_tileMap.AddPositionToSpawnQueue(new Vector2(x, z));
+				_tileMap.SendIdleToPosition(x,z);
 			}
 		} else {
 			currentTileCoord.y = -1;

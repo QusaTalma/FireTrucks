@@ -57,7 +57,19 @@ public class EGFiretruck : MonoBehaviour {
 		this.position = position;
 	}
 
+	public Vector3 GetPosition(){
+		return this.position;
+	}
+
 	public void SetDestination(Vector3 destination){
 		this.destination = destination;
+	}
+
+	public bool IsActive(){
+		return !IsAtDestination ();
+	}
+
+	public bool IsAtDestination(){
+		return position.Equals (destination);
 	}
 }
