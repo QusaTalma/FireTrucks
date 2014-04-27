@@ -37,6 +37,7 @@ public class TGMap : MonoBehaviour {
 		List<EGFiretruck> toMoveToIdle = new List<EGFiretruck> ();
 		for (int i=0; i<_activeTrucks.Count; i++) {
 			EGFiretruck truck = _activeTrucks[i];
+
 			if(!truck.IsActive()){
 				toMoveToIdle.Add(truck);
 			}
@@ -194,12 +195,11 @@ public class TGMap : MonoBehaviour {
 
 	public void SendIdleToPosition(int x, int z){
 		if (_idleTrucks.Count > 0) {
-			EGFiretruck truck = _idleTrucks[0];
-			_idleTrucks.Remove(truck);
+			EGFiretruck truck = PopIdleTruck();
 
 			TDPath truckPath = new TDPath ();
 			truckPath.BuildPath (_map,
-			                     _map.GetTile(Mathf.FloorToInt(truck.GetPosition().x), Mathf.FloorToInt(truck.GetPosition().y)),
+			                     _map.GetTile(Mathf.FloorToInt(truck.GetPosition().x), Mathf.FloorToInt(-truck.GetPosition().z)),
 			                     _map.GetTile (x, -z));
 
 			truck.SetPath(truckPath);

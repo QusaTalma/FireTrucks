@@ -33,7 +33,8 @@ public class TDPath {
 				end = nearbyStreets[0];
 			}
 		}
-		Debug.Log ("Building path from " + start.ToString () + " to " + end.ToString ());
+		Debug.Log ("Building path from " + start.ToString ());
+		Debug.Log (" to " + end.ToString ());
 		List<TDTile> closed = new List<TDTile> ();
 		List<TDTile> open = new List<TDTile> ();
 		open.Add (start);
@@ -44,12 +45,6 @@ public class TDPath {
 
 			if(current.Equals(end)){
 				steps = ReconstructPath(cameFrom, end);
-
-				Debug.Log("Final path:");
-
-				for(int i=0; i<steps.Count; i++){
-					Debug.Log("Step #"+i+": " + steps[i].ToString());
-				}
 				break;
 			}
 
@@ -93,10 +88,6 @@ public class TDPath {
 		} else {
 			pathSteps = new List<TDStep>();
 			pathSteps.Add(new TDStep(current));
-		}
-
-		for (int i=0; i<pathSteps.Count; i++) {
-			Debug.Log(pathSteps[i].ToString());
 		}
 
 		return pathSteps;

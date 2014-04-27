@@ -14,6 +14,10 @@
 		this.path = path;
 	}
 
+	public bool HasNextStep(){
+		return path.GetStepCount() > 0;
+	}
+
 	public TDStep PopPathStep(){
 		return path.PopStep ();
 	}

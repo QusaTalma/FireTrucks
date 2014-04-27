@@ -9,8 +9,11 @@ public class EGFiretruck : MonoBehaviour {
 	public float speed;
 
 	void Update(){
-		if (destination == null) {
+		if (destination.Equals(new Vector3())) {
 			SetDestination(GetNextDestination());
+			if(destination.Equals(new Vector3())){
+				return;
+			}
 		}
 
 		float deltaTime = Time.deltaTime;
@@ -29,9 +32,13 @@ public class EGFiretruck : MonoBehaviour {
 		position = transform.position;
 	}
 
+	bool HasNextDestination(){
+		return _firetruck.HasNextStep ();
+	}
+
 	Vector3 GetNextDestination(){
 		TDStep step = _firetruck.PopPathStep ();
-		Vector3 nextPosition = destination;
+		Vector3 nextPosition = new Vector3();
 		if (step != null) {
 			TDTile nextTile = step.tile;
 			nextPosition = map.GetPositionForTile (nextTile.GetX (), nextTile.GetY ());
@@ -66,10 +73,6 @@ public class EGFiretruck : MonoBehaviour {
 	}
 
 	public bool IsActive(){
-		return !IsAtDestination ();
-	}
-
-	public bool IsAtDestination(){
-		return position.Equals (destination);
+		return !destination.Equals(new Vector3()) || HasNextDestination();
 	}
 }
