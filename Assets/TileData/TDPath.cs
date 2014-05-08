@@ -33,8 +33,7 @@ public class TDPath {
 				end = nearbyStreets[0];
 			}
 		}
-		Debug.Log ("Building path from " + start.ToString ());
-		Debug.Log (" to " + end.ToString ());
+
 		List<TDTile> closed = new List<TDTile> ();
 		List<TDTile> open = new List<TDTile> ();
 		open.Add (start);

@@ -2,58 +2,148 @@ using UnityEngine;
 using System.Collections;
 
 [RequireComponent(typeof(TGMap))]
+[RequireComponent(typeof(Camera))]
 public class TGMouse : MonoBehaviour {
+	bool dragging = false;
+	bool singleTouchDown = false;
+	Vector3 singleTouchStart;
+	Vector3 dragOrigin;
 	TGMap _tileMap;
 
-	Vector3 currentTileCoord;
+	private float minX;
+	private float maxX;
+	private float minZ;
+	private float maxZ;
 
-	public Transform selectionCube;
+	private const float DRAG_SPEED = 15;
 
 	void Start(){
 		_tileMap = GetComponent<TGMap>();
-		currentTileCoord = new Vector3 ();
+
+		//The orthographic size if half the height of the camera
+		float vertExtent = Camera.main.orthographicSize;
+		float horizExtent = Camera.main.orthographicSize * Screen.width / Screen.height;
+
+		float mapX = _tileMap.size_x * _tileMap.tileSize;
+		float mapZ = _tileMap.size_z * _tileMap.tileSize;
+		Debug.Log ("MapX: " + mapX);
+		Debug.Log ("MapZ: " + mapZ);
+
+		minX = 0 + horizExtent;
+		//(float)(horizExtent - mapX / 2.0);
+		maxX = mapX - horizExtent;
+		//(float)(mapX / 2.0 - horizExtent);
+		minZ = -(mapZ - vertExtent);
+		//(float)(vertExtent - mapY / 2.0);
+		maxZ = 0 - vertExtent;
+		//(float)(mapY / 2.0 - vertExtent);
+
+		Debug.Log ("MinX: " + minX);
+		Debug.Log ("MaxX: " + maxX);
+		Debug.Log ("MinZ: " + minZ);
+		Debug.Log ("MaxZ: " + maxZ);
 	}
 
 	// Update is called once per frame
 	void Update () {
-		Ray rayCast = Camera.main.ScreenPointToRay (Input.mousePosition);
-		RaycastHit hitInfo;
-		float distance = Mathf.Infinity;
+		if (Input.touchCount == 1) {
+			Touch touch = Input.GetTouch (0);
 
-		if (collider.Raycast (rayCast, out hitInfo, distance)) {
-			//transform.localToWorldMatrix
-			int x = Mathf.FloorToInt (hitInfo.point.x / _tileMap.tileSize);
-			int z = Mathf.FloorToInt (hitInfo.point.z / _tileMap.tileSize);
-			z += 1;
+			Ray rayCast = Camera.main.ScreenPointToRay (touch.position);
+			RaycastHit hitInfo;
+			float distance = Mathf.Infinity;
 
-			currentTileCoord.x = x + 0.5f;
-			currentTileCoord.y = 0;
-			currentTileCoord.z = z - 0.5f;
+			if (collider.Raycast (rayCast, out hitInfo, distance)) {
+					switch (touch.phase) {
+					case TouchPhase.Began:
+							HandleTouchStart (hitInfo.point);
+							break;
 
-			selectionCube.transform.position = currentTileCoord;
+					case TouchPhase.Moved:
+							HandleTouchMoved (touch.position);
+							break;
 
-			bool clicked = Input.GetMouseButtonDown(0);
-			if(!clicked){
-				for(int i=0; i<Input.touchCount; i++){
-					Touch touch = Input.touches[i];
-					if (touch.phase == TouchPhase.Ended){
-						clicked = true;
-						break;
+					case TouchPhase.Ended:
+							HandleTouchEnded (hitInfo.point);
+							break;
 					}
-				}
-			}
-
-			if (clicked) {
-				//Clicked a tile!?
-				Debug.Log("Clicked tile: " + x + ", " + z);
-				//Negate the z
-				_tileMap.AddPositionToSpawnQueue(new Vector2(x, z));
-				_tileMap.SendIdleToPosition(x,z);
+			}else{
+				dragging = false;
+				singleTouchDown = false;
 			}
 		} else {
-			currentTileCoord.y = -1;
+			Ray rayCast = Camera.main.ScreenPointToRay (Input.mousePosition);
+			RaycastHit hitInfo;
+			float distance = Mathf.Infinity;
 			
-			selectionCube.transform.position = currentTileCoord;
+			if (collider.Raycast (rayCast, out hitInfo, distance)) {
+				if(Input.GetMouseButtonDown(0)){
+					HandleTouchStart(hitInfo.point);
+				}else if(Input.GetMouseButtonUp(0)){
+					HandleTouchEnded(hitInfo.point);
+				}else if(singleTouchDown){
+					HandleTouchMoved(Input.mousePosition);
+				}
+			}else{
+				dragging = false;
+				singleTouchDown = false;
+			}
 		}
+
+		Vector3 camPos = Camera.main.transform.position;
+		camPos.x = Mathf.Clamp(camPos.x, minX, maxX);
+		camPos.z = Mathf.Clamp(camPos.z, minZ, maxZ);;
+
+		Camera.main.transform.position = camPos;
+	}
+
+	void HandleTouchStart(Vector3 touchPos){
+		singleTouchStart = touchPos;
+		singleTouchDown = true;
+	}
+
+	void HandleTouchMoved(Vector3 touchPos){
+		if (!dragging) {
+			Vector3 worldTouch = Camera.main.ScreenToWorldPoint(touchPos);
+
+			int tileX = Mathf.FloorToInt (worldTouch.x / _tileMap.tileSize);
+			int tileZ = Mathf.FloorToInt (worldTouch.z / _tileMap.tileSize);
+			tileZ += 1;
+
+			int startTileX = Mathf.FloorToInt (singleTouchStart.x / _tileMap.tileSize);
+			int startTileZ = Mathf.FloorToInt (singleTouchStart.z / _tileMap.tileSize);
+			startTileZ += 1;
+
+			if (startTileX != tileX ||
+				startTileZ != tileZ) {
+				dragging = true;
+				dragOrigin = touchPos;
+			}
+		}
+
+		if (dragging) {	
+			Vector3 dragDelta = dragOrigin - touchPos;
+			Vector3 screenDelta = Camera.main.ScreenToViewportPoint(dragDelta);
+			Vector3 moveTo = new Vector3(screenDelta.x * DRAG_SPEED, 0, screenDelta.y * DRAG_SPEED);
+			Camera.main.transform.Translate(moveTo, Space.World);
+
+			dragOrigin = touchPos;
+		}
+	}
+
+	void HandleTouchEnded(Vector3 touchPos){
+		int tileX = Mathf.FloorToInt (touchPos.x / _tileMap.tileSize);
+		int tileZ = Mathf.FloorToInt (touchPos.z / _tileMap.tileSize);
+		tileZ += 1;
+
+		if(!dragging && singleTouchDown){
+			//Negate the z
+			_tileMap.AddPositionToSpawnQueue(new Vector2(tileX, tileZ));
+			_tileMap.SendIdleToPosition(tileX, tileZ);
+		}else{
+			dragging = false;
+		}
+
+		singleTouchDown = false;
 	}
 }
