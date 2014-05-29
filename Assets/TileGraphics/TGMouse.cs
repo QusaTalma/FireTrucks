@@ -22,26 +22,16 @@ public class TGMouse : MonoBehaviour {
 
 		//The orthographic size if half the height of the camera
 		float vertExtent = Camera.main.orthographicSize;
+		//Calculate the half height of the screen
 		float horizExtent = Camera.main.orthographicSize * Screen.width / Screen.height;
-
 		float mapX = _tileMap.size_x * _tileMap.tileSize;
 		float mapZ = _tileMap.size_z * _tileMap.tileSize;
-		Debug.Log ("MapX: " + mapX);
-		Debug.Log ("MapZ: " + mapZ);
-
+		//Limit the camera to within half the width/height of the screen
+		//of the bounds of the map
 		minX = 0 + horizExtent;
-		//(float)(horizExtent - mapX / 2.0);
 		maxX = mapX - horizExtent;
-		//(float)(mapX / 2.0 - horizExtent);
 		minZ = -(mapZ - vertExtent);
-		//(float)(vertExtent - mapY / 2.0);
 		maxZ = 0 - vertExtent;
-		//(float)(mapY / 2.0 - vertExtent);
-
-		Debug.Log ("MinX: " + minX);
-		Debug.Log ("MaxX: " + maxX);
-		Debug.Log ("MinZ: " + minZ);
-		Debug.Log ("MaxZ: " + maxZ);
 	}
 
 	// Update is called once per frame

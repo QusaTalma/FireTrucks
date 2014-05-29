@@ -22,7 +22,8 @@ public class TDMap {
 				   x == _width -1 ||
 				   x%3 == 0 ||
 				   y == 0 ||
-				   y == _height - 1){
+				   y == _height - 1 ||
+				   y%4 == 0){
 					_tiles[x,y].type = TDTile.TILE_STREET;
 				}
 			}
