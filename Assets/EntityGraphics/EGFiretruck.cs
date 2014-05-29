@@ -87,12 +87,6 @@ public class EGFiretruck : MonoBehaviour {
 			angle = angle - 360;
 		}
 
-//		if (angle < 0) {
-//			angle = Mathf.Ceil (angle);
-//		} else {
-//			angle = Mathf.Floor(angle);
-//		}
-
 		return angle;
 	}
 
