@@ -15,7 +15,6 @@ public class EGFirehouse : MonoBehaviour {
 	}
 
 	void OnTriggerExit(Collider other){
-		Debug.Log ("Trigger exit! " + other.gameObject.tag);
 		if(other.gameObject.tag.Equals("Truck")){
 			truckCount--;
 		}

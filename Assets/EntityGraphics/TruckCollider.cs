@@ -7,21 +7,23 @@ public class TruckCollider : MonoBehaviour {
 
 	EGFiretruck truck;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+	void Start(){
+		truck = truckObject.GetComponent<EGFiretruck> ();
 	}
 	
 	void OnTriggerEnter(Collider other){
-		Debug.Log ("Triggered!");
+		if(!transform.parent.Equals(other.transform.parent) &&
+		   other.gameObject.tag.Equals("Truck")){
+			truck.SetWaitingForTraffic(true);
+			renderer.material.color = Color.green;
+		}
 	}
 
 	void OnTriggerExit(Collider other){
-		Debug.Log ("Untriggered!");
+		if(!transform.parent.Equals(other.transform.parent) &&
+		   other.gameObject.tag.Equals("Truck")){
+			truck.SetWaitingForTraffic(false);
+			renderer.material.color = Color.clear;
+		}
 	}
 }

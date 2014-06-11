@@ -27,6 +27,10 @@ public class EGFiretruck : MonoBehaviour {
 			}
 		}
 
+		if (waitingForTraffic) {
+			return;
+		}
+
 		float deltaTime = Time.deltaTime;
 
 		//Update distance and angle to destination
@@ -125,6 +129,7 @@ public class EGFiretruck : MonoBehaviour {
 
 	public void SetWaitingForTraffic(bool waiting){
 		this.waitingForTraffic = waiting;
+		Debug.Log ("Set waiting for traffic " + waitingForTraffic);
 	}
 
 	public void SetMap(TGMap map){
