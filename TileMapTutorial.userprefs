@@ -1,12 +1,12 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/EntityGraphics/EGFiretruck.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/TileGraphics/TGMap.cs">
     <Files>
-      <File FileName="Assets/EntityGraphics/EGFiretruck.cs" Line="98" Column="59" />
-      <File FileName="Assets/TileGraphics/TGMap.cs" Line="1" Column="1" />
-      <File FileName="Assets/TileGraphics/TGMouse.cs" Line="1" Column="1" />
-      <File FileName="Assets/TileData/TDMap.cs" Line="1" Column="1" />
-      <File FileName="Assets/Utils/MathUtils.cs" Line="13" Column="24" />
+      <File FileName="Assets/EntityGraphics/EGFiretruck.cs" Line="6" Column="12" />
+      <File FileName="Assets/TileGraphics/TGMap.cs" Line="78" Column="45" />
+      <File FileName="Assets/EntityGraphics/TruckCollider.cs" Line="9" Column="2" />
+      <File FileName="Assets/EntityData/EDFiretruck.cs" Line="15" Column="3" />
+      <File FileName="Assets/TileData/TDMap.cs" Line="38" Column="22" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

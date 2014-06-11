@@ -21,4 +21,8 @@
 	public TDStep PopPathStep(){
 		return path.PopStep ();
 	}
+
+	public TDStep PeekPathStep(){
+		return path.PeekStep ();
+	}
 }

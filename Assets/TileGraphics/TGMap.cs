@@ -13,6 +13,7 @@ public class TGMap : MonoBehaviour {
 	public int tileResolution;
 
 	public GameObject firetruckPrefab;
+	public GameObject firehousePrefab;
 
 	TDMap _map;
 
@@ -23,10 +24,13 @@ public class TGMap : MonoBehaviour {
 	List<EGFiretruck> _activeTrucks;
 	List<EGFiretruck> _idleTrucks;
 
+	EGFirehouse firehouse;
+
 	// Use this for initialization
 	void Start () {
 		BuildMesh ();
 		BuildTexture ();
+		PlaceFireHouse ();
 		
 		_activeTrucks = new List<EGFiretruck> ();
 		_truckSpawnQueue = new List<Vector2> ();
@@ -49,7 +53,10 @@ public class TGMap : MonoBehaviour {
 		}
 
 		//TODO only spawn when there's space for the truck
-		SpawnNextTruck ();
+		if (!firehouse.ContainsTruck ()) {
+			SpawnNextTruck ();
+		}
+
 	}
 
 	Color[][] ChopUpTiles(){
@@ -68,6 +75,21 @@ public class TGMap : MonoBehaviour {
 		}
 
 		return tiles;
+	}
+
+	void PlaceFireHouse(){
+		Vector2 fireHouseTilePos = new Vector2 ();
+		_map.GetFireHouseCoordinates (out fireHouseTilePos);
+
+		Vector3 housePos = GetPositionForTile (Mathf.FloorToInt(fireHouseTilePos.x),
+		                                       Mathf.FloorToInt(fireHouseTilePos.y));
+
+		housePos.x += 0.5f;
+		housePos.z -= 0.5f;
+
+		GameObject house = (GameObject)Instantiate (firehousePrefab);
+		firehouse = house.GetComponent<EGFirehouse> ();
+		firehouse.transform.position = housePos;
 	}
 
 	public void BuildTexture(){

@@ -15,6 +15,16 @@ public class TDPath {
 		return steps.Count;
 	}
 
+	public TDStep PeekStep(){
+		TDStep step = null;
+
+		if (steps != null && steps.Count > 0) {
+			step = steps[0];
+		}
+
+		return step;
+	}
+
 	public TDStep PopStep(){
 		TDStep step = null;
 

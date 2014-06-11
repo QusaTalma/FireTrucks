@@ -7,6 +7,7 @@ public class EGFiretruck : MonoBehaviour {
 	Vector3 position;
 	Vector3 destination;
 	float angleToDestination = 0;
+	bool waitingForTraffic = false;
 
 	public float speed;
 	public float turnSpeed;
@@ -59,13 +60,45 @@ public class EGFiretruck : MonoBehaviour {
 
 	Vector3 GetNextDestination(){
 		TDStep step = _firetruck.PopPathStep ();
+		TDStep afterStep = _firetruck.PeekPathStep ();
 		Vector3 nextPosition = new Vector3();
+		Vector3 afterPosition = new Vector3 ();
 		if (step != null) {
 			TDTile nextTile = step.tile;
+			TDTile afterTile = null;
+
+			if(afterStep != null){
+				afterTile = afterStep.tile;
+				afterPosition = map.GetPositionForTile(afterTile.GetX(), afterTile.GetY());
+				afterPosition.x += 0.5f;
+				afterPosition.z -= 0.5f;
+			}
+
 			nextPosition = map.GetPositionForTile (nextTile.GetX (), nextTile.GetY ());
 
 			nextPosition.x += 0.5f;
 			nextPosition.z -= 0.5f;
+
+			//If nextPosition is to the right then trucks drive in the lower
+			//of the horizontal lanes
+			if(nextPosition.x > transform.position.x 
+			   		|| (afterStep != null && afterPosition.x > transform.position.x)){
+				nextPosition.z -= 0.25f;
+			//If it's to the left then trucks drive in the upper lane
+			}else if(nextPosition.x < transform.position.x 
+			         || (afterStep != null && afterPosition.x < transform.position.x)){
+				nextPosition.z += 0.25f;
+			}
+
+			//If nextPosition is up the trucks drive in the right lane
+			if(nextPosition.z > transform.position.z 
+			   		|| (afterStep != null && afterPosition.z > transform.position.z)){
+				nextPosition.x += 0.25f;
+			//If it's down then drucks drive in the left lane
+			}else if(nextPosition.z < transform.position.z
+			         || (afterStep != null && afterPosition.z < transform.position.z)){
+				nextPosition.x -= 0.25f;
+			}
 		}
 
 		return nextPosition;
@@ -88,6 +121,10 @@ public class EGFiretruck : MonoBehaviour {
 		}
 
 		return angle;
+	}
+
+	public void SetWaitingForTraffic(bool waiting){
+		this.waitingForTraffic = waiting;
 	}
 
 	public void SetMap(TGMap map){
