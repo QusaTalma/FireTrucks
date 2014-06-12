@@ -16,6 +16,7 @@ public class TGMap : MonoBehaviour {
 	public GameObject firehousePrefab;
 
 	TDMap _map;
+	TGArsonist _arsonist;
 
 	//Requested locations for new trucks to go to
 	List<Vector2> _truckSpawnQueue;
@@ -31,6 +32,7 @@ public class TGMap : MonoBehaviour {
 		BuildMesh ();
 		BuildTexture ();
 		PlaceFireHouse ();
+		PlaceArsonist ();
 		
 		_activeTrucks = new List<EGFiretruck> ();
 		_truckSpawnQueue = new List<Vector2> ();
@@ -52,11 +54,11 @@ public class TGMap : MonoBehaviour {
 			SetTruckIdle(truck);
 		}
 
-		//TODO only spawn when there's space for the truck
 		if (!firehouse.ContainsTruck ()) {
 			SpawnNextTruck ();
 		}
 
+		_arsonist.Update (Time.deltaTime);
 	}
 
 	Color[][] ChopUpTiles(){
@@ -90,6 +92,15 @@ public class TGMap : MonoBehaviour {
 		GameObject house = (GameObject)Instantiate (firehousePrefab);
 		firehouse = house.GetComponent<EGFirehouse> ();
 		firehouse.transform.position = housePos;
+	}
+
+	void PlaceArsonist(){
+		_arsonist = new TGArsonist ();
+		_arsonist.SetMap (_map);
+
+		int arsonistX = Random.Range (0, _map.GetWidth ());
+		int arsonistY = Random.Range (0, _map.GetHeight ());
+		_arsonist.SetPosition (arsonistX, arsonistY);
 	}
 
 	public void BuildTexture(){

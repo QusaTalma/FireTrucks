@@ -77,6 +77,14 @@ public class TDMap {
 		}
 	}
 
+	public int GetWidth(){
+		return _width;
+	}
+
+	public int GetHeight(){
+		return _height;
+	}
+
 	public List<TDTile> GetAdjacentTiles(TDTile tile) {
 		List<TDTile> adjacent = new List<TDTile> ();
 

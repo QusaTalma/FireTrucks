@@ -54,6 +54,7 @@
      <Compile Include="Assets\TileData\TDPath.cs" />
      <Compile Include="Assets\TileData\TDStep.cs" />
      <Compile Include="Assets\TileData\TDTile.cs" />
+     <Compile Include="Assets\TileGraphics\TGArsonist.cs" />
      <Compile Include="Assets\TileGraphics\TGMap.cs" />
      <Compile Include="Assets\TileGraphics\TGMouse.cs" />
      <Compile Include="Assets\Utils\MathUtils.cs" />
