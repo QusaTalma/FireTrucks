@@ -37,7 +37,11 @@ public class EGFiretruck : MonoBehaviour {
 		float dist = Vector3.Distance (position, destination);
 		angleToDestination = CalculateAngleToDestination();
 
-		if (dist > 0 && Mathf.Abs(angleToDestination) > 0){
+		//Ugh, this sucks, but to prevent a stupid fucking issue where
+		//the truck turns back and forth across the destination angle 
+		//when the difference is very small, usually aboout 6.0E-5, so if the
+		//decimal is in the E-5 magnitude ignore it
+		if (dist > 0 && Mathf.Abs(angleToDestination) > 0.0001){
 			float rotateBy;
 			if(Mathf.Abs(angleToDestination) > Mathf.Abs(turnSpeed*deltaTime)){
 				rotateBy = turnSpeed * deltaTime;
@@ -129,7 +133,6 @@ public class EGFiretruck : MonoBehaviour {
 
 	public void SetWaitingForTraffic(bool waiting){
 		this.waitingForTraffic = waiting;
-		Debug.Log ("Set waiting for traffic " + waitingForTraffic);
 	}
 
 	public void SetMap(TGMap map){
