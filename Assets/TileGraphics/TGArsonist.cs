@@ -48,11 +48,7 @@ public class TGArsonist : MonoBehaviour
 		if (!HaveNeighboringFires ()) {
 			List<TDTile> houses = GetNeighboringHouses();
 			if(houses.Count > 0){
-				Debug.Log(houses);
 				int houseIndexToIgnite = Random.Range(0, houses.Count);
-				
-				Debug.Log("index to ignite " + houseIndexToIgnite);
-				Debug.Log("houses.Count " + houses.Count);
 				TDTile tileToIgnite = houses[houseIndexToIgnite];
 				GameObject flame = (GameObject)Instantiate (flamePrefab);
 				

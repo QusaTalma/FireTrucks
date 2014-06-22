@@ -15,7 +15,6 @@ public class TruckCollider : MonoBehaviour {
 		if(!transform.parent.Equals(other.transform.parent) &&
 		   other.gameObject.tag.Equals("Truck")){
 			truck.SetWaitingForTraffic(true);
-			renderer.material.color = Color.green;
 		}
 	}
 
@@ -23,7 +22,6 @@ public class TruckCollider : MonoBehaviour {
 		if(!transform.parent.Equals(other.transform.parent) &&
 		   other.gameObject.tag.Equals("Truck")){
 			truck.SetWaitingForTraffic(false);
-			renderer.material.color = Color.clear;
 		}
 	}
 }

@@ -7,7 +7,9 @@ public class EGFiretruck : MonoBehaviour {
 	Vector3 position;
 	Vector3 destination;
 	float angleToDestination = 0;
+
 	bool waitingForTraffic = false;
+	bool puttingOutFire = false;
 
 	public float speed;
 	public float turnSpeed;
@@ -27,7 +29,7 @@ public class EGFiretruck : MonoBehaviour {
 			}
 		}
 
-		if (waitingForTraffic) {
+		if (waitingForTraffic || puttingOutFire) {
 			return;
 		}
 
@@ -135,6 +137,10 @@ public class EGFiretruck : MonoBehaviour {
 		this.waitingForTraffic = waiting;
 	}
 
+	public bool IsWaitingForTraffic(){
+		return waitingForTraffic;
+	}
+
 	public void SetMap(TGMap map){
 		this.map = map;
 	}
@@ -160,5 +166,13 @@ public class EGFiretruck : MonoBehaviour {
 
 	public bool IsActive(){
 		return !destination.Equals(new Vector3()) || HasNextDestination();
+	}
+
+	public bool IsPuttingOutFire(){
+		return puttingOutFire;
+	}
+
+	public void SetPuttingOutFire(bool puttingOutFire){
+		this.puttingOutFire = puttingOutFire;
 	}
 }

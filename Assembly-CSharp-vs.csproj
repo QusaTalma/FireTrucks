@@ -49,6 +49,7 @@
      <Compile Include="Assets\EntityData\EDFiretruck.cs" />
      <Compile Include="Assets\EntityGraphics\EGFirehouse.cs" />
      <Compile Include="Assets\EntityGraphics\EGFiretruck.cs" />
+     <Compile Include="Assets\EntityGraphics\EGHose.cs" />
      <Compile Include="Assets\EntityGraphics\TruckCollider.cs" />
      <Compile Include="Assets\TileData\TDMap.cs" />
      <Compile Include="Assets\TileData\TDPath.cs" />

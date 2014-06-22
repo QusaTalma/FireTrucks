@@ -45,7 +45,7 @@ public class TGMap : MonoBehaviour {
 		for (int i=0; i<_activeTrucks.Count; i++) {
 			EGFiretruck truck = _activeTrucks[i];
 
-			if(!truck.IsActive()){
+			if(!truck.IsActive() && !truck.IsPuttingOutFire()){
 				toMoveToIdle.Add(truck);
 			}
 		}
