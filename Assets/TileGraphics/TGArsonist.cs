@@ -1,39 +1,39 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class TGArsonist
+public class TGArsonist : MonoBehaviour
 {
-	TDMap _map;
+	TGMap _map;
 	TDTile _currentTile;
 	TDTile _previousTile;
 
 	int x;
 	int y;
 
-	static float FIRE_LIGHT_INTERVAL = 1f;
-	static float MOVE_INTERVAL = .75f;
+	public float fireLightInterval;
+	public float moveInterval;
 
 	float timeSinceFireLight = 0f;
 	float timeSinceMove = 0f;
 
-	public TGArsonist (){}
+	public GameObject flamePrefab;
 
-	public void Update(float delta){
-		timeSinceFireLight += delta;
-		timeSinceMove += delta;
+	public void Update(){
+		timeSinceFireLight += Time.deltaTime;
+		timeSinceMove += Time.deltaTime;
 
-		if (timeSinceFireLight >= FIRE_LIGHT_INTERVAL) {
+		if (timeSinceFireLight >= fireLightInterval) {
 			StartNearbyHouseOnFire();
 			timeSinceFireLight = 0f;
 		}
 
-		if (timeSinceMove >= MOVE_INTERVAL) {
+		if (timeSinceMove >= moveInterval) {
 			MoveToNearbyTile();
 			timeSinceMove = 0f;
 		}
 	}
 
-	public void SetMap(TDMap map){
+	public void SetMap(TGMap map){
 		this._map = map;
 	}
 
@@ -41,19 +41,43 @@ public class TGArsonist
 		this.x = x;
 		this.y = y;
 
-		_currentTile = _map.GetTile (x, y);
+		_currentTile = _map.GetDataMap ().GetTile (x, y);
 	}
 
 	void StartNearbyHouseOnFire(){
-		//TODO find a nearby hous eto set on fire:
-		//Check for fires nearby, if any present skip starting one this time
-		//Find a nearby house
-		//Create a flame on that house and set the tile's type to be on fire
-		//Object.Instantiate
+		if (!HaveNeighboringFires ()) {
+			List<TDTile> houses = GetNeighboringHouses();
+			if(houses.Count > 0){
+				Debug.Log(houses);
+				int houseIndexToIgnite = Random.Range(0, houses.Count);
+				
+				Debug.Log("index to ignite " + houseIndexToIgnite);
+				Debug.Log("houses.Count " + houses.Count);
+				TDTile tileToIgnite = houses[houseIndexToIgnite];
+				GameObject flame = (GameObject)Instantiate (flamePrefab);
+				
+				Vector3 flamePos = _map.GetPositionForTile (tileToIgnite.GetX(), tileToIgnite.GetY());
+				flamePos.x += 0.5f;
+				flamePos.z -= 0.5f;
+				
+				flame.transform.position = flamePos;
+				
+				tileToIgnite.type = TDTile.TILE_HOUSE_ON_FIRE;
+			}
+		}
+	}
+
+	bool HaveNeighboringFires(){
+		List<TDTile> neighboringFires = _map.GetDataMap ().FindAdjacentTilesOfType (_currentTile, TDTile.TILE_HOUSE_ON_FIRE);
+		return neighboringFires.Count > 0;
+	}
+
+	List<TDTile> GetNeighboringHouses(){
+		return _map.GetDataMap ().FindAdjacentTilesOfType (_currentTile, TDTile.TILE_HOUSE);
 	}
 
 	void MoveToNearbyTile(){
-		List<TDTile> neighboringTiles = _map.FindAdjacentTilesOfType (_currentTile, TDTile.TILE_STREET);
+		List<TDTile> neighboringTiles = _map.GetDataMap ().FindAdjacentTilesOfType (_currentTile, TDTile.TILE_STREET);
 		neighboringTiles.Remove (_previousTile);
 
 		int tileIndex = Random.Range (0, neighboringTiles.Count);

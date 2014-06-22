@@ -14,9 +14,10 @@ public class TGMap : MonoBehaviour {
 
 	public GameObject firetruckPrefab;
 	public GameObject firehousePrefab;
+	public GameObject arsonistPrefab;
 
 	TDMap _map;
-	TGArsonist _arsonist;
+	TGArsonist arsonist;
 
 	//Requested locations for new trucks to go to
 	List<Vector2> _truckSpawnQueue;
@@ -57,8 +58,6 @@ public class TGMap : MonoBehaviour {
 		if (!firehouse.ContainsTruck ()) {
 			SpawnNextTruck ();
 		}
-
-		_arsonist.Update (Time.deltaTime);
 	}
 
 	Color[][] ChopUpTiles(){
@@ -95,12 +94,13 @@ public class TGMap : MonoBehaviour {
 	}
 
 	void PlaceArsonist(){
-		_arsonist = new TGArsonist ();
-		_arsonist.SetMap (_map);
+		GameObject arsonistObject = (GameObject)Instantiate (arsonistPrefab);
+		arsonist = arsonistObject.GetComponent<TGArsonist> ();
+		arsonist.SetMap (this);
 
 		int arsonistX = Random.Range (0, _map.GetWidth ());
 		int arsonistY = Random.Range (0, _map.GetHeight ());
-		_arsonist.SetPosition (arsonistX, arsonistY);
+		arsonist.SetPosition (arsonistX, arsonistY);
 	}
 
 	public void BuildTexture(){
@@ -264,5 +264,9 @@ public class TGMap : MonoBehaviour {
 			_activeTrucks.Remove(truck);
 			_idleTrucks.Add(truck);
 		}
+	}
+
+	public TDMap GetDataMap(){
+		return this._map;
 	}
 }
