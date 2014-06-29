@@ -57,6 +57,11 @@ public class TGArsonist : MonoBehaviour
 				flamePos.z -= 0.5f;
 				
 				flame.transform.position = flamePos;
+
+				EGFlame egFlame = flame.GetComponent<EGFlame>();
+				egFlame.SetTile(tileToIgnite);
+				egFlame.SetMap(_map);
+				egFlame.SetSpreadPrefab(flamePrefab);
 				
 				tileToIgnite.type = TDTile.TILE_HOUSE_ON_FIRE;
 			}

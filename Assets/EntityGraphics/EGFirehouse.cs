@@ -8,11 +8,15 @@ public class EGFirehouse : MonoBehaviour {
 		return truckCount > 0;
 	}
 
-	void OnTriggerEnter(Collider other){
-		if(other.gameObject.tag.Equals("Truck")){
-			truckCount++;
-		}
+	public void AddTruck(){
+		truckCount++;
 	}
+
+//	void OnTriggerEnter(Collider other){
+//		if(other.gameObject.tag.Equals("Truck")){
+//			truckCount++;
+//		}
+//	}
 
 	void OnTriggerExit(Collider other){
 		if(other.gameObject.tag.Equals("Truck")){

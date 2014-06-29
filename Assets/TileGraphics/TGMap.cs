@@ -180,7 +180,6 @@ public class TGMap : MonoBehaviour {
 
 		//Assign mesh to filter,renderer,collider
 		MeshFilter mesh_filterer = GetComponent<MeshFilter> ();
-		MeshRenderer mesh_rendererer = GetComponent<MeshRenderer> ();
 		MeshCollider mesh_colliderer = GetComponent<MeshCollider> ();
 
 		mesh_filterer.mesh = mesh;
@@ -196,6 +195,8 @@ public class TGMap : MonoBehaviour {
 		                                       Mathf.FloorToInt(fireHouseTilePos.y));
 		truckPos.x += .5f;
 		truckPos.z -= .5f;
+
+		firehouse.AddTruck ();
 
 		GameObject truck = (GameObject)Instantiate (firetruckPrefab);
 		truck.transform.position = truckPos;

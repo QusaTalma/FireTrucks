@@ -1,13 +1,15 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/TileGraphics/TGArsonist.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/EntityGraphics/EGFiretruck.cs">
     <Files>
-      <File FileName="Assets/TileGraphics/TGMap.cs" Line="270" Column="1" />
+      <File FileName="Assets/TileGraphics/TGMap.cs" Line="1" Column="1" />
       <File FileName="Assets/TileData/TDTile.cs" Line="1" Column="1" />
       <File FileName="Assets/TileData/TDMap.cs" Line="1" Column="1" />
-      <File FileName="Assets/TileGraphics/TGArsonist.cs" Line="14" Column="27" />
-      <File FileName="Assets/EntityGraphics/EGFiretruck.cs" Line="135" Column="36" />
-      <File FileName="Assets/EntityGraphics/TruckCollider.cs" Line="18" Column="42" />
+      <File FileName="Assets/TileGraphics/TGArsonist.cs" Line="1" Column="1" />
+      <File FileName="Assets/EntityGraphics/EGFiretruck.cs" Line="20" Column="55" />
+      <File FileName="Assets/EntityGraphics/TruckCollider.cs" Line="1" Column="1" />
+      <File FileName="Assets/EntityGraphics/EGHose.cs" Line="1" Column="1" />
+      <File FileName="Assets/EntityData/EDFiretruck.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
