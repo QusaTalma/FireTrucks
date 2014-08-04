@@ -55,6 +55,23 @@ public class TGMap : MonoBehaviour {
 			SetTruckIdle(truck);
 		}
 
+		List<EGFiretruck> toDestroy = new List<EGFiretruck> ();
+
+		for (int i=0; i<_idleTrucks.Count; i++) {
+			EGFiretruck truck = _idleTrucks[i];
+
+			TDTile truckTile = GetTileForWorldPosition(truck.transform.position);
+			if(truckTile.type == TDTile.TILE_FIREHOUSE){
+				toDestroy.Add(truck);
+			}
+		}
+		
+		for (int i=0; i<toDestroy.Count; i++) {
+			EGFiretruck truck = toDestroy[i];
+			_idleTrucks.Remove(truck);
+			Destroy(truck.gameObject);
+		}
+
 		if (!firehouse.ContainsTruck ()) {
 			SpawnNextTruck ();
 		}
@@ -222,6 +239,15 @@ public class TGMap : MonoBehaviour {
 
 		return pos;
 	}
+
+	public TDTile GetTileForWorldPosition(Vector3 position){
+		int x, y;
+
+		x = Mathf.FloorToInt (position.x/tileSize);
+		y = Mathf.FloorToInt (-position.z / tileSize);
+
+		return _map.GetTile(x, y);
+	}
 	
 	public void AddPositionToSpawnQueue(Vector2 truckPosition){
 		_truckSpawnQueue.Add (truckPosition);
@@ -237,6 +263,7 @@ public class TGMap : MonoBehaviour {
 			                     _map.GetTile (x, -z));
 
 			truck.SetPath(truckPath);
+			truck.SetIdle(false);
 
 			_activeTrucks.Add(truck);
 		}
@@ -264,6 +291,18 @@ public class TGMap : MonoBehaviour {
 		if(truck != null){
 			_activeTrucks.Remove(truck);
 			_idleTrucks.Add(truck);
+			
+			Vector2 fireHouseTilePos = new Vector2 ();
+			_map.GetFireHouseCoordinates (out fireHouseTilePos);
+
+			TDTile start = GetTileForWorldPosition(truck.transform.position);
+			TDTile end = _map.GetTile(Mathf.FloorToInt(fireHouseTilePos.x), Mathf.FloorToInt(fireHouseTilePos.y));
+			TDPath pathToFirehouse = new TDPath();
+			pathToFirehouse.BuildPath (_map,start,end);
+
+			truck.SetPath(pathToFirehouse);
+
+			truck.SetIdle(true);
 		}
 	}
 

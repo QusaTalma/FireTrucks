@@ -52,6 +52,7 @@
      <Compile Include="Assets\EntityGraphics\EGFlame.cs" />
      <Compile Include="Assets\EntityGraphics\EGHose.cs" />
      <Compile Include="Assets\EntityGraphics\TruckCollider.cs" />
+     <Compile Include="Assets\EntityGraphics\TruckVision.cs" />
      <Compile Include="Assets\TileData\TDMap.cs" />
      <Compile Include="Assets\TileData\TDPath.cs" />
      <Compile Include="Assets\TileData\TDStep.cs" />

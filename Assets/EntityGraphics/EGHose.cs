@@ -15,6 +15,14 @@ public class EGHose : MonoBehaviour {
 	void Start () {
 		foundFlames = new List<GameObject>();
 	}
+
+	public void AddFlame(GameObject flame){
+		foundFlames.Add (flame);
+	}
+
+	public void RemoveFlame(GameObject flame){
+		foundFlames.Remove (flame);
+	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -75,6 +83,10 @@ public class EGHose : MonoBehaviour {
 					flame.transform.localScale = flameScale;
 					
 					if(flameScale.x <= waterRate){
+						EGFlame egFlame = flame.GetComponent<EGFlame>();
+						if(egFlame != null){
+							egFlame.PutOut();
+						}
 						Destroy(flame);
 						foundFlames.Remove(flame);
 					}
@@ -86,21 +98,6 @@ public class EGHose : MonoBehaviour {
 				}
 				truck.SetPuttingOutFire(false);
 			}
-		}
-	}
-	
-	void OnTriggerEnter(Collider other){
-		if(!transform.parent.Equals(other.transform.parent) &&
-		   other.gameObject.tag.Equals("Fire")){
-			foundFlames.Add(other.gameObject);
-		}
-	}
-	
-	void OnTriggerExit(Collider other){
-		if(!transform.parent.Equals(other.transform.parent) &&
-		   other.gameObject.tag.Equals("Fire")){
-
-			foundFlames.Remove(other.gameObject);
 		}
 	}
 }

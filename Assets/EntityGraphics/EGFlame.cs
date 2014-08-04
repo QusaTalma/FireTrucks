@@ -6,6 +6,8 @@ public class EGFlame : MonoBehaviour {
 	public float maxSize;
 	public int spreadChance;
 	public float spreadInterval;
+	public float damagePerSecond;
+	public GameObject ashesPrefab;
 
 	float timeSinceSpreadAttempt = 0;
 
@@ -16,20 +18,49 @@ public class EGFlame : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		float delta = Time.deltaTime;
+		if (tile != null) {
+			UpdateScale ();
+			UpdateSpread ();
+			DoDamage ();
+		} else {
+			PutOut();
+			Destroy(transform.root.gameObject);
+		}
+	}
 
+	void UpdateScale(){
+		float delta = Time.deltaTime;
+		
 		Vector3 scale = transform.localScale;
-		if (scale.x < maxSize){
+
+		if(tile.type == TDTile.TILE_BURNED_DOWN_HOUSE){
+			scale.x -= growthRate * delta;
+			scale.y -= growthRate * delta;
+			scale.z -= growthRate * delta;
+			
+			transform.localScale = scale;
+		}else if (scale.x < maxSize){
 			scale.x += Mathf.Min(growthRate * delta, maxSize);
 			scale.y += Mathf.Min(growthRate * delta, maxSize);
 			scale.z += Mathf.Min(growthRate * delta, maxSize);
-
+			
 			transform.localScale = scale;
 		}
 
-		if (scale.x >= maxSize) {
-			timeSinceSpreadAttempt += delta;
+		if(scale.x <= 0){
+			PutOut();
+			Destroy(transform.root.gameObject);
+		}
+	}
 
+	void UpdateSpread(){
+		float delta = Time.deltaTime;
+		
+		Vector3 scale = transform.localScale;
+		
+		if (scale.x >= maxSize || tile.type == TDTile.TILE_BURNED_DOWN_HOUSE) {
+			timeSinceSpreadAttempt += delta;
+			
 			if(timeSinceSpreadAttempt >= spreadInterval){
 				int rand = Random.Range (0, spreadChance);
 				if (rand % spreadChance == 0){
@@ -53,10 +84,26 @@ public class EGFlame : MonoBehaviour {
 						
 						tileToIgnite.type = TDTile.TILE_HOUSE_ON_FIRE;
 					}
-
+					
 					timeSinceSpreadAttempt = 0;
 				}
 			}
+		}
+	}
+
+	void DoDamage(){
+		float deltaTime = Time.deltaTime;
+		Vector3 scale = transform.localScale;
+		float damage = (deltaTime * damagePerSecond * (scale.x / maxSize));
+		tile.Damage (damage);
+	}
+
+	public void PutOut(){
+		if (tile.type != TDTile.TILE_BURNED_DOWN_HOUSE) {
+			tile.type = TDTile.TILE_HOUSE;
+		} else {
+			GameObject ashes = (GameObject)Instantiate(ashesPrefab);
+			ashes.transform.position = transform.position;
 		}
 	}
 

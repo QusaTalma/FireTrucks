@@ -10,9 +10,11 @@ public class EGFiretruck : MonoBehaviour {
 
 	bool waitingForTraffic = false;
 	bool puttingOutFire = false;
+	bool idle = false;
 
 	public float speed;
 	public float turnSpeed;
+	public bool returnWhenIdle;
 
 	void Update(){
 		//Check if the truck is at its destination or a destination
@@ -165,7 +167,7 @@ public class EGFiretruck : MonoBehaviour {
 	}
 
 	public bool IsActive(){
-		return !destination.Equals(new Vector3()) || HasNextDestination();
+		return (!destination.Equals(new Vector3()) || HasNextDestination()) && !idle;
 	}
 
 	public bool IsPuttingOutFire(){
@@ -174,5 +176,9 @@ public class EGFiretruck : MonoBehaviour {
 
 	public void SetPuttingOutFire(bool puttingOutFire){
 		this.puttingOutFire = puttingOutFire;
+	}
+
+	public void SetIdle(bool idle){
+		this.idle = idle;
 	}
 }

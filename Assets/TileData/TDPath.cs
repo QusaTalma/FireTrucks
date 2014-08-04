@@ -12,7 +12,7 @@ public class TDPath {
 	}
 
 	public int GetStepCount(){
-		return steps.Count;
+		return steps == null ? 0 : steps.Count;
 	}
 
 	public TDStep PeekStep(){
@@ -37,7 +37,7 @@ public class TDPath {
 	}
 
 	public void BuildPath(TDMap map, TDTile start, TDTile end){
-		if (end.type != TDTile.TILE_STREET) {
+		if (end.type != TDTile.TILE_STREET && end.type != TDTile.TILE_FIREHOUSE) {
 			List<TDTile> nearbyStreets = map.FindAdjacentTilesOfType(end, TDTile.TILE_STREET);
 			if(nearbyStreets.Count > 0){
 				end = nearbyStreets[0];
@@ -59,6 +59,21 @@ public class TDPath {
 
 			open.Remove(current);
 			closed.Add(current);
+
+			if(end.type == TDTile.TILE_FIREHOUSE){
+				List<TDTile> firestation = map.FindAdjacentTilesOfType(current, TDTile.TILE_FIREHOUSE);
+				for(int i=0; i<firestation.Count; i++){
+					TDTile station = firestation[i];
+					if(closed.Contains(station)){
+						continue;
+					}
+
+					if(!open.Contains(station)){
+						cameFrom.Add(station, current);
+						open.Add(station);
+					}
+				}
+			}
 
 			List<TDTile> neighborStreets = map.FindAdjacentTilesOfType(current, TDTile.TILE_STREET);
 
