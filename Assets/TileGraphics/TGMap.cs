@@ -309,4 +309,8 @@ public class TGMap : MonoBehaviour {
 	public TDMap GetDataMap(){
 		return this._map;
 	}
+
+	public int GetTruckCount(){
+		return _idleTrucks.Count + _activeTrucks.Count;
+	}
 }
