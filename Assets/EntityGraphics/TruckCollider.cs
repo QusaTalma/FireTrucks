@@ -14,7 +14,10 @@ public class TruckCollider : MonoBehaviour {
 	void OnTriggerEnter(Collider other){
 		if(!transform.parent.Equals(other.transform.parent) &&
 		   other.gameObject.tag.Equals("Truck")){
-			truck.SetWaitingForTraffic(true);
+			EGFiretruck otherTruck = other.transform.root.gameObject.GetComponent<EGFiretruck>();
+			if(otherTruck != null && !otherTruck.IsWaitingForTraffic()){
+				truck.SetWaitingForTraffic(true);
+			}
 		}
 	}
 

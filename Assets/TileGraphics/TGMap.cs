@@ -27,6 +27,7 @@ public class TGMap : MonoBehaviour {
 	List<EGFiretruck> _idleTrucks;
 
 	EGFirehouse firehouse;
+	EGFiretruck selectedTruck = null;
 
 	// Use this for initialization
 	void Start () {
@@ -253,19 +254,35 @@ public class TGMap : MonoBehaviour {
 		_truckSpawnQueue.Add (truckPosition);
 	}
 
-	public void SendIdleToPosition(int x, int z){
-		if (_idleTrucks.Count > 0) {
-			EGFiretruck truck = PopIdleTruck();
+	public void SetSelectedTruck(EGFiretruck selected){
+		selectedTruck = selected;
+	}
 
+	public void SendIdleToPosition(int x, int z){
+		EGFiretruck truckToSend = null;
+
+		if (selectedTruck != null) {
+			truckToSend = selectedTruck;
+			if(_idleTrucks.Contains(selectedTruck)){
+				_idleTrucks.Remove(selectedTruck);
+			}else if(_activeTrucks.Contains(selectedTruck)){
+				_activeTrucks.Remove(selectedTruck);
+			}
+			selectedTruck = null;
+		} else if (_idleTrucks.Count > 0) {
+			truckToSend = PopIdleTruck ();
+		}
+
+		if(truckToSend != null){
 			TDPath truckPath = new TDPath ();
 			truckPath.BuildPath (_map,
-			                     _map.GetTile(Mathf.FloorToInt(truck.GetPosition().x), Mathf.FloorToInt(-truck.GetPosition().z)),
+			                     _map.GetTile(Mathf.FloorToInt(truckToSend.GetPosition().x), Mathf.FloorToInt(-truckToSend.GetPosition().z)),
 			                     _map.GetTile (x, -z));
 
-			truck.SetPath(truckPath);
-			truck.SetIdle(false);
+			truckToSend.SetPath(truckPath);
+			truckToSend.SetIdle(false);
 
-			_activeTrucks.Add(truck);
+			_activeTrucks.Add(truckToSend);
 		}
 	}
 	
@@ -291,16 +308,18 @@ public class TGMap : MonoBehaviour {
 		if(truck != null){
 			_activeTrucks.Remove(truck);
 			_idleTrucks.Add(truck);
-			
-			Vector2 fireHouseTilePos = new Vector2 ();
-			_map.GetFireHouseCoordinates (out fireHouseTilePos);
 
-			TDTile start = GetTileForWorldPosition(truck.transform.position);
-			TDTile end = _map.GetTile(Mathf.FloorToInt(fireHouseTilePos.x), Mathf.FloorToInt(fireHouseTilePos.y));
-			TDPath pathToFirehouse = new TDPath();
-			pathToFirehouse.BuildPath (_map,start,end);
-
-			truck.SetPath(pathToFirehouse);
+			if(truck.returnWhenIdle){
+				Vector2 fireHouseTilePos = new Vector2 ();
+				_map.GetFireHouseCoordinates (out fireHouseTilePos);
+				
+				TDTile start = GetTileForWorldPosition(truck.transform.position);
+				TDTile end = _map.GetTile(Mathf.FloorToInt(fireHouseTilePos.x), Mathf.FloorToInt(fireHouseTilePos.y));
+				TDPath pathToFirehouse = new TDPath();
+				pathToFirehouse.BuildPath (_map,start,end);
+				
+				truck.SetPath(pathToFirehouse);
+			}
 
 			truck.SetIdle(true);
 		}

@@ -43,20 +43,36 @@ public class TGMouse : MonoBehaviour {
 			RaycastHit hitInfo;
 			float distance = Mathf.Infinity;
 
-			if (collider.Raycast (rayCast, out hitInfo, distance)) {
+			if(Physics.Raycast(rayCast, out hitInfo, distance)) {
+				if(hitInfo.transform.root.gameObject.tag.Equals("Map")){
 					switch (touch.phase) {
 					case TouchPhase.Began:
-							HandleTouchStart (hitInfo.point);
+							HandleTouchMapStart (hitInfo.point);
 							break;
 
 					case TouchPhase.Moved:
-							HandleTouchMoved (touch.position);
+							HandleTouchMapMoved (touch.position);
 							break;
 
 					case TouchPhase.Ended:
-							HandleTouchEnded (hitInfo.point);
+							HandleTouchMapEnded (hitInfo.point);
 							break;
 					}
+				}else if(hitInfo.transform.root.gameObject.tag.Equals("TruckRoot")){
+					switch (touch.phase) {
+					case TouchPhase.Began:
+						HandleTouchTruckStart (hitInfo);
+						break;
+						
+					case TouchPhase.Moved:
+						HandleTouchTruckMoved (hitInfo);
+						break;
+						
+					case TouchPhase.Ended:
+						HandleTouchTruckEnded (hitInfo);
+						break;
+					}
+				}
 			}else{
 				dragging = false;
 				singleTouchDown = false;
@@ -66,13 +82,23 @@ public class TGMouse : MonoBehaviour {
 			RaycastHit hitInfo;
 			float distance = Mathf.Infinity;
 			
-			if (collider.Raycast (rayCast, out hitInfo, distance)) {
-				if(Input.GetMouseButtonDown(0)){
-					HandleTouchStart(hitInfo.point);
-				}else if(Input.GetMouseButtonUp(0)){
-					HandleTouchEnded(hitInfo.point);
-				}else if(singleTouchDown){
-					HandleTouchMoved(Input.mousePosition);
+			if(Physics.Raycast(rayCast, out hitInfo, distance)) {
+				if(hitInfo.transform.root.gameObject.tag.Equals("Map")){
+					if(Input.GetMouseButtonDown(0)){
+						HandleTouchMapStart(hitInfo.point);
+					}else if(Input.GetMouseButtonUp(0)){
+						HandleTouchMapEnded(hitInfo.point);
+					}else if(singleTouchDown){
+						HandleTouchMapMoved(Input.mousePosition);
+					}
+				}else if(hitInfo.transform.root.gameObject.tag.Equals("TruckRoot")){
+					if(Input.GetMouseButtonDown(0)){
+						HandleTouchTruckStart(hitInfo);
+					}else if(Input.GetMouseButtonUp(0)){
+						HandleTouchTruckEnded(hitInfo);
+					}else if(singleTouchDown){
+						HandleTouchTruckMoved(hitInfo);
+					}
 				}
 			}else{
 				dragging = false;
@@ -87,12 +113,32 @@ public class TGMouse : MonoBehaviour {
 		Camera.main.transform.position = camPos;
 	}
 
-	void HandleTouchStart(Vector3 touchPos){
+	void HandleTouchTruckStart(RaycastHit hitInfo){
+		singleTouchStart = hitInfo.point;
+		singleTouchDown = true;
+
+		//Not sure what else this needs
+	}
+
+	void HandleTouchTruckMoved(RaycastHit hitInfo){
+		//Not sure what to do here
+	}
+
+	void HandleTouchTruckEnded(RaycastHit hitInfo){
+		singleTouchDown = false;
+
+		EGFiretruck truck = hitInfo.transform.root.gameObject.GetComponent<EGFiretruck> ();
+		if (truck != null) {
+			_tileMap.SetSelectedTruck(truck);
+		}
+	}
+
+	void HandleTouchMapStart(Vector3 touchPos){
 		singleTouchStart = touchPos;
 		singleTouchDown = true;
 	}
 
-	void HandleTouchMoved(Vector3 touchPos){
+	void HandleTouchMapMoved(Vector3 touchPos){
 		if (!dragging) {
 			Vector3 worldTouch = Camera.main.ScreenToWorldPoint(touchPos);
 
@@ -121,7 +167,7 @@ public class TGMouse : MonoBehaviour {
 		}
 	}
 
-	void HandleTouchEnded(Vector3 touchPos){
+	void HandleTouchMapEnded(Vector3 touchPos){
 		int tileX = Mathf.FloorToInt (touchPos.x / _tileMap.tileSize);
 		int tileZ = Mathf.FloorToInt (touchPos.z / _tileMap.tileSize);
 		tileZ += 1;
