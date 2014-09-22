@@ -1,9 +1,14 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="../../8MinuteFlight/FromTheSun/Assets/PhotonSpawner.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/EntityGraphics/EGFiretruck.cs">
     <Files>
-      <File FileName="../../8MinuteFlight/FromTheSun/Assets/PhotonSpawner.cs" Line="12" Column="32" />
-      <File FileName="../../8MinuteFlight/FromTheSun/Assets/WallSpawner.cs" Line="1" Column="1" />
+      <File FileName="Assets/TileGraphics/TGMap.cs" Line="331" Column="57" />
+      <File FileName="Assets/TileGraphics/TGMouse.cs" Line="122" Column="23" />
+      <File FileName="Assets/EntityGraphics/TruckCollider.cs" Line="1" Column="1" />
+      <File FileName="Assets/EntityGraphics/EGFiretruck.cs" Line="154" Column="29" />
+      <File FileName="Assets/EntityGraphics/TruckVision.cs" Line="11" Column="36" />
+      <File FileName="Assets/EntityGraphics/EGHose.cs" Line="92" Column="38" />
+      <File FileName="Assets/TileData/TDPath.cs" Line="40" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

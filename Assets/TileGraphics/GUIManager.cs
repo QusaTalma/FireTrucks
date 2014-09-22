@@ -15,7 +15,7 @@ public class GUIManager : MonoBehaviour {
 		float left, top, width, height;
 		top = 20;
 		height = 30;
-		width = 200;
+		width = 300;
 		left = Screen.width - width;
 		string truckCount = _map.GetTruckCount () + " Firetrucks in play";
 		GUI.Label (new Rect (left, top, width, height), truckCount, labelStyle); 

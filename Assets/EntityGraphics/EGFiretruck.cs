@@ -150,6 +150,8 @@ public class EGFiretruck : MonoBehaviour {
 	public void SetPath(TDPath path){
 		_firetruck.SetPath (path);
 
+		puttingOutFire = false;
+		waitingForTraffic = false;
 		SetDestination (GetNextDestination ());
 		angleToDestination = CalculateAngleToDestination();
 	}

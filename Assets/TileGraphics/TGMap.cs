@@ -1,6 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
+/*****
+ * 
+ * This class handles GameObject interactions related to the map:
+ * Creates the texture for the map and displays it.
+ * Responds to touches on the map
+ * 
+ * Manages firetrucks by organizing them by idle and non-idle
+ * //As I write this comment, admiteddly too late, I realize this class
+ * //Shouldn't be managing firetrucks. 
+ * //TODO Create a Dispatcher class
+ * //that can take signals from the map about where to send firetrucks,
+ * //and then the dispatcher class organizes the trucks
+ *
+ *****/
+
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(MeshRenderer))]
 [RequireComponent(typeof(MeshCollider))]
@@ -29,10 +44,11 @@ public class TGMap : MonoBehaviour {
 	EGFirehouse firehouse;
 	EGFiretruck selectedTruck = null;
 
-	// Use this for initialization
 	void Start () {
+		//Create the map
 		BuildMesh ();
 		BuildTexture ();
+		//Initiate game state
 		PlaceFireHouse ();
 		PlaceArsonist ();
 		
@@ -42,42 +58,54 @@ public class TGMap : MonoBehaviour {
 	}
 
 	void Update(){
+		//TODO everything in this method is out of scope for this class,
+		//create a Dispatcher class to manage all this, also manage it smarter
+
+		//Sort through trucks so that they are kept in the right sets, active and idle
 		List<EGFiretruck> toMoveToIdle = new List<EGFiretruck> ();
 		for (int i=0; i<_activeTrucks.Count; i++) {
 			EGFiretruck truck = _activeTrucks[i];
 
 			if(!truck.IsActive() && !truck.IsPuttingOutFire()){
+				//Don't remove them while iterating, remove afterwards
 				toMoveToIdle.Add(truck);
 			}
 		}
 
+		//Set the trucks that need setting
 		for (int i=0; i<toMoveToIdle.Count; i++) {
 			EGFiretruck truck = toMoveToIdle[i];
 			SetTruckIdle(truck);
 		}
 
+		//Identify trucks that need to be removes
 		List<EGFiretruck> toDestroy = new List<EGFiretruck> ();
 
 		for (int i=0; i<_idleTrucks.Count; i++) {
 			EGFiretruck truck = _idleTrucks[i];
 
 			TDTile truckTile = GetTileForWorldPosition(truck.transform.position);
+			//Trucks that are idle at the firehouse need to be removed
 			if(truckTile.type == TDTile.TILE_FIREHOUSE){
 				toDestroy.Add(truck);
 			}
 		}
-		
+
+		//Remove trucks that need to be removed
 		for (int i=0; i<toDestroy.Count; i++) {
 			EGFiretruck truck = toDestroy[i];
 			_idleTrucks.Remove(truck);
 			Destroy(truck.gameObject);
 		}
 
+		//Spawn truck is ready for it
 		if (!firehouse.ContainsTruck ()) {
 			SpawnNextTruck ();
 		}
 	}
 
+	//Loads the texture for each tile from the sprite strip into 
+	//individual tile color data
 	Color[][] ChopUpTiles(){
 		int numTilesPerRow = terrainTiles.width / tileResolution;
 		int numRows = terrainTiles.height / tileResolution;
@@ -96,6 +124,8 @@ public class TGMap : MonoBehaviour {
 		return tiles;
 	}
 
+	//Places the firehouse GameObject on the map
+	//TODO this should be determined by the level, once levels are a thing
 	void PlaceFireHouse(){
 		Vector2 fireHouseTilePos = new Vector2 ();
 		_map.GetFireHouseCoordinates (out fireHouseTilePos);
@@ -111,6 +141,7 @@ public class TGMap : MonoBehaviour {
 		firehouse.transform.position = housePos;
 	}
 
+	//Places the arsonist, who will wander the map starting fires
 	void PlaceArsonist(){
 		GameObject arsonistObject = (GameObject)Instantiate (arsonistPrefab);
 		arsonist = arsonistObject.GetComponent<TGArsonist> ();
@@ -121,15 +152,20 @@ public class TGMap : MonoBehaviour {
 		arsonist.SetPosition (arsonistX, arsonistY);
 	}
 
+	//Creates the texture for the map
 	public void BuildTexture(){
+		//Initialize the map data
 		_map = new TDMap (size_x, size_z);
 
+		//Create a texture of adequate size
 		int texWidth = size_x * tileResolution;
 		int textHeight = size_z * tileResolution;
 		Texture2D texture = new Texture2D(texWidth, textHeight);
-
+		//Get the tile color info
 		Color[][] tiles = ChopUpTiles ();
 
+		//Loop over the map, stitching tiles of the appropriate
+		//type together into the texture
 		for(int y=0; y<size_z; y++){
 			for(int x=0; x < size_x; x++) {
 				Color[] p = tiles[_map.GetTile(x,y).type];
@@ -137,11 +173,12 @@ public class TGMap : MonoBehaviour {
 				                  tileResolution, tileResolution, p);
 			}
 		}
-
+		//Finalize the texture
 		texture.filterMode = FilterMode.Point;
 		texture.wrapMode = TextureWrapMode.Clamp;
 		texture.Apply ();
-		
+
+		//Apply the texture to the renderer
 		MeshRenderer mesh_rendererer = GetComponent<MeshRenderer> ();
 		mesh_rendererer.sharedMaterials [0].mainTexture = texture;
 	}
@@ -166,6 +203,7 @@ public class TGMap : MonoBehaviour {
 		int[] triangles = new int[numTris * 3 /*3 per triangle*/];
 
 		int x, z;
+		//Create the vertices, normals, and uvs for each point in the mesh
 		for (z = 0; z < vsize_z; z++) {
 			for(x = 0; x < vsize_x; x++){
 				vertices[z * vsize_x + x] = GetPositionForTile(x, z);
@@ -175,6 +213,7 @@ public class TGMap : MonoBehaviour {
 			}
 		}
 
+		//Define the triangles for the mesh
 		for (z = 0; z < size_z; z++) {
 			for(x = 0; x < size_x; x++){
 				int squareIndex = z * size_x + x;
@@ -196,15 +235,17 @@ public class TGMap : MonoBehaviour {
 		mesh.normals = normals;
 		mesh.uv = uvs;
 
-		//Assign mesh to filter,renderer,collider
+		//Assign mesh to filter and collider
 		MeshFilter mesh_filterer = GetComponent<MeshFilter> ();
 		MeshCollider mesh_colliderer = GetComponent<MeshCollider> ();
 
 		mesh_filterer.mesh = mesh;
-
 		mesh_colliderer.sharedMesh = mesh;
 	}
 
+	//Creates a firetruck at the firehouse with
+	//the tile at the given point as destination
+	//TODO Dispatcher class
 	public void SpawnFireTruck(int x, int z){
 		Vector2 fireHouseTilePos;
 		_map.GetFireHouseCoordinates (out fireHouseTilePos);
@@ -232,6 +273,8 @@ public class TGMap : MonoBehaviour {
 		_activeTrucks.Add (firetruck);
 	}
 
+	//Returns the game world position for the upper left corner
+	//of the given tile
 	public Vector3 GetPositionForTile(int x, int z){
 		Vector3 pos = new Vector3 ();
 		pos.x = tileSize * x;
@@ -241,6 +284,7 @@ public class TGMap : MonoBehaviour {
 		return pos;
 	}
 
+	//Returns the tile for the given world position
 	public TDTile GetTileForWorldPosition(Vector3 position){
 		int x, y;
 
@@ -249,15 +293,18 @@ public class TGMap : MonoBehaviour {
 
 		return _map.GetTile(x, y);
 	}
-	
+
+	//TODO Dispatcher
 	public void AddPositionToSpawnQueue(Vector2 truckPosition){
 		_truckSpawnQueue.Add (truckPosition);
 	}
-
+	
+	//TODO Dispatcher
 	public void SetSelectedTruck(EGFiretruck selected){
 		selectedTruck = selected;
 	}
-
+	
+	//TODO Dispatcher
 	public void SendIdleToPosition(int x, int z){
 		EGFiretruck truckToSend = null;
 
@@ -268,6 +315,7 @@ public class TGMap : MonoBehaviour {
 			}else if(_activeTrucks.Contains(selectedTruck)){
 				_activeTrucks.Remove(selectedTruck);
 			}
+			Debug.Log("Using selected truck");
 			selectedTruck = null;
 		} else if (_idleTrucks.Count > 0) {
 			truckToSend = PopIdleTruck ();
@@ -279,6 +327,9 @@ public class TGMap : MonoBehaviour {
 			                     _map.GetTile(Mathf.FloorToInt(truckToSend.GetPosition().x), Mathf.FloorToInt(-truckToSend.GetPosition().z)),
 			                     _map.GetTile (x, -z));
 
+			Debug.Log("Destination: " + x + ", " + -z);
+			Debug.Log("Truck pos: " + truckToSend.GetPosition());
+			Debug.Log("Setting path: " + truckPath.ToString());
 			truckToSend.SetPath(truckPath);
 			truckToSend.SetIdle(false);
 
@@ -286,6 +337,7 @@ public class TGMap : MonoBehaviour {
 		}
 	}
 	
+	//TODO Dispatcher
 	public void SpawnNextTruck(){
 		if (_truckSpawnQueue.Count > 0) {
 			Vector2 truckPos = _truckSpawnQueue[0];
@@ -294,6 +346,7 @@ public class TGMap : MonoBehaviour {
 		}
 	}
 	
+	//TODO Dispatcher
 	public EGFiretruck PopIdleTruck(){
 		EGFiretruck poppedTruck = null;
 		if (_idleTrucks.Count > 0) {
@@ -304,6 +357,7 @@ public class TGMap : MonoBehaviour {
 		return poppedTruck;
 	}
 	
+	//TODO Dispatcher
 	public void SetTruckIdle(EGFiretruck truck){
 		if(truck != null){
 			_activeTrucks.Remove(truck);
@@ -325,10 +379,12 @@ public class TGMap : MonoBehaviour {
 		}
 	}
 
+	//Returns the underlying map data
 	public TDMap GetDataMap(){
 		return this._map;
 	}
-
+	
+	//TODO Dispatcher
 	public int GetTruckCount(){
 		return _idleTrucks.Count + _activeTrucks.Count;
 	}

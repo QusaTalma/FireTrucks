@@ -89,6 +89,7 @@ public class EGHose : MonoBehaviour {
 						}
 						Destroy(flame);
 						foundFlames.Remove(flame);
+						truck.SetPuttingOutFire(false);
 					}
 				}
 			}else{
