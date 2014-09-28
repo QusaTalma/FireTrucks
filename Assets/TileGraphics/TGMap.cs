@@ -30,17 +30,28 @@ public class TGMap : MonoBehaviour {
 	public GameObject firehousePrefab;
 	public GameObject arsonistPrefab;
 
+	public float levelTimeInSeconds;
+	public float targetCityPercent;
+
 	TDMap _map;
+	TDGameSession _gameSession;
 	TGArsonist arsonist;
 
-
 	void Start () {
+		_gameSession = new TDGameSession(levelTimeInSeconds);
 		//Create the map
 		BuildMesh ();
 		BuildTexture ();
 		//Initiate game state
 		PlaceFireHouse ();
 		PlaceArsonist ();
+	}
+
+	void Update(){
+		_gameSession.AddToCurrentTime (Time.deltaTime);
+		if (!_gameSession.IsActive()) {
+			Time.timeScale = 0f;
+		}
 	}
 
 	//Loads the texture for each tile from the sprite strip into 
@@ -211,6 +222,10 @@ public class TGMap : MonoBehaviour {
 	//Returns the underlying map data
 	public TDMap GetDataMap(){
 		return this._map;
+	}
+
+	public TDGameSession GetGameSession(){
+		return this._gameSession;
 	}
 
 	public float GetCityDurabilityPercent(){

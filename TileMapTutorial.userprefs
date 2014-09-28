@@ -1,14 +1,15 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/EntityGraphics/EGFiretruck.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/TileGraphics/GUIManager.cs">
     <Files>
-      <File FileName="Assets/TileGraphics/TGMap.cs" Line="331" Column="57" />
-      <File FileName="Assets/TileGraphics/TGMouse.cs" Line="122" Column="23" />
-      <File FileName="Assets/EntityGraphics/TruckCollider.cs" Line="1" Column="1" />
-      <File FileName="Assets/EntityGraphics/EGFiretruck.cs" Line="154" Column="29" />
-      <File FileName="Assets/EntityGraphics/TruckVision.cs" Line="11" Column="36" />
-      <File FileName="Assets/EntityGraphics/EGHose.cs" Line="92" Column="38" />
-      <File FileName="Assets/TileData/TDPath.cs" Line="40" Column="1" />
+      <File FileName="Assets/EntityGraphics/EGFirehouse.cs" Line="90" Column="1" />
+      <File FileName="Assets/TileGraphics/TGMouse.cs" Line="123" Column="20" />
+      <File FileName="Assets/TileGraphics/TGMap.cs" Line="206" Column="14" />
+      <File FileName="Assets/TileData/TDMap.cs" Line="62" Column="71" />
+      <File FileName="Assets/EntityGraphics/EGFlame.cs" Line="1" Column="1" />
+      <File FileName="Assets/TileData/TDTile.cs" Line="16" Column="19" />
+      <File FileName="Assets/TileGraphics/GUIManager.cs" Line="40" Column="23" />
+      <File FileName="Assets/TileData/TDGameSession.cs" Line="8" Column="27" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
