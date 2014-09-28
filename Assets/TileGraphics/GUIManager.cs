@@ -10,8 +10,8 @@ public class GUIManager : MonoBehaviour {
 	EGDispatcher _dispatcher;
 	TGMap _map;
 
-	const float LABEL_HEIGHT = 30;
-	const float LABEL_WIDTH = 200;
+	const float LABEL_HEIGHT = 50;
+	const float LABEL_WIDTH = 250;
 	const float TRUCK_COUNT_TOP = 20;
 	const float CITY_HEALTH_TOP = TRUCK_COUNT_TOP + LABEL_HEIGHT + 1;
 	const float TIME_REMAINING_TOP = CITY_HEALTH_TOP + LABEL_HEIGHT + 1;

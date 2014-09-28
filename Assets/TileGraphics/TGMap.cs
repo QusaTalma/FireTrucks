@@ -45,6 +45,8 @@ public class TGMap : MonoBehaviour {
 		//Initiate game state
 		PlaceFireHouse ();
 		PlaceArsonist ();
+
+		Time.timeScale = 1f;
 	}
 
 	void Update(){
@@ -101,8 +103,12 @@ public class TGMap : MonoBehaviour {
 		arsonist = arsonistObject.GetComponent<TGArsonist> ();
 		arsonist.SetMap (this);
 
-		int arsonistX = Random.Range (0, _map.GetWidth ());
-		int arsonistY = Random.Range (0, _map.GetHeight ());
+		Vector2 firehousePos = new Vector2 ();
+
+		_map.GetFireHouseCoordinates (out firehousePos);
+
+		int arsonistX = (int)firehousePos.x;
+		int arsonistY = (int)firehousePos.y;
 		arsonist.SetPosition (arsonistX, arsonistY);
 	}
 
