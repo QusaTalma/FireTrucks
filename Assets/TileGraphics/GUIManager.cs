@@ -4,7 +4,11 @@ using System.Collections;
 public class GUIManager : MonoBehaviour {
 	public GUIStyle labelStyle;
 
-	public EGDispatcher _dispatcher;
+	EGDispatcher _dispatcher;
+
+	void Start(){
+		_dispatcher = gameObject.GetComponent<EGDispatcher> ();
+	}
 
 	void OnGUI(){
 		float left, top, width, height;

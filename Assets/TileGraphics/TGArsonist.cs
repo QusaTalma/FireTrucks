@@ -7,9 +7,6 @@ public class TGArsonist : MonoBehaviour
 	TDTile _currentTile;
 	TDTile _previousTile;
 
-	int x;
-	int y;
-
 	public float fireLightInterval;
 	public float moveInterval;
 
@@ -38,9 +35,6 @@ public class TGArsonist : MonoBehaviour
 	}
 
 	public void SetPosition(int x, int y){
-		this.x = x;
-		this.y = y;
-
 		_currentTile = _map.GetDataMap ().GetTile (x, y);
 	}
 

@@ -120,6 +120,7 @@ public class TGMouse : MonoBehaviour {
 
 	void HandleTouchTruckEnded(RaycastHit hitInfo){
 		singleTouchDown = false;
+		dragging = false;
 
 		EGFiretruck truck = hitInfo.transform.root.gameObject.GetComponent<EGFiretruck> ();
 		if (truck != null) {

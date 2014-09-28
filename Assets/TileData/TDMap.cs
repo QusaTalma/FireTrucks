@@ -31,6 +31,32 @@ public class TDMap {
 
 		PlaceHousesOnStreets ();
 
+		SetFireHouseCoordinates (CalculateFirehousePosition ());
+	}
+
+	Vector2 CalculateFirehousePosition(){
+		Vector2 position = new Vector2 ();
+
+		position.x = (int)(_width / 2);
+		position.y = (int)(_height / 2);
+
+		TDTile tile = GetTile ((int)position.x, (int)position.y);
+
+		if (tile.type != TDTile.TILE_HOUSE) {
+			List<TDTile> houses = FindAdjacentTilesOfType(tile, TDTile.TILE_HOUSE);
+			if(houses.Count > 0){
+				position.x = houses[0].GetX();
+				position.y = houses[0].GetY();
+			}
+		}
+
+		return position;
+	}
+
+	public void SetFireHouseCoordinates(Vector2 pos){
+		fireHouseX = (int)pos.x;
+		fireHouseY = (int)pos.y;
+
 		_tiles [fireHouseX, fireHouseY].type = TDTile.TILE_FIREHOUSE;
 	}
 

@@ -113,10 +113,6 @@ public class EGDispatcher : MonoBehaviour {
 			truckPath.BuildPath (dataMap,
 			                     dataMap.GetTile(Mathf.FloorToInt(truckToSend.GetPosition().x), Mathf.FloorToInt(-truckToSend.GetPosition().z)),
 			                     dataMap.GetTile (x, -z));
-			
-			Debug.Log("Destination: " + x + ", " + -z);
-			Debug.Log("Truck pos: " + truckToSend.GetPosition());
-			Debug.Log("Setting path: " + truckPath.ToString());
 			truckToSend.SetPath(truckPath);
 			truckToSend.SetIdle(false);
 
