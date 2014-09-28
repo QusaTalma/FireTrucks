@@ -10,6 +10,8 @@ public class TGMouse : MonoBehaviour {
 	Vector3 dragOrigin;
 	TGMap _tileMap;
 
+	EGDispatcher _dispatcher;
+
 	private float minX;
 	private float maxX;
 	private float minZ;
@@ -19,6 +21,7 @@ public class TGMouse : MonoBehaviour {
 
 	void Start(){
 		_tileMap = GetComponent<TGMap>();
+		_dispatcher = GetComponent<EGDispatcher>();
 
 		//The orthographic size if half the height of the camera
 		float vertExtent = Camera.main.orthographicSize;
@@ -107,7 +110,7 @@ public class TGMouse : MonoBehaviour {
 	void HandleTouchTruckStart(RaycastHit hitInfo){
 		EGFiretruck truck = hitInfo.transform.root.gameObject.GetComponent<EGFiretruck> ();
 		if (truck != null) {
-			_tileMap.SetSelectedTruck(truck);
+			_dispatcher.SetSelectedTruck(truck);
 		}
 	}
 
@@ -120,7 +123,7 @@ public class TGMouse : MonoBehaviour {
 
 		EGFiretruck truck = hitInfo.transform.root.gameObject.GetComponent<EGFiretruck> ();
 		if (truck != null) {
-			_tileMap.SetSelectedTruck(truck);
+			_dispatcher.SetSelectedTruck(truck);
 		}
 	}
 
@@ -165,8 +168,8 @@ public class TGMouse : MonoBehaviour {
 
 		if(!dragging && singleTouchDown){
 			//Negate the z
-			_tileMap.AddPositionToSpawnQueue(new Vector2(tileX, tileZ));
-			_tileMap.SendIdleToPosition(tileX, tileZ);
+			_dispatcher.AddPositionToSpawnQueue(new Vector2(tileX, tileZ));
+			_dispatcher.SendIdleToPosition(tileX, tileZ);
 		}else{
 			dragging = false;
 		}
