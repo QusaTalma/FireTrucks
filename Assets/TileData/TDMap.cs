@@ -9,6 +9,8 @@ public class TDMap {
 	int fireHouseX = 5;
 	int fireHouseY = 5;
 
+	float totalDurability = 0;
+
 	public TDMap(int width, int height) {
 		_width = width;
 		_height = height;
@@ -56,7 +58,8 @@ public class TDMap {
 	public void SetFireHouseCoordinates(Vector2 pos){
 		fireHouseX = (int)pos.x;
 		fireHouseY = (int)pos.y;
-
+		
+		totalDurability -= _tiles [fireHouseX, fireHouseY].GetDurability ();
 		_tiles [fireHouseX, fireHouseY].type = TDTile.TILE_FIREHOUSE;
 	}
 
@@ -75,6 +78,22 @@ public class TDMap {
 		return _tiles [x, y];
 	}
 
+	public float GetTotalDurability(){
+		return totalDurability;
+	}
+
+	public float GetCurrentDurability(){
+		float currentDurability = 0;
+		for (int x = 0; x< _width; x++){
+			for( int y = 0; y < _height; y++){
+				if(_tiles[x,y].type == TDTile.TILE_HOUSE){
+					currentDurability += _tiles[x,y].GetDurability();
+				}
+			}
+		}
+		return currentDurability;
+	}
+
 	void PlaceHousesOnStreets(){
 		for (int x = 0; x< _width; x++){
 			for( int y = 0; y < _height; y++){
@@ -88,18 +107,22 @@ public class TDMap {
 	void PlaceHousesOnStreet(int x, int y){
 		if (x > 0 && _tiles[x - 1, y].type == TDTile.TILE_CITY_FILL) {
 			_tiles[x-1,y].type = TDTile.TILE_HOUSE;
+			totalDurability += _tiles[x-1,y].GetDurability();
 		}
 
 		if (x < _width - 1 && _tiles [x + 1, y].type == TDTile.TILE_CITY_FILL) {
 			_tiles[x+1,y].type = TDTile.TILE_HOUSE;
+			totalDurability += _tiles[x+1,y].GetDurability();
 		}
 		
 		if (y > 0 && _tiles[x, y-1].type == TDTile.TILE_CITY_FILL) {
 			_tiles[x,y-1].type = TDTile.TILE_HOUSE;
+			totalDurability += _tiles[x,y-1].GetDurability();
 		}
 		
 		if (y < _height - 1 && _tiles [x, y+1].type == TDTile.TILE_CITY_FILL) {
 			_tiles[x,y+1].type = TDTile.TILE_HOUSE;
+			totalDurability += _tiles[x,y+1].GetDurability();
 		}
 	}
 

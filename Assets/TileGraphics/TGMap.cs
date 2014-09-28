@@ -212,4 +212,8 @@ public class TGMap : MonoBehaviour {
 	public TDMap GetDataMap(){
 		return this._map;
 	}
+
+	public float GetCityDurabilityPercent(){
+		return _map.GetCurrentDurability () / _map.GetTotalDurability ();
+	}
 }

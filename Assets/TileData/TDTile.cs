@@ -21,6 +21,10 @@ public class TDTile {
 		durability = maxDurability;
 	}
 
+	public float GetDurability(){
+		return durability;
+	}
+
 	public void Damage(float damage){
 		durability -= damage;
 
