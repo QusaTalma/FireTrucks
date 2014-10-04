@@ -6,25 +6,29 @@ public class EGFiretruck : MonoBehaviour {
 	TGMap map;
 	Vector3 position;
 	Vector3 destination;
-	float angleToDestination = 0;
 
 	bool waitingForTraffic = false;
 	bool puttingOutFire = false;
 	bool idle = false;
 
+	Vector3 velocity = Vector3.forward;
+
 	public float speed;
-	public float turnSpeed;
+	public float maxSteering;
 	public bool returnWhenIdle;
+	public float destinationRadius;
 
 	void Update(){
 		//Check if the truck is at its destination or a destination
 		//is needed
-		bool destinationReachedOrNotSet = destination.Equals(new Vector3()) ||
-			destination.Equals(transform.position);
-		if (destinationReachedOrNotSet) {
-			SetDestination(GetNextDestination());
+		
+		//Update distance and angle to destination
+		float dist = Vector3.Distance (transform.position, destination);
+		bool destinationReached = dist <= destinationRadius;
+		bool destinationNotSet = destination.Equals (new Vector3 ());
 
-			angleToDestination = CalculateAngleToDestination();
+		if (destinationReached || destinationNotSet) {
+			SetDestination(GetNextDestination());
 
 			if(destination.Equals(new Vector3())){
 				return;
@@ -37,31 +41,18 @@ public class EGFiretruck : MonoBehaviour {
 
 		float deltaTime = Time.deltaTime;
 
-		//Update distance and angle to destination
-		float dist = Vector3.Distance (position, destination);
-		angleToDestination = CalculateAngleToDestination();
+		float maxSpeed = speed * deltaTime;
+		maxSpeed = Mathf.Min (maxSpeed, dist);
+		Vector3 desiredVelocity = Vector3.Normalize(destination - transform.position);
+		desiredVelocity = desiredVelocity * maxSpeed;
 
-		//Ugh, this sucks, but to prevent a stupid fucking issue where
-		//the truck turns back and forth across the destination angle 
-		//when the difference is very small, usually aboout 6.0E-5, so if the
-		//decimal is in the E-5 magnitude ignore it
-		if (dist > 0 && Mathf.Abs(angleToDestination) > 0.0001){
-			float rotateBy;
-			if(Mathf.Abs(angleToDestination) > Mathf.Abs(turnSpeed*deltaTime)){
-				rotateBy = turnSpeed * deltaTime;
-				if(angleToDestination < 0){
-					rotateBy = 0 - rotateBy;
-				}
-			}else{
-				rotateBy = angleToDestination;
-			}
+		Vector3 steering = VectorUtils.Truncate( desiredVelocity - velocity, maxSteering);
 
-			transform.Rotate(0, rotateBy, 0);
-		}else if (dist > speed*deltaTime){
-			transform.Translate(Vector3.forward * speed * deltaTime);
-		}else{
-			transform.position = destination;
-		}
+		velocity = velocity + steering;
+		velocity = VectorUtils.Truncate (velocity, maxSpeed);
+
+		transform.forward = velocity;
+		transform.Translate(Vector3.forward * maxSpeed);
 
 		position = transform.position;
 	}
@@ -116,24 +107,7 @@ public class EGFiretruck : MonoBehaviour {
 		return nextPosition;
 	}
 
-	float CalculateAngleToDestination(){
-		//This angle is in a coordinate space of (-180,180] with 0 to the right and increasing to the counterclockwise
-		float angle = Mathf.Atan2 (destination.z - transform.position.z, destination.x - transform.position.x);
-		angle = angle * Mathf.Rad2Deg;
 
-		//Convert to local coordinate system
-		angle = 90 - angle;
-
-		float localizedCurrentAngle = transform.eulerAngles.y;
-		angle = angle - localizedCurrentAngle;
-		angle = (angle+360) % 360;
-
-		if (angle > 180) {
-			angle = angle - 360;
-		}
-
-		return angle;
-	}
 
 	public void SetWaitingForTraffic(bool waiting){
 		this.waitingForTraffic = waiting;
@@ -153,7 +127,6 @@ public class EGFiretruck : MonoBehaviour {
 		puttingOutFire = false;
 		waitingForTraffic = false;
 		SetDestination (GetNextDestination ());
-		angleToDestination = CalculateAngleToDestination();
 	}
 	
 	public void SetPosition(Vector3 position){

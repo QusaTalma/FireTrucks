@@ -66,6 +66,7 @@
      <Compile Include="Assets\TileGraphics\TGMap.cs" />
      <Compile Include="Assets\TileGraphics\TGMouse.cs" />
      <Compile Include="Assets\Utils\MathUtils.cs" />
+     <Compile Include="Assets\Utils\VectorUtils.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
