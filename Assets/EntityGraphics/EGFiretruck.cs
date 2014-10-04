@@ -4,7 +4,6 @@ using System.Collections;
 public class EGFiretruck : MonoBehaviour {
 	EDFiretruck _firetruck = new EDFiretruck();
 	TGMap map;
-	Vector3 position;
 	Vector3 destination;
 
 	bool waitingForTraffic = false;
@@ -19,11 +18,10 @@ public class EGFiretruck : MonoBehaviour {
 	public float destinationRadius;
 
 	void Update(){
-		//Check if the truck is at its destination or a destination
-		//is needed
-		
 		//Update distance and angle to destination
 		float dist = Vector3.Distance (transform.position, destination);
+		//Check if the truck is at its destination or a destination
+		//is needed
 		bool destinationReached = dist <= destinationRadius;
 		bool destinationNotSet = destination.Equals (new Vector3 ());
 
@@ -39,22 +37,15 @@ public class EGFiretruck : MonoBehaviour {
 			return;
 		}
 
+		dist = Vector3.Distance (transform.position, destination);
 		float deltaTime = Time.deltaTime;
+		float maxMagnitude = speed * deltaTime;
+		maxMagnitude = Mathf.Min (maxMagnitude, dist);
 
-		float maxSpeed = speed * deltaTime;
-		maxSpeed = Mathf.Min (maxSpeed, dist);
-		Vector3 desiredVelocity = Vector3.Normalize(destination - transform.position);
-		desiredVelocity = desiredVelocity * maxSpeed;
-
-		Vector3 steering = VectorUtils.Truncate( desiredVelocity - velocity, maxSteering);
-
-		velocity = velocity + steering;
-		velocity = VectorUtils.Truncate (velocity, maxSpeed);
+		UpdateVelocity (maxMagnitude);
 
 		transform.forward = velocity;
-		transform.Translate(Vector3.forward * maxSpeed);
-
-		position = transform.position;
+		transform.Translate(Vector3.forward * maxMagnitude);
 	}
 
 	bool HasNextDestination(){
@@ -107,7 +98,15 @@ public class EGFiretruck : MonoBehaviour {
 		return nextPosition;
 	}
 
-
+	void UpdateVelocity(float maxMagnitude){
+		Vector3 desiredVelocity = Vector3.Normalize(destination - transform.position);
+		desiredVelocity = desiredVelocity * maxMagnitude;
+		
+		Vector3 steering = VectorUtils.Truncate( desiredVelocity - velocity, maxSteering);
+		
+		velocity = velocity + steering;
+		velocity = VectorUtils.Truncate (velocity, maxMagnitude);
+	}
 
 	public void SetWaitingForTraffic(bool waiting){
 		this.waitingForTraffic = waiting;
@@ -128,13 +127,13 @@ public class EGFiretruck : MonoBehaviour {
 		waitingForTraffic = false;
 		SetDestination (GetNextDestination ());
 	}
-	
-	public void SetPosition(Vector3 position){
-		this.position = position;
-	}
 
 	public Vector3 GetPosition(){
-		return this.position;
+		return transform.position;
+	}
+
+	public void SetPosition(Vector3 position){
+		transform.position = position;
 	}
 
 	public void SetDestination(Vector3 destination){
