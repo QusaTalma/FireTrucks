@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
-public class EGFiretruck : MonoBehaviour {
+public class EGFiretruck : MonoBehaviour, EDTruckControls{
 	EDFiretruck _firetruck = new EDFiretruck();
+	EDDriver _driver;
 	TGMap map;
 	Vector3 destination;
+
+	List<GameObject> otherTrucks;
 
 	bool waitingForTraffic = false;
 	bool puttingOutFire = false;
@@ -13,9 +16,18 @@ public class EGFiretruck : MonoBehaviour {
 	Vector3 velocity = Vector3.forward;
 
 	public float speed;
-	public float maxSteering;
 	public bool returnWhenIdle;
 	public float destinationRadius;
+	public float avoidanceDistance;
+	public float maxAvoidance;
+	public float avoidanceForce;
+	public float maxQueueAhead;
+	public float maxQueueRadius;
+
+	void Start(){
+		_driver = new EDDriver (this);
+		otherTrucks = new List<GameObject> ();
+	}
 
 	void Update(){
 		//Update distance and angle to destination
@@ -33,7 +45,7 @@ public class EGFiretruck : MonoBehaviour {
 			}
 		}
 
-		if (waitingForTraffic || puttingOutFire) {
+		if (puttingOutFire) {
 			return;
 		}
 
@@ -42,10 +54,12 @@ public class EGFiretruck : MonoBehaviour {
 		float maxMagnitude = speed * deltaTime;
 		maxMagnitude = Mathf.Min (maxMagnitude, dist);
 
-		UpdateVelocity (maxMagnitude);
+		UpdateVelocity ();
 
 		transform.forward = velocity;
-		transform.Translate(Vector3.forward * maxMagnitude);
+		if (!waitingForTraffic) {
+			transform.Translate(Vector3.forward * maxMagnitude);
+		}
 	}
 
 	bool HasNextDestination(){
@@ -88,7 +102,7 @@ public class EGFiretruck : MonoBehaviour {
 			if(nextPosition.z > transform.position.z 
 			   		|| (afterStep != null && afterPosition.z > transform.position.z)){
 				nextPosition.x += 0.25f;
-			//If it's down then drucks drive in the left lane
+			//If it's down then trucks drive in the left lane
 			}else if(nextPosition.z < transform.position.z
 			         || (afterStep != null && afterPosition.z < transform.position.z)){
 				nextPosition.x -= 0.25f;
@@ -98,14 +112,51 @@ public class EGFiretruck : MonoBehaviour {
 		return nextPosition;
 	}
 
-	void UpdateVelocity(float maxMagnitude){
-		Vector3 desiredVelocity = Vector3.Normalize(destination - transform.position);
-		desiredVelocity = desiredVelocity * maxMagnitude;
-		
-		Vector3 steering = VectorUtils.Truncate( desiredVelocity - velocity, maxSteering);
-		
-		velocity = velocity + steering;
-		velocity = VectorUtils.Truncate (velocity, maxMagnitude);
+	void UpdateVelocity(){
+		_driver.Seek (destination);
+		AvoidTrucks ();
+		_driver.Update (Time.deltaTime);
+	}
+
+	void AvoidTrucks(){
+		List<GameObject> trucksToAvoid = findClosestOtherTruck ();
+		if (trucksToAvoid != null){
+			for(int i=0; i<trucksToAvoid.Count; i++){
+				GameObject truckToAvoid = trucksToAvoid[i];
+				AvoidDirection(truckToAvoid.transform.position);
+			}
+		}
+	}
+
+	List<GameObject> findClosestOtherTruck(){
+		List<GameObject> toAvoid = new List<GameObject> ();
+		float maximumToQualify = avoidanceDistance;
+
+		if (otherTrucks.Count > 0) {
+			for(int i=0; i<otherTrucks.Count; i++){
+				GameObject otherTruck = otherTrucks[i];
+				float dist = Vector3.Distance(otherTruck.transform.position, transform.position);
+				if(dist < maximumToQualify){
+					toAvoid.Add(otherTruck);
+				}
+			}
+		}
+
+		return toAvoid;
+	}
+
+	void AvoidDirection(Vector3 direction){
+		RaycastHit hitInfo;
+		if(Physics.Raycast(transform.position, direction, out hitInfo, avoidanceDistance)){
+			if(hitInfo.transform.gameObject.tag.Equals("Truck")){
+				EGFiretruck otherTruck = hitInfo.transform.root.GetComponent<EGFiretruck>();
+				if(otherTruck != null && otherTruck != this){
+					Debug.Log("Avoiding a truck");
+					Vector3 avoidPos = hitInfo.point;
+					_driver.Avoid(avoidPos);
+				}
+			}
+		}
 	}
 
 	public void SetWaitingForTraffic(bool waiting){
@@ -154,5 +205,43 @@ public class EGFiretruck : MonoBehaviour {
 
 	public void SetIdle(bool idle){
 		this.idle = idle;
+	}
+
+	public Vector3 GetVelocity()
+	{
+		return velocity;
+	}
+
+	public float GetMaxVelocity()
+	{
+		return speed;
+	}
+
+	public void SetVelocity(Vector3 velocity){
+		this.velocity = velocity;
+	}
+
+	public float GetMaxAvoidance(){
+		return this.maxAvoidance;
+	}
+
+	public void addOtherTruck(GameObject other){
+		otherTrucks.Add (other);
+	}
+
+	public void removeOtherTruck(GameObject other){
+		otherTrucks.Remove (other);
+	}
+
+	public float GetAvoidanceForce(){
+		return avoidanceForce;
+	}
+
+	public float GetMaxQueueAhead(){
+		return maxQueueAhead;
+	}
+
+	public float GetMaxQueueRadius(){
+		return maxQueueRadius;
 	}
 }

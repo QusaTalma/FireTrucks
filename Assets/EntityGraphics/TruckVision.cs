@@ -6,16 +6,24 @@ public class TruckVision : MonoBehaviour {
 	public EGHose hose;
 
 	void OnTriggerEnter(Collider other){
-		if(!transform.parent.Equals(other.transform.parent) &&
-		   other.gameObject.tag.Equals("Fire")){
-			hose.AddFlame(other.gameObject);
+		if(!transform.root.Equals(other.transform.root)){
+			string otherTag = other.gameObject.tag;
+			if(otherTag.Equals("Fire")){
+				hose.AddFlame(other.gameObject);
+			}else if(otherTag.Equals("Truck")){
+				truck.addOtherTruck(other.gameObject);
+			}
 		}
 	}
 	
 	void OnTriggerExit(Collider other){
-		if(!transform.parent.Equals(other.transform.parent) &&
-		   other.gameObject.tag.Equals("Fire")){
-			hose.RemoveFlame(other.gameObject);
+		if(!transform.parent.Equals(other.transform.parent)){
+			string otherTag = other.gameObject.tag;
+			if(otherTag.Equals("Fire")){
+				hose.RemoveFlame(other.gameObject);
+			}else if(otherTag.Equals("Truck")){
+				truck.removeOtherTruck(other.gameObject);
+			}
 		}
 	}
 }
