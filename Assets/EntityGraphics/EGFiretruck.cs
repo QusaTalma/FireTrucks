@@ -44,6 +44,12 @@ public class EGFiretruck : MonoBehaviour, EDTruckControls{
 			}
 		}
 
+		//If the truck is waiting on traffic then look beyond
+		//the current tile for directional guidance
+		if (_driver.IsQueueing ()) {
+			IncrementDestinationIfOnCurrentDestinationTile();
+		}
+
 		if (puttingOutFire) {
 			return;
 		}
@@ -82,7 +88,6 @@ public class EGFiretruck : MonoBehaviour, EDTruckControls{
 			}
 
 			nextPosition = map.GetPositionForTile (nextTile.GetX (), nextTile.GetY ());
-
 			nextPosition.x += 0.5f;
 			nextPosition.z -= 0.5f;
 
@@ -115,7 +120,7 @@ public class EGFiretruck : MonoBehaviour, EDTruckControls{
 		_driver.Reset();
 		_driver.Seek (destination);
 		List<GameObject> nearbyTrucks = findClosestOtherTruck();
-		//AvoidTrucks (nearbyTrucks);
+		AvoidTrucks (nearbyTrucks);
 		QueueBehindTrucks(nearbyTrucks);
 		_driver.Update (Time.deltaTime);
 	}
@@ -156,6 +161,14 @@ public class EGFiretruck : MonoBehaviour, EDTruckControls{
 		}
 
 		return toAvoid;
+	}
+
+	void IncrementDestinationIfOnCurrentDestinationTile(){
+		TDTile currentTile = map.GetTileForWorldPosition (transform.position);
+		TDTile destinationTile = map.GetTileForWorldPosition (destination);
+		if (currentTile.Equals (destinationTile)) {
+			SetDestination(GetNextDestination());
+		}
 	}
 
 	public bool IsWaitingForTraffic(){

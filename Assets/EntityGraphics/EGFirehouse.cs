@@ -32,16 +32,16 @@ public class EGFirehouse : MonoBehaviour {
 	public bool ContainsTruck(){
 		return truckCount > 0;
 	}
-//
-//	public void AddTruck(){
-//		truckCount++;
-//	}
-//
-	void OnTriggerEnter(Collider other){
-		if(other.gameObject.tag.Equals("Truck")){
-			truckCount++;
-		}
+
+	public void AddTruck(){
+		truckCount++;
 	}
+
+//	void OnTriggerEnter(Collider other){
+//		if(other.gameObject.tag.Equals("Truck")){
+//			truckCount++;
+//		}
+//	}
 
 	void OnTriggerExit(Collider other){
 		if(other.gameObject.tag.Equals("Truck")){
@@ -70,8 +70,8 @@ public class EGFirehouse : MonoBehaviour {
 		                                       Mathf.FloorToInt(fireHouseTilePos.y));
 		truckPos.x += .5f;
 		truckPos.z -= .5f;
-//		
-//		AddTruck ();
+		
+		AddTruck ();
 		
 		GameObject truck = (GameObject)Instantiate (firetruckPrefab);
 		truck.transform.position = truckPos;

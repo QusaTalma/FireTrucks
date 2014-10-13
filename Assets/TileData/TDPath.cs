@@ -69,7 +69,9 @@ public class TDPath {
 					}
 
 					if(!open.Contains(station)){
-						cameFrom.Add(station, current);
+						if(!current.Equals(start)){
+							cameFrom.Add(station, current);
+						}
 						open.Add(station);
 					}
 				}
@@ -84,7 +86,9 @@ public class TDPath {
 				}
 
 				if(!open.Contains(neighbor)){
-					cameFrom.Add(neighbor, current);
+					if(!current.Equals(start)){
+						cameFrom.Add(neighbor, current);
+					}
 					open.Add(neighbor);
 				}
 			}
