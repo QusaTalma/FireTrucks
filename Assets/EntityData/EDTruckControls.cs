@@ -7,6 +7,4 @@ public interface EDTruckControls{
 	void SetVelocity(Vector3 velocity);
 	float GetMaxAvoidance();
 	float GetAvoidanceForce();
-	float GetMaxQueueAhead();
-	float GetMaxQueueRadius();
 }

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class EGFirehouse : MonoBehaviour {
@@ -37,14 +37,20 @@ public class EGFirehouse : MonoBehaviour {
 		truckCount++;
 	}
 
-//	void OnTriggerEnter(Collider other){
+	void OnTriggerEnter(Collider other){
 //		if(other.gameObject.tag.Equals("Truck")){
 //			truckCount++;
 //		}
-//	}
+	}
 
 	void OnTriggerExit(Collider other){
 		if(other.gameObject.tag.Equals("Truck")){
+			truckCount--;
+		}
+	}
+
+	public void DecreaseTruckCount(){
+		if(truckCount > 0){
 			truckCount--;
 		}
 	}

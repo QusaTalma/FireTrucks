@@ -31,30 +31,10 @@ public class EDDriver {
 
 	private Vector3 doAvoid(GameObject target){
 		Vector3 velocity = controls.GetVelocity();
-		RaycastHit hitInfo;
-		Vector3 avoidPos = new Vector3();
-		if(Physics.Raycast(controls.GetPosition(), velocity, out hitInfo, controls.GetMaxAvoidance())){
-			if(hitInfo.transform.gameObject.tag.Equals("Truck")){
-				EGFiretruck otherTruck = hitInfo.transform.root.GetComponent<EGFiretruck>();
-				if(otherTruck != null && 
-				   otherTruck.transform.position != controls.GetPosition()){
-					Debug.Log("Avoiding a truck");
-					avoidPos = hitInfo.point;
-				}
-			}
-		}
-
-		Vector3 avoidance = new Vector3 ();
-
-		if(avoidPos != new Vector3()){
-			avoidance = Vector3.Normalize(avoidPos - controls.GetPosition());
-			
-			Debug.Log ("Avoidance force: " + avoidance);
-			Debug.Log ("Target: " + avoidPos);
-			Debug.Log ("Position: " + controls.GetPosition ());
-		}
-
-
+		velocity.Normalize();
+		Vector3 avoidance = velocity - target.transform.forward;
+		avoidance.Normalize();
+		avoidance = avoidance * controls.GetMaxAvoidance();
 		return avoidance;
 	}
 
@@ -66,25 +46,7 @@ public class EDDriver {
 
 	private Vector3 doQueue(GameObject target){
 		Vector3 queueForce = new Vector3 ();
-//
-//		Vector3 ahead = controls.GetVelocity();
-//		ahead.Normalize();
-//		ahead = ahead * controls.GetMaxQueueAhead();
-//
-//		ahead = controls.GetPosition() + ahead;
-//
-//		Vector3 nearestPoint = target.transform.position;
-//		float dist = Vector3.Distance(ahead, nearestPoint);
-//
-//		float tolerance = controls.GetMaxQueueRadius();// + target.transform.localScale.z;
-
-		//Vector3 toNearest = nearestPoint - controls.GetPosition();
-		//float angleToNearest = Vector3.Angle(ahead, toNearest);
-		//if(angleToNearest > 90){
-//			if(dist <= tolerance){
-				queueing = true;
-//			}
-		//}
+		queueing = true;
 
 		return queueForce;
 	}

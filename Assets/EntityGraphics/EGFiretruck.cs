@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 
 public class EGFiretruck : MonoBehaviour, EDTruckControls{
@@ -20,8 +20,6 @@ public class EGFiretruck : MonoBehaviour, EDTruckControls{
 	public float avoidanceDistance;
 	public float maxAvoidance;
 	public float avoidanceForce;
-	public float maxQueueAhead;
-	public float maxQueueRadius;
 
 	void Start(){
 		_driver = new EDDriver (this);
@@ -61,9 +59,14 @@ public class EGFiretruck : MonoBehaviour, EDTruckControls{
 
 		UpdateVelocity ();
 
-		transform.forward = velocity;
+		if(velocity.magnitude > 0){
+			transform.forward = velocity;
+		}
+
 		if (!_driver.IsQueueing()) {
 			transform.Translate(Vector3.forward * maxMagnitude);
+		}else{
+			transform.Translate(Vector3.zero);
 		}
 	}
 
@@ -119,9 +122,8 @@ public class EGFiretruck : MonoBehaviour, EDTruckControls{
 	void UpdateVelocity(){
 		_driver.Reset();
 		_driver.Seek (destination);
-		List<GameObject> nearbyTrucks = findClosestOtherTruck();
-		AvoidTrucks (nearbyTrucks);
-		QueueBehindTrucks(nearbyTrucks);
+		AvoidTrucks (otherTrucks);
+		QueueBehindTrucks(otherTrucks);
 		_driver.Update (Time.deltaTime);
 	}
 
@@ -129,7 +131,9 @@ public class EGFiretruck : MonoBehaviour, EDTruckControls{
 		if (trucksToAvoid != null){
 			for(int i=0; i<trucksToAvoid.Count; i++){
 				GameObject truckToAvoid = trucksToAvoid[i];
-				_driver.Avoid(truckToAvoid);
+				if(truckToAvoid != null){
+					_driver.Avoid(truckToAvoid);
+				}
 			}
 		}
 	}
@@ -143,31 +147,6 @@ public class EGFiretruck : MonoBehaviour, EDTruckControls{
 					break;
 				}
 			}
-		}
-	}
-
-	List<GameObject> findClosestOtherTruck(){
-		List<GameObject> toAvoid = new List<GameObject> ();
-		float maximumToQualify = avoidanceDistance;
-
-		if (otherTrucks.Count > 0) {
-			for(int i=0; i<otherTrucks.Count; i++){
-				GameObject otherTruck = otherTrucks[i];
-				float dist = Vector3.Distance(otherTruck.transform.position, transform.position);
-				if(dist < maximumToQualify){
-					toAvoid.Add(otherTruck);
-				}
-			}
-		}
-
-		return toAvoid;
-	}
-
-	void IncrementDestinationIfOnCurrentDestinationTile(){
-		TDTile currentTile = map.GetTileForWorldPosition (transform.position);
-		TDTile destinationTile = map.GetTileForWorldPosition (destination);
-		if (currentTile.Equals (destinationTile)) {
-			SetDestination(GetNextDestination());
 		}
 	}
 
@@ -244,13 +223,5 @@ public class EGFiretruck : MonoBehaviour, EDTruckControls{
 
 	public float GetAvoidanceForce(){
 		return avoidanceForce;
-	}
-
-	public float GetMaxQueueAhead(){
-		return maxQueueAhead;
-	}
-
-	public float GetMaxQueueRadius(){
-		return maxQueueRadius;
 	}
 }
