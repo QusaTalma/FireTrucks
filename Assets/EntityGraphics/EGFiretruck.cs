@@ -9,7 +9,6 @@ public class EGFiretruck : MonoBehaviour, EDTruckControls{
 
 	List<GameObject> otherTrucks;
 
-	bool waitingForTraffic = false;
 	bool puttingOutFire = false;
 	bool idle = false;
 
@@ -57,7 +56,7 @@ public class EGFiretruck : MonoBehaviour, EDTruckControls{
 		UpdateVelocity ();
 
 		transform.forward = velocity;
-		if (!waitingForTraffic) {
+		if (!_driver.IsQueueing()) {
 			transform.Translate(Vector3.forward * maxMagnitude);
 		}
 	}
@@ -113,17 +112,31 @@ public class EGFiretruck : MonoBehaviour, EDTruckControls{
 	}
 
 	void UpdateVelocity(){
+		_driver.Reset();
 		_driver.Seek (destination);
-		AvoidTrucks ();
+		List<GameObject> nearbyTrucks = findClosestOtherTruck();
+		//AvoidTrucks (nearbyTrucks);
+		QueueBehindTrucks(nearbyTrucks);
 		_driver.Update (Time.deltaTime);
 	}
 
-	void AvoidTrucks(){
-		List<GameObject> trucksToAvoid = findClosestOtherTruck ();
+	void AvoidTrucks(List<GameObject> trucksToAvoid){
 		if (trucksToAvoid != null){
 			for(int i=0; i<trucksToAvoid.Count; i++){
 				GameObject truckToAvoid = trucksToAvoid[i];
-				AvoidDirection(truckToAvoid.transform.position);
+				_driver.Avoid(truckToAvoid);
+			}
+		}
+	}
+
+	void QueueBehindTrucks(List<GameObject> nearbyTrucks){
+		if(nearbyTrucks != null){
+			for(int i=0; i<nearbyTrucks.Count; i++){
+				GameObject truck = nearbyTrucks[i];
+				if(_driver.Queue(truck)){
+					//Stop looping if this truck is queueing behind another truck
+					break;
+				}
 			}
 		}
 	}
@@ -145,26 +158,8 @@ public class EGFiretruck : MonoBehaviour, EDTruckControls{
 		return toAvoid;
 	}
 
-	void AvoidDirection(Vector3 direction){
-		RaycastHit hitInfo;
-		if(Physics.Raycast(transform.position, direction, out hitInfo, avoidanceDistance)){
-			if(hitInfo.transform.gameObject.tag.Equals("Truck")){
-				EGFiretruck otherTruck = hitInfo.transform.root.GetComponent<EGFiretruck>();
-				if(otherTruck != null && otherTruck != this){
-					Debug.Log("Avoiding a truck");
-					Vector3 avoidPos = hitInfo.point;
-					_driver.Avoid(avoidPos);
-				}
-			}
-		}
-	}
-
-	public void SetWaitingForTraffic(bool waiting){
-		this.waitingForTraffic = waiting;
-	}
-
 	public bool IsWaitingForTraffic(){
-		return waitingForTraffic;
+		return _driver.IsQueueing();
 	}
 
 	public void SetMap(TGMap map){
@@ -175,7 +170,6 @@ public class EGFiretruck : MonoBehaviour, EDTruckControls{
 		_firetruck.SetPath (path);
 
 		puttingOutFire = false;
-		waitingForTraffic = false;
 		SetDestination (GetNextDestination ());
 	}
 
@@ -226,7 +220,9 @@ public class EGFiretruck : MonoBehaviour, EDTruckControls{
 	}
 
 	public void addOtherTruck(GameObject other){
-		otherTrucks.Add (other);
+		if(other.transform.root != transform.root){
+			otherTrucks.Add (other);
+		}
 	}
 
 	public void removeOtherTruck(GameObject other){

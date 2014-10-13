@@ -90,7 +90,6 @@ public class GUIManager : MonoBehaviour {
 		width = LABEL_WIDTH;
 		top = (Screen.height/2f) - height/2f;
 		left = (Screen.width/2f) - width/2f;
-		float timeRemaining = _map.GetGameSession ().GetRemainingTime ();
 		string loseText = "YOU LOSE";
 		GUI.Label (new Rect (left, top, width, height), loseText, loseLabelStyle); 
 	}
@@ -101,7 +100,6 @@ public class GUIManager : MonoBehaviour {
 		width = LABEL_WIDTH;
 		top = (Screen.height/2f) - height/2f + height;
 		left = (Screen.width/2f) - width/2f;
-		float timeRemaining = _map.GetGameSession ().GetRemainingTime ();
 		string loseText = "RESTART";
 		return GUI.Button (new Rect (left, top, width, height), loseText, restartButtonStyle);
 	}

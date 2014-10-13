@@ -15,8 +15,8 @@ public class TruckCollider : MonoBehaviour {
 		if(!transform.parent.Equals(other.transform.parent) &&
 		   other.gameObject.tag.Equals("Truck")){
 			EGFiretruck otherTruck = other.transform.root.gameObject.GetComponent<EGFiretruck>();
-			if(otherTruck != null && !otherTruck.IsWaitingForTraffic()){
-				truck.SetWaitingForTraffic(true);
+			if(otherTruck != null){
+				truck.addOtherTruck(other.transform.root.gameObject);
 			}
 		}
 	}
@@ -24,7 +24,10 @@ public class TruckCollider : MonoBehaviour {
 	void OnTriggerExit(Collider other){
 		if(!transform.parent.Equals(other.transform.parent) &&
 		   other.gameObject.tag.Equals("Truck")){
-			truck.SetWaitingForTraffic(false);
+			EGFiretruck otherTruck = other.transform.root.gameObject.GetComponent<EGFiretruck>();
+			if(otherTruck != null){
+				truck.removeOtherTruck(other.transform.root.gameObject);
+			}
 		}
 	}
 }
