@@ -59,6 +59,7 @@ public class EGDispatcher : MonoBehaviour {
 		for (int i=0; i<toDestroy.Count; i++) {
 			EGFiretruck truck = toDestroy[i];
 			_dispatcher.RemoveIdleTruck(truck);
+			_firehouse.DecreaseTruckCount();
 			Destroy(truck.gameObject);
 		}
 	}
