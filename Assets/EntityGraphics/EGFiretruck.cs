@@ -150,6 +150,14 @@ public class EGFiretruck : MonoBehaviour, EDTruckControls{
 		}
 	}
 
+	void IncrementDestinationIfOnCurrentDestinationTile(){
+		TDTile currentTile = map.GetTileForWorldPosition (transform.position);
+		TDTile destinationTile = map.GetTileForWorldPosition (destination);
+		if (currentTile.Equals (destinationTile)) {
+			SetDestination(GetNextDestination());
+		}
+	}
+
 	public bool IsWaitingForTraffic(){
 		return _driver.IsQueueing();
 	}
