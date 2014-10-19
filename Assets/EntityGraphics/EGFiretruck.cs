@@ -7,7 +7,7 @@ public class EGFiretruck : MonoBehaviour, EDTruckControls{
 	TGMap map;
 	Vector3 destination;
 
-	List<GameObject> otherTrucks;
+	Dictionary<GameObject, Vector3> otherTrucks;
 
 	bool puttingOutFire = false;
 	bool idle = false;
@@ -19,11 +19,10 @@ public class EGFiretruck : MonoBehaviour, EDTruckControls{
 	public float destinationRadius;
 	public float avoidanceDistance;
 	public float maxAvoidance;
-	public float avoidanceForce;
 
 	void Start(){
 		_driver = new EDDriver (this);
-		otherTrucks = new List<GameObject> ();
+		otherTrucks = new Dictionary<GameObject, Vector3> ();
 	}
 
 	void Update(){
@@ -122,26 +121,28 @@ public class EGFiretruck : MonoBehaviour, EDTruckControls{
 	void UpdateVelocity(){
 		_driver.Reset();
 		_driver.Seek (destination);
-		AvoidTrucks (otherTrucks);
-		QueueBehindTrucks(otherTrucks);
+		AvoidTrucks ();
+		QueueBehindTrucks();
 		_driver.Update (Time.deltaTime);
 	}
 
-	void AvoidTrucks(List<GameObject> trucksToAvoid){
-		if (trucksToAvoid != null){
-			for(int i=0; i<trucksToAvoid.Count; i++){
-				GameObject truckToAvoid = trucksToAvoid[i];
+	void AvoidTrucks(){
+		if (otherTrucks != null){
+			Dictionary<GameObject, Vector3>.Enumerator enumerator = otherTrucks.GetEnumerator();
+			while(enumerator.MoveNext()){
+				GameObject truckToAvoid = enumerator.Current.Key;
+				Vector3 truckToAvoidClosestPoint = enumerator.Current.Value;
 				if(truckToAvoid != null){
-					_driver.Avoid(truckToAvoid);
+					_driver.Avoid(truckToAvoid, truckToAvoidClosestPoint);
 				}
 			}
 		}
 	}
 
-	void QueueBehindTrucks(List<GameObject> nearbyTrucks){
-		if(nearbyTrucks != null){
-			for(int i=0; i<nearbyTrucks.Count; i++){
-				GameObject truck = nearbyTrucks[i];
+	void QueueBehindTrucks(){
+		if(otherTrucks != null){Dictionary<GameObject, Vector3>.Enumerator enumerator = otherTrucks.GetEnumerator();
+			while(enumerator.MoveNext()){
+				GameObject truck = enumerator.Current.Key;
 				if(_driver.Queue(truck)){
 					//Stop looping if this truck is queueing behind another truck
 					break;
@@ -219,9 +220,12 @@ public class EGFiretruck : MonoBehaviour, EDTruckControls{
 		return this.maxAvoidance;
 	}
 
-	public void addOtherTruck(GameObject other){
+	public void addOtherTruck(GameObject other, Vector3 closestPoint){
 		if(other.transform.root != transform.root){
-			otherTrucks.Add (other);
+			if(otherTrucks.ContainsKey(other)){
+				otherTrucks.Remove(other);
+			}
+			otherTrucks.Add (other, closestPoint);
 		}
 	}
 
@@ -229,7 +233,7 @@ public class EGFiretruck : MonoBehaviour, EDTruckControls{
 		otherTrucks.Remove (other);
 	}
 
-	public float GetAvoidanceForce(){
-		return avoidanceForce;
+	public Vector3 GetLeft(){
+		return -transform.right;
 	}
 }

@@ -6,5 +6,5 @@ public interface EDTruckControls{
 	Vector3 GetPosition();
 	void SetVelocity(Vector3 velocity);
 	float GetMaxAvoidance();
-	float GetAvoidanceForce();
+	Vector3 GetLeft();
 }

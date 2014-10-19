@@ -22,24 +22,27 @@ public class EDDriver {
 		desiredVelocity = desiredVelocity * controls.GetMaxVelocity();
 		force = desiredVelocity - controls.GetVelocity();
 
+		Debug.DrawLine (controls.GetPosition (), controls.GetPosition () + force, Color.green);
+
 		return force;
 	}
 
-	public void Avoid(GameObject target){
-		steering = steering + doAvoid (target);
+	public void Avoid(GameObject target, Vector3 targetClosestPoint){
+		steering = steering + doAvoid (target, targetClosestPoint);
 	}
 
-	private Vector3 doAvoid(GameObject target){
-		Vector3 velocity = controls.GetVelocity();
-		velocity.Normalize();
-		Vector3 avoidance = velocity - target.transform.forward;
+	private Vector3 doAvoid(GameObject target, Vector3 targetClosestPoint){
+		Vector3 avoidance = controls.GetPosition() - targetClosestPoint;
 		avoidance.Normalize();
 		avoidance = avoidance * controls.GetMaxAvoidance();
+
+		Debug.DrawLine (controls.GetPosition (), controls.GetPosition () + avoidance, Color.blue);
 		return avoidance;
 	}
 
 	public bool Queue(GameObject target){
 		Vector3 queueVector = doQueue(target);
+
 		steering = steering + queueVector;
 		return queueing;
 	}
