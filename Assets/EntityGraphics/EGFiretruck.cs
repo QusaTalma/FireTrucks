@@ -17,7 +17,6 @@ public class EGFiretruck : MonoBehaviour, EDTruckControls{
 	public float speed;
 	public bool returnWhenIdle;
 	public float destinationRadius;
-	public float avoidanceDistance;
 	public float maxAvoidance;
 
 	void Start(){

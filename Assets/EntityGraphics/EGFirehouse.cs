@@ -6,6 +6,8 @@ public class EGFirehouse : MonoBehaviour {
 
 	private EDFirehouse _firehouse;
 	private EDDispatcher _dispatcher;
+	float spawnInterval = 0.5f;
+	float timeSinceSpawn = 0f;
 	TGMap _map;
 
 	public GameObject firetruckPrefab;
@@ -16,8 +18,10 @@ public class EGFirehouse : MonoBehaviour {
 	}
 
 	void Update(){//Spawn truck is ready for it
-		if (!ContainsTruck ()) {
+		timeSinceSpawn += Time.deltaTime;
+		if (timeSinceSpawn >= spawnInterval) {
 			SpawnNextTruck ();
+			timeSinceSpawn = 0;
 		}
 	}
 
@@ -37,14 +41,8 @@ public class EGFirehouse : MonoBehaviour {
 		truckCount++;
 	}
 
-	void OnTriggerEnter(Collider other){
-//		if(other.gameObject.tag.Equals("Truck")){
-//			truckCount++;
-//		}
-	}
-
 	void OnTriggerExit(Collider other){
-		if(other.gameObject.tag.Equals("Truck")){
+		if(other.gameObject.tag.Equals("Truck") && truckCount > 0){
 			truckCount--;
 		}
 	}

@@ -33,6 +33,7 @@ public class EDDriver {
 
 	private Vector3 doAvoid(GameObject target, Vector3 targetClosestPoint){
 		Vector3 avoidance = controls.GetPosition() - targetClosestPoint;
+		avoidance = avoidance + controls.GetLeft();
 		avoidance.Normalize();
 		avoidance = avoidance * controls.GetMaxAvoidance();
 
