@@ -3,8 +3,16 @@ using System.Collections.Generic;
 
 public class TDMap {
 	TDTile[,] _tiles;
+
 	int _width;
+	public int Width{
+		get { return _width; }
+	}
+	
 	int _height;
+	public int Height{
+		get { return _height; }
+	}
 
 	int fireHouseX = 5;
 	int fireHouseY = 5;
@@ -124,14 +132,6 @@ public class TDMap {
 			_tiles[x,y+1].type = TDTile.TILE_HOUSE;
 			totalDurability += _tiles[x,y+1].GetDurability();
 		}
-	}
-
-	public int GetWidth(){
-		return _width;
-	}
-
-	public int GetHeight(){
-		return _height;
 	}
 
 	public List<TDTile> GetAdjacentTiles(TDTile tile) {

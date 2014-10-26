@@ -6,13 +6,6 @@ using System.Collections.Generic;
  * This class handles GameObject interactions related to the map:
  * Creates the texture for the map and displays it.
  * Responds to touches on the map
- * 
- * Manages firetrucks by organizing them by idle and non-idle
- * //As I write this comment, admiteddly too late, I realize this class
- * //Shouldn't be managing firetrucks. 
- * //TODO Create a Dispatcher class
- * //that can take signals from the map about where to send firetrucks,
- * //and then the dispatcher class organizes the trucks
  *
  *****/
 
@@ -20,8 +13,6 @@ using System.Collections.Generic;
 [RequireComponent(typeof(MeshRenderer))]
 [RequireComponent(typeof(MeshCollider))]
 public class TGMap : MonoBehaviour {
-	public int size_x;
-	public int size_z;
 	public float tileSize;
 
 	public Texture2D terrainTiles;
@@ -33,12 +24,19 @@ public class TGMap : MonoBehaviour {
 	public float levelTimeInSeconds;
 	public float targetCityPercent;
 
-	TDMap _map;
+	public TDMap Map{
+		get { return _level.Map; }
+	}
+
 	TDGameSession _gameSession;
 	TGArsonist arsonist;
 
+	TDLevel _level;
+
 	void Start () {
-		_gameSession = new TDGameSession(levelTimeInSeconds);
+		_level = new TDLevel();
+		_gameSession = new TDGameSession(_level.TimeInSecondsToPlay);
+
 		//Create the map
 		BuildMesh ();
 		BuildTexture ();
@@ -80,7 +78,7 @@ public class TGMap : MonoBehaviour {
 	//TODO this should be determined by the level, once levels are a thing
 	void PlaceFireHouse(){
 		Vector2 fireHouseTilePos = new Vector2 ();
-		_map.GetFireHouseCoordinates (out fireHouseTilePos);
+		Map.GetFireHouseCoordinates (out fireHouseTilePos);
 
 		Vector3 housePos = GetPositionForTile (Mathf.FloorToInt(fireHouseTilePos.x),
 		                                       Mathf.FloorToInt(fireHouseTilePos.y));
@@ -105,7 +103,7 @@ public class TGMap : MonoBehaviour {
 
 		Vector2 firehousePos = new Vector2 ();
 
-		_map.GetFireHouseCoordinates (out firehousePos);
+		Map.GetFireHouseCoordinates (out firehousePos);
 
 		int arsonistX = (int)firehousePos.x;
 		int arsonistY = (int)firehousePos.y;
@@ -114,21 +112,18 @@ public class TGMap : MonoBehaviour {
 
 	//Creates the texture for the map
 	public void BuildTexture(){
-		//Initialize the map data
-		_map = new TDMap (size_x, size_z);
-
 		//Create a texture of adequate size
-		int texWidth = size_x * tileResolution;
-		int textHeight = size_z * tileResolution;
+		int texWidth = Map.Width * tileResolution;
+		int textHeight = Map.Height * tileResolution;
 		Texture2D texture = new Texture2D(texWidth, textHeight);
 		//Get the tile color info
 		Color[][] tiles = ChopUpTiles ();
 
 		//Loop over the map, stitching tiles of the appropriate
 		//type together into the texture
-		for(int y=0; y<size_z; y++){
-			for(int x=0; x < size_x; x++) {
-				Color[] p = tiles[_map.GetTile(x,y).type];
+		for(int y=0; y<Map.Width; y++){
+			for(int x=0; x < Map.Height; x++) {
+				Color[] p = tiles[Map.GetTile(x,y).type];
 				texture.SetPixels(x*tileResolution, y*tileResolution,
 				                  tileResolution, tileResolution, p);
 			}
@@ -144,15 +139,15 @@ public class TGMap : MonoBehaviour {
 	}
 
 	public TDTile GetTileAt(int x, int z){
-		return _map.GetTile (x, z);
+		return Map.GetTile (x, z);
 	}
 
 	public void BuildMesh()
 	{
-		int numTiles = size_x * size_z;
+		int numTiles = Map.Width * Map.Height;
 		int numTris = numTiles * 2;
-		int vsize_x = size_x + 1;
-		int vsize_z = size_z + 1;
+		int vsize_x = Map.Width + 1;
+		int vsize_z = Map.Height + 1;
 		int numVerts = vsize_x * vsize_z;
 
 		//Generate mesh data
@@ -168,15 +163,15 @@ public class TGMap : MonoBehaviour {
 			for(x = 0; x < vsize_x; x++){
 				vertices[z * vsize_x + x] = GetPositionForTile(x, z);
 				normals[z * vsize_x + x] = Vector3.up;
-				uvs[z * vsize_x + x] = new Vector2((float)x/(float)size_x,
-				                                   (float)z/(float)size_z);
+				uvs[z * vsize_x + x] = new Vector2((float)x/(float)Map.Width,
+				                                   (float)z/(float)Map.Height);
 			}
 		}
 
 		//Define the triangles for the mesh
-		for (z = 0; z < size_z; z++) {
-			for(x = 0; x < size_x; x++){
-				int squareIndex = z * size_x + x;
+		for (z = 0; z < Map.Height; z++) {
+			for(x = 0; x < Map.Width; x++){
+				int squareIndex = z * Map.Width + x;
 				int triIndex = squareIndex * 6;
 				triangles[triIndex+0] = z * vsize_x + x + 0;
 				triangles[triIndex+2] = z * vsize_x + x + vsize_x + 0;
@@ -222,12 +217,7 @@ public class TGMap : MonoBehaviour {
 		x = Mathf.FloorToInt (position.x/tileSize);
 		y = Mathf.FloorToInt (-position.z / tileSize);
 
-		return _map.GetTile(x, y);
-	}
-
-	//Returns the underlying map data
-	public TDMap GetDataMap(){
-		return this._map;
+		return Map.GetTile(x, y);
 	}
 
 	public TDGameSession GetGameSession(){
@@ -235,6 +225,6 @@ public class TGMap : MonoBehaviour {
 	}
 
 	public float GetCityDurabilityPercent(){
-		return _map.GetCurrentDurability () / _map.GetTotalDurability ();
+		return Map.GetCurrentDurability () / Map.GetTotalDurability ();
 	}
 }

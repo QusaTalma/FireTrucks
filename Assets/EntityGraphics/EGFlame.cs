@@ -64,7 +64,7 @@ public class EGFlame : MonoBehaviour {
 			if(timeSinceSpreadAttempt >= spreadInterval){
 				int rand = Random.Range (0, spreadChance);
 				if (rand % spreadChance == 0){
-					List<TDTile> houses = map.GetDataMap().FindAdjacentTilesOfType(tile, TDTile.TILE_HOUSE);
+					List<TDTile> houses = map.Map.FindAdjacentTilesOfType(tile, TDTile.TILE_HOUSE);
 					
 					if(houses.Count > 0) {
 						rand = Random.Range(0, houses.Count);

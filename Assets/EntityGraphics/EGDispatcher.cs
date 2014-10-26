@@ -71,12 +71,12 @@ public class EGDispatcher : MonoBehaviour {
 			
 			if(truck.returnWhenIdle){
 				Vector2 fireHouseTilePos = new Vector2 ();
-				_map.GetDataMap().GetFireHouseCoordinates (out fireHouseTilePos);
+				_map.Map.GetFireHouseCoordinates (out fireHouseTilePos);
 				
 				TDTile start = _map.GetTileForWorldPosition(truck.transform.position);
-				TDTile end = _map.GetDataMap().GetTile(Mathf.FloorToInt(fireHouseTilePos.x), Mathf.FloorToInt(fireHouseTilePos.y));
+				TDTile end = _map.Map.GetTile(Mathf.FloorToInt(fireHouseTilePos.x), Mathf.FloorToInt(fireHouseTilePos.y));
 				TDPath pathToFirehouse = new TDPath();
-				pathToFirehouse.BuildPath (_map.GetDataMap(), start, end);
+				pathToFirehouse.BuildPath (_map.Map, start, end);
 				
 				truck.SetPath(pathToFirehouse);
 			}
@@ -110,7 +110,7 @@ public class EGDispatcher : MonoBehaviour {
 		
 		if(truckToSend != null){
 			TDPath truckPath = new TDPath ();
-			TDMap dataMap = _map.GetDataMap();
+			TDMap dataMap = _map.Map;
 			truckPath.BuildPath (dataMap,
 			                     dataMap.GetTile(Mathf.FloorToInt(truckToSend.GetPosition().x), Mathf.FloorToInt(-truckToSend.GetPosition().z)),
 			                     dataMap.GetTile (x, -z));

@@ -35,7 +35,7 @@ public class TGArsonist : MonoBehaviour
 	}
 
 	public void SetPosition(int x, int y){
-		_currentTile = _map.GetDataMap ().GetTile (x, y);
+		_currentTile = _map.Map.GetTile (x, y);
 	}
 
 	void StartNearbyHouseOnFire(){
@@ -63,16 +63,16 @@ public class TGArsonist : MonoBehaviour
 	}
 
 	bool HaveNeighboringFires(){
-		List<TDTile> neighboringFires = _map.GetDataMap ().FindAdjacentTilesOfType (_currentTile, TDTile.TILE_HOUSE_ON_FIRE);
+		List<TDTile> neighboringFires = _map.Map.FindAdjacentTilesOfType (_currentTile, TDTile.TILE_HOUSE_ON_FIRE);
 		return neighboringFires.Count > 0;
 	}
 
 	List<TDTile> GetNeighboringHouses(){
-		return _map.GetDataMap ().FindAdjacentTilesOfType (_currentTile, TDTile.TILE_HOUSE);
+		return _map.Map.FindAdjacentTilesOfType (_currentTile, TDTile.TILE_HOUSE);
 	}
 
 	void MoveToNearbyTile(){
-		List<TDTile> neighboringTiles = _map.GetDataMap ().FindAdjacentTilesOfType (_currentTile, TDTile.TILE_STREET);
+		List<TDTile> neighboringTiles = _map.Map.FindAdjacentTilesOfType (_currentTile, TDTile.TILE_STREET);
 		neighboringTiles.Remove (_previousTile);
 
 		int tileIndex = Random.Range (0, neighboringTiles.Count);

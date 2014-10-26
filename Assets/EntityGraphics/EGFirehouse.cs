@@ -68,7 +68,7 @@ public class EGFirehouse : MonoBehaviour {
 	//the tile at the given point as destination
 	public void SpawnFireTruck(int x, int z){
 		Vector2 fireHouseTilePos;
-		_map.GetDataMap().GetFireHouseCoordinates (out fireHouseTilePos);
+		_map.Map.GetFireHouseCoordinates (out fireHouseTilePos);
 		
 		Vector3 truckPos = _map.GetPositionForTile (Mathf.FloorToInt(fireHouseTilePos.x),
 		                                       Mathf.FloorToInt(fireHouseTilePos.y));
@@ -84,7 +84,7 @@ public class EGFirehouse : MonoBehaviour {
 		firetruck.SetPosition (truckPos);
 		
 		TDPath truckPath = new TDPath ();
-		TDMap dataMap = _map.GetDataMap();
+		TDMap dataMap = _map.Map;
 		firetruck.SetMap (_map);
 		truckPath.BuildPath (dataMap,
 		                     dataMap.GetTile(Mathf.FloorToInt(fireHouseTilePos.x), Mathf.FloorToInt(fireHouseTilePos.y)),

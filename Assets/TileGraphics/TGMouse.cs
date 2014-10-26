@@ -27,8 +27,8 @@ public class TGMouse : MonoBehaviour {
 		float vertExtent = Camera.main.orthographicSize;
 		//Calculate the half height of the screen
 		float horizExtent = Camera.main.orthographicSize * Screen.width / Screen.height;
-		float mapX = _tileMap.size_x * _tileMap.tileSize;
-		float mapZ = _tileMap.size_z * _tileMap.tileSize;
+		float mapX = _tileMap.Map.Width * _tileMap.tileSize;
+		float mapZ = _tileMap.Map.Height * _tileMap.tileSize;
 		//Limit the camera to within half the width/height of the screen
 		//of the bounds of the map
 		minX = 0 + horizExtent;
