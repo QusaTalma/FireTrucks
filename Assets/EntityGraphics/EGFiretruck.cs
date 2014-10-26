@@ -120,22 +120,8 @@ public class EGFiretruck : MonoBehaviour, EDTruckControls{
 	void UpdateVelocity(){
 		_driver.Reset();
 		_driver.Seek (destination);
-		AvoidTrucks ();
 		QueueBehindTrucks();
 		_driver.Update (Time.deltaTime);
-	}
-
-	void AvoidTrucks(){
-		if (otherTrucks != null){
-			Dictionary<GameObject, Vector3>.Enumerator enumerator = otherTrucks.GetEnumerator();
-			while(enumerator.MoveNext()){
-				GameObject truckToAvoid = enumerator.Current.Key;
-				Vector3 truckToAvoidClosestPoint = enumerator.Current.Value;
-				if(truckToAvoid != null){
-					_driver.Avoid(truckToAvoid, truckToAvoidClosestPoint);
-				}
-			}
-		}
 	}
 
 	void QueueBehindTrucks(){
