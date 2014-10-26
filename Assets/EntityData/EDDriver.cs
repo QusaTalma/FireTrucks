@@ -27,20 +27,6 @@ public class EDDriver {
 		return force;
 	}
 
-	public void Avoid(GameObject target, Vector3 targetClosestPoint){
-		steering = steering + doAvoid (target, targetClosestPoint);
-	}
-
-	private Vector3 doAvoid(GameObject target, Vector3 targetClosestPoint){
-		Vector3 avoidance = controls.GetPosition() - targetClosestPoint;
-		avoidance = avoidance + controls.GetLeft();
-		avoidance.Normalize();
-		avoidance = avoidance * controls.GetMaxAvoidance();
-
-		Debug.DrawLine (controls.GetPosition (), controls.GetPosition () + avoidance, Color.blue);
-		return avoidance;
-	}
-
 	public bool Queue(GameObject target){
 		Vector3 queueVector = doQueue(target);
 

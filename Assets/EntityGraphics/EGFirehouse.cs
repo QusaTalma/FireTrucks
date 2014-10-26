@@ -6,8 +6,6 @@ public class EGFirehouse : MonoBehaviour {
 
 	private EDFirehouse _firehouse;
 	private EDDispatcher _dispatcher;
-	float spawnInterval = 0.5f;
-	float timeSinceSpawn = 0f;
 	TGMap _map;
 
 	public GameObject firetruckPrefab;
@@ -18,10 +16,8 @@ public class EGFirehouse : MonoBehaviour {
 	}
 
 	void Update(){//Spawn truck is ready for it
-		timeSinceSpawn += Time.deltaTime;
-		if (timeSinceSpawn >= spawnInterval) {
+		if (truckCount == 0) {
 			SpawnNextTruck ();
-			timeSinceSpawn = 0;
 		}
 	}
 
@@ -35,10 +31,6 @@ public class EGFirehouse : MonoBehaviour {
 
 	public bool ContainsTruck(){
 		return truckCount > 0;
-	}
-
-	public void AddTruck(){
-		truckCount++;
 	}
 
 	void OnTriggerExit(Collider other){
@@ -67,6 +59,8 @@ public class EGFirehouse : MonoBehaviour {
 	//Creates a firetruck at the firehouse with
 	//the tile at the given point as destination
 	public void SpawnFireTruck(int x, int z){
+		truckCount++;
+
 		Vector2 fireHouseTilePos;
 		_map.GetDataMap().GetFireHouseCoordinates (out fireHouseTilePos);
 		
@@ -74,9 +68,7 @@ public class EGFirehouse : MonoBehaviour {
 		                                       Mathf.FloorToInt(fireHouseTilePos.y));
 		truckPos.x += .5f;
 		truckPos.z -= .5f;
-		
-		AddTruck ();
-		
+
 		GameObject truck = (GameObject)Instantiate (firetruckPrefab);
 		truck.transform.position = truckPos;
 		
