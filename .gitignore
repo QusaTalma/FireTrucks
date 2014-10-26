@@ -11,15 +11,15 @@ UnityGenerated/
 # Visual Studio / MonoDevelop generated #
 # ===================================== #
 ExportedObj/
-**/*.svd
-**/*.userprefs
+*.svd
+*.userprefs
 *.csproj
-**/*.pidb
+*.pidb
 ./*.suo
-**/*.sln
-**/*.user
-**/*.unityproj
-**/*.booproj
+*.sln
+*.user
+*.unityproj
+*.booproj
 
 # ============ #
 # OS generated #
