@@ -27,7 +27,7 @@ public class GUIManager : MonoBehaviour {
 		DrawTimeRemaining ();
 
 		if (!_map.GetGameSession ().IsActive ()) {
-			if(_map.GetCityDurabilityPercent() >= _map.targetCityPercent){
+			if(_map.GetCityDurabilityPercent() >= _map.PercentToWin){
 				DrawWinLabel();
 			}else{
 				DrawLoseLabel();
@@ -38,7 +38,6 @@ public class GUIManager : MonoBehaviour {
 				Time.timeScale = 1f;
 			}
 		}
-		
 	}
 
 	void DrawTruckCount(){
@@ -59,7 +58,7 @@ public class GUIManager : MonoBehaviour {
 		left = Screen.width - width;
 		float durabilityPercent = _map.GetCityDurabilityPercent ();
 		string cityPercent = "Buildings remaining: " + durabilityPercent.ToString("P0") +
-						   "\nRequired to win:     " + _map.targetCityPercent.ToString("P0");
+						   "\nRequired to win:     " + _map.PercentToWin.ToString("P0");
 		GUI.Label (new Rect (left, top, width, height), cityPercent, labelStyle); 
 	}
 

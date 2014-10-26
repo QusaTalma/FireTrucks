@@ -14,12 +14,10 @@ public class TDMap {
 		get { return _height; }
 	}
 
-	int fireHouseX = 5;
-	int fireHouseY = 5;
-
 	float totalDurability = 0;
+	Vector2 fireHousePosition;
 
-	public TDMap(int width, int height) {
+	public TDMap(int width, int height, Vector2 fireHousePos) {
 		_width = width;
 		_height = height;
 
@@ -41,7 +39,7 @@ public class TDMap {
 
 		PlaceHousesOnStreets ();
 
-		SetFireHouseCoordinates (CalculateFirehousePosition ());
+		SetFireHouseCoordinates (fireHousePos);
 	}
 
 	Vector2 CalculateFirehousePosition(){
@@ -64,16 +62,15 @@ public class TDMap {
 	}
 
 	public void SetFireHouseCoordinates(Vector2 pos){
-		fireHouseX = (int)pos.x;
-		fireHouseY = (int)pos.y;
+		fireHousePosition = pos;
 		
-		totalDurability -= _tiles [fireHouseX, fireHouseY].GetDurability ();
-		_tiles [fireHouseX, fireHouseY].type = TDTile.TILE_FIREHOUSE;
+		totalDurability -= _tiles [(int)fireHousePosition.x, (int)fireHousePosition.y].GetDurability ();
+		_tiles [(int)fireHousePosition.x, (int)fireHousePosition.y].type = TDTile.TILE_FIREHOUSE;
 	}
 
 	public void GetFireHouseCoordinates(out Vector2 pos){
-		pos.x = fireHouseX;
-		pos.y = fireHouseY;
+		pos.x = fireHousePosition.x; 
+		pos.y = fireHousePosition.y;
 	}
 
 	public TDTile GetTile(int x, int y){

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System.IO;
 
 /*****
  * 
@@ -21,11 +22,18 @@ public class TGMap : MonoBehaviour {
 	public GameObject firehousePrefab;
 	public GameObject arsonistPrefab;
 
-	public float levelTimeInSeconds;
-	public float targetCityPercent;
+	public string levelFileName;
 
 	public TDMap Map{
 		get { return _level.Map; }
+	}
+
+	public float TimeInSecondsToPlay{
+		get { return _level.TimeInSecondsToPlay; }
+	}
+
+	public float PercentToWin{
+		get { return _level.PercentRemainingToWin; }
 	}
 
 	TDGameSession _gameSession;
@@ -34,7 +42,14 @@ public class TGMap : MonoBehaviour {
 	TDLevel _level;
 
 	void Start () {
-		_level = new TDLevel();
+		string levelText = "";
+
+		TextAsset levelFile = Resources.Load(levelFileName) as TextAsset;
+		if(levelFile != null){
+			levelText = levelFile.text;
+		}
+
+		_level = new TDLevel(levelText);
 		_gameSession = new TDGameSession(_level.TimeInSecondsToPlay);
 
 		//Create the map

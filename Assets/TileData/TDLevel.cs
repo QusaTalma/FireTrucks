@@ -27,10 +27,10 @@ public class TDLevel {
 		get { return firehouseLocation; }
 	}
 
-	public TDLevel(){
-		_map = new TDMap(32, 32);
+	public TDLevel(string levelData){
 		percentRemainingToWin = 0.90f;
-		timeInSecondsToPlay = 90f;
+		timeInSecondsToPlay = 30f;
 		firehouseLocation = new Vector2(5f, 5f);
+		_map = new TDMap(32, 32, firehouseLocation);
 	}
 }
