@@ -115,14 +115,7 @@ public class TGMap : MonoBehaviour {
 		GameObject arsonistObject = (GameObject)Instantiate (arsonistPrefab);
 		arsonist = arsonistObject.GetComponent<TGArsonist> ();
 		arsonist.SetMap (this);
-
-		Vector2 firehousePos = new Vector2 ();
-
-		Map.GetFireHouseCoordinates (out firehousePos);
-
-		int arsonistX = (int)firehousePos.x;
-		int arsonistY = (int)firehousePos.y;
-		arsonist.SetPosition (arsonistX, arsonistY);
+		arsonist.ArsonPath = _level.ArsonPath;
 	}
 
 	//Creates the texture for the map
@@ -136,8 +129,8 @@ public class TGMap : MonoBehaviour {
 
 		//Loop over the map, stitching tiles of the appropriate
 		//type together into the texture
-		for(int y=0; y<Map.Width; y++){
-			for(int x=0; x < Map.Height; x++) {
+		for(int y=0; y<Map.Height; y++){
+			for(int x=0; x < Map.Width; x++) {
 				Color[] p = tiles[Map.GetTile(x,y).type];
 				texture.SetPixels(x*tileResolution, y*tileResolution,
 				                  tileResolution, tileResolution, p);

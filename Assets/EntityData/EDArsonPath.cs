@@ -1,5 +1,34 @@
-using System;
+using System.Collections.Generic;
 
 public class EDArsonPath{
-	//TODO: describe the path the arson takes
+	private List<TDTile> pathSteps;
+	private List<float> pathTimes;
+
+	public EDArsonPath(List<TDTile> pathSteps, List<float> pathTimes){
+		this.pathSteps = pathSteps;
+		this.pathTimes = pathTimes;
+	}
+
+	public bool HasMoreSteps(){
+		return pathTimes.Count > 0 && pathSteps.Count > 0;
+	}
+
+	public bool TimeForNextStep(float elapsedTime){
+		float nextStepTime = pathTimes [0];
+		return elapsedTime >= nextStepTime;
+	}
+
+	public TDTile PopStep(){
+		if (pathTimes.Count > 0) {
+			pathTimes.RemoveAt (0);
+		}
+
+		TDTile popped = null;
+		if (pathSteps.Count > 0) {
+			popped = pathSteps[0];
+			pathSteps.RemoveAt(0);
+		}
+
+		return popped;
+	}
 }
