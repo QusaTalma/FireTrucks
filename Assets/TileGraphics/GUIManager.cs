@@ -10,6 +10,11 @@ public class GUIManager : MonoBehaviour {
 	EGDispatcher _dispatcher;
 	TGMap _map;
 
+	string _nextLevelSceneName;
+	public string nextLevelSceneName{
+		set{_nextLevelSceneName = value;}
+	}
+
 	const float LABEL_HEIGHT = 50;
 	const float LABEL_WIDTH = 250;
 	const float TRUCK_COUNT_TOP = 20;
@@ -35,6 +40,11 @@ public class GUIManager : MonoBehaviour {
 
 			if(DrawRestartButton()){
 				Application.LoadLevel(Application.loadedLevel);
+				Time.timeScale = 1f;
+			}
+
+			if(DrawNextButton()){
+				Application.LoadLevel(_nextLevelSceneName);
 				Time.timeScale = 1f;
 			}
 		}
@@ -99,7 +109,18 @@ public class GUIManager : MonoBehaviour {
 		width = LABEL_WIDTH;
 		top = (Screen.height/2f) - height/2f + height;
 		left = (Screen.width/2f) - width/2f;
-		string loseText = "RESTART";
-		return GUI.Button (new Rect (left, top, width, height), loseText, restartButtonStyle);
+		string restartText = "RESTART";
+		return GUI.Button (new Rect (left, top, width, height), restartText, restartButtonStyle);
+	}
+
+	bool DrawNextButton(){
+		float left, top, width, height;
+		height = LABEL_HEIGHT;
+		width = LABEL_WIDTH;
+		top = (Screen.height/2f) - height/2f + height*2;//Go under the restart button
+		left = (Screen.width/2f) - width/2f;
+		string nextText = "NEXT";
+		return GUI.Button (new Rect (left, top, width, height), nextText, restartButtonStyle);
+
 	}
 }
