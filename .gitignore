@@ -31,3 +31,8 @@ ExportedObj/
 .Trashes
 ehthumbs.db
 Thumbs.db
+/LevelEditor/LevelEditorApplication/nbproject/private/
+/LevelEditor/LevelEditorLibrary/nbproject/private/
+/LevelEditor/LevelEditorLibrary/build/
+/LevelEditor/LevelEditorApplication/build/
+/LevelEditor/LevelEditorLibrary/dist/
