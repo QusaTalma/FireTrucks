@@ -167,7 +167,7 @@ public class LevelEditorUI extends javax.swing.JFrame {
             JSlider source = (JSlider)e.getSource();
             if (!source.getValueIsAdjusting()) {
                 int newWidth = (int)source.getValue();
-                level.setWidth(newWidth);
+                level.resize(newWidth, level.getHeight());
             }    
         }
     }
@@ -178,7 +178,7 @@ public class LevelEditorUI extends javax.swing.JFrame {
             JSlider source = (JSlider)e.getSource();
             if (!source.getValueIsAdjusting()) {
                 int newHeight = (int)source.getValue();
-                level.setHeight(newHeight);
+                level.resize(level.getWidth(), newHeight);
             }
         }
     }

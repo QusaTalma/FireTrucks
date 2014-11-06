@@ -40,16 +40,8 @@ public class Level {
         return width;
     }
 
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
     public int getHeight() {
         return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
     }
 
     public LevelMap getMap() {
@@ -74,5 +66,11 @@ public class Level {
 
     public void setWinPercent(int winPercent) {
         this.winPercent = winPercent;
+    }
+    
+    public void resize(int newWidth, int newHeight){
+       width = newWidth;
+       height = newHeight;
+       map.resize(width, height);
     }
 }

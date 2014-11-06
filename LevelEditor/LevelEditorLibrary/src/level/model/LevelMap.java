@@ -23,4 +23,8 @@ public class LevelMap {
     public void setTileMap(Tile[][] tileMap) {
         this.tileMap = tileMap;
     }
+    
+    public void resize(int newWidth, int newHeight){
+        
+    }
 }
