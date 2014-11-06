@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+  <NonVisualComponents>
+    <Component class="javax.swing.ButtonGroup" name="tileButtonGroup">
+    </Component>
+  </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
     <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -34,17 +38,25 @@
               <Component id="mapScrollPane" min="-2" pref="512" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="widthLabel" min="-2" max="-2" attributes="0"/>
-                  <Component id="heightLabel" min="-2" max="-2" attributes="0"/>
-                  <Component id="durationLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="percentLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="widthSpinner" pref="64" max="32767" attributes="0"/>
-                  <Component id="heightSpinner" max="32767" attributes="0"/>
-                  <Component id="durationSpinner" max="32767" attributes="0"/>
-                  <Component id="winSpinner" max="32767" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="widthLabel" min="-2" max="-2" attributes="0"/>
+                          <Component id="heightLabel" min="-2" max="-2" attributes="0"/>
+                          <Component id="durationLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="percentLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="widthSpinner" pref="64" max="32767" attributes="0"/>
+                          <Component id="heightSpinner" max="32767" attributes="0"/>
+                          <Component id="durationSpinner" max="32767" attributes="0"/>
+                          <Component id="winSpinner" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Component id="streetRadioButton" min="-2" max="-2" attributes="0"/>
+                  <Component id="houseRadioButton" min="-2" max="-2" attributes="0"/>
+                  <Component id="fireStationRadioButton" min="-2" max="-2" attributes="0"/>
+                  <Component id="cityFillRadioButton" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="312" max="32767" attributes="0"/>
           </Group>
@@ -75,6 +87,14 @@
                           <Component id="percentLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="winSpinner" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="streetRadioButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="houseRadioButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="fireStationRadioButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="cityFillRadioButton" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="mapScrollPane" min="-2" pref="512" max="-2" attributes="0"/>
               </Group>
@@ -146,6 +166,27 @@
     <Component class="javax.swing.JSpinner" name="durationSpinner">
     </Component>
     <Component class="javax.swing.JSpinner" name="winSpinner">
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="streetRadioButton">
+      <Properties>
+        <Property name="selected" type="boolean" value="true"/>
+        <Property name="text" type="java.lang.String" value="Street"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="houseRadioButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="House"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="fireStationRadioButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Fire Station"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="cityFillRadioButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Fill"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

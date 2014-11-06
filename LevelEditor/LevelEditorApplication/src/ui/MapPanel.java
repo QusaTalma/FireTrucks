@@ -5,19 +5,22 @@
  */
 package ui;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
+import level.model.Level;
+import level.model.Tile;
 
 /**
  *
  * @author asheehan
  */
 public class MapPanel extends JPanel{
-    private static final int TILE_SIZE = 16;
+    public static final int TILE_SIZE = 16;
     private static final String TILE_SET_TEXTURE_FILE = "./Resources/FiretruckCityTextures.jpg";
     private BufferedImage tileSet;
     
@@ -44,21 +47,66 @@ public class MapPanel extends JPanel{
             onFireHouseRGB = tileSet.getRGB(TILE_SIZE*3, 0, TILE_SIZE, TILE_SIZE, null, 0, TILE_SIZE);
             fireStationRGB = tileSet.getRGB(TILE_SIZE*4, 0, TILE_SIZE, TILE_SIZE, null, 0, TILE_SIZE);
         }
-        
-        mapImage = new BufferedImage(1024, 1024, BufferedImage.TYPE_INT_RGB);
-        
-        int[] tileToSet = cityFillRGB;
-        
-        for(int x=0; x<1024; x+=16){
-            for(int y=0; y<1024; y+=16){
-                mapImage.setRGB(x, y, TILE_SIZE, TILE_SIZE, tileToSet, 0, TILE_SIZE);
-            }
-        }
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g); //To change body of generated methods, choose Tools | Templates.
-        g.drawImage(mapImage, 0, 0, null);
+        if(mapImage != null){
+            g.drawImage(mapImage, 0, 0, null);
+        }
+    }
+    
+    public void updateMap(Level level){
+        int width = level.getWidth();
+        int height = level.getHeight();
+        
+        resizePanel(width, height);
+        
+        updateMapImage(level);
+    }
+    
+    protected void resizePanel(int width, int height){
+        setSize(width, height);
+        setPreferredSize(new Dimension(width, height));
+    }
+    
+    protected void updateMapImage(Level level){
+        BufferedImage newMapImage = new BufferedImage(1024, 1024, BufferedImage.TYPE_INT_RGB);
+        
+        Tile[][] tileMap = level.getMap().getTileMap();
+        
+        for(int x=0; x<level.getWidth(); x++){
+            for(int y=0; y<level.getHeight(); y++){
+                Tile tile = tileMap[x][y];
+                int[] tileRGB;
+                switch(tile){
+                    case STREET:
+                        tileRGB = streetRGB;
+                        break;
+                        
+                    case HOUSE:
+                        tileRGB = houseRGB;
+                        break;
+                        
+                    case HOUSE_ON_FIRE:
+                        tileRGB = onFireHouseRGB;
+                        break;
+                        
+                    case FIRE_STATION:
+                        tileRGB = fireStationRGB;
+                        break;
+                        
+                    default:
+                    case CITY_FILL:
+                        tileRGB = cityFillRGB;
+                        break;
+                }
+                
+                newMapImage.setRGB(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, tileRGB, 0, TILE_SIZE);
+            }
+        }
+        
+        mapImage = newMapImage;
     }
 }
