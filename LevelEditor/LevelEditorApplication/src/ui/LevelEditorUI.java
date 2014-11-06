@@ -7,6 +7,7 @@ package ui;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
@@ -205,42 +206,72 @@ public class LevelEditorUI extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     
     private class PanelMouseListener implements MouseListener{
+        private MapPanelMouseMoveListener moveListener = null;
         @Override
-        public void mouseClicked(MouseEvent e) {
-            int x = (int)Math.floor(e.getX() / (float)MapPanel.TILE_SIZE);
-            int y = (int)Math.floor(e.getY() / (float)MapPanel.TILE_SIZE);
-            
-            Tile toSet = null;
-            
-            if(streetRadioButton.isSelected()){
-                toSet = Tile.STREET;
-            }else if(houseRadioButton.isSelected()){
-                toSet = Tile.HOUSE;
-            }else if(fireStationRadioButton.isSelected()){
-                toSet = Tile.FIRE_STATION;
-            }else if(cityFillRadioButton.isSelected()){
-                toSet = Tile.CITY_FILL;
-            }
-            
-            if(toSet != null){
-                if(x < level.getWidth() && y < level.getHeight()){
-                    level.getMap().getTileMap()[x][y] = toSet;
-                    mapPanel.updateMap(level);
-                }
-            }
+        public void mouseClicked(MouseEvent e) {}
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            moveListener = new MapPanelMouseMoveListener();
+            mapPanel.addMouseMotionListener(moveListener);
         }
 
         @Override
-        public void mousePressed(MouseEvent e) {}
-
-        @Override
-        public void mouseReleased(MouseEvent e) {}
+        public void mouseReleased(MouseEvent e) {
+            if(moveListener != null){
+                mapPanel.removeMouseMotionListener(moveListener);
+                moveListener = null;
+            }
+        }
 
         @Override
         public void mouseEntered(MouseEvent e) {}
 
         @Override
-        public void mouseExited(MouseEvent e) {}
+        public void mouseExited(MouseEvent e) {
+            if(moveListener != null){
+                mapPanel.removeMouseMotionListener(moveListener);
+                moveListener = null;
+            }
+        }
+    }
+    
+    private class MapPanelMouseMoveListener implements MouseMotionListener{
+        private int prevX = -1;
+        private int prevY = -1;
+
+        @Override
+        public void mouseDragged(MouseEvent e) {
+            int x = (int)Math.floor(e.getX() / (float)MapPanel.TILE_SIZE);
+            int y = (int)Math.floor(e.getY() / (float)MapPanel.TILE_SIZE);
+            
+            if(x != prevX || y != prevY){
+                prevX = x;
+                prevY = y;
+            
+                Tile toSet = null;
+
+                if(streetRadioButton.isSelected()){
+                    toSet = Tile.STREET;
+                }else if(houseRadioButton.isSelected()){
+                    toSet = Tile.HOUSE;
+                }else if(fireStationRadioButton.isSelected()){
+                    toSet = Tile.FIRE_STATION;
+                }else if(cityFillRadioButton.isSelected()){
+                    toSet = Tile.CITY_FILL;
+                }
+
+                if(toSet != null){
+                    if(x < level.getWidth() && y < level.getHeight()){
+                        level.getMap().getTileMap()[x][y] = toSet;
+                        mapPanel.updateMap(level);
+                    }
+                }
+            }
+        }
+
+        @Override
+        public void mouseMoved(MouseEvent e) {}
     }
     
     private class WidthSpinnerChangeListener implements ChangeListener{
