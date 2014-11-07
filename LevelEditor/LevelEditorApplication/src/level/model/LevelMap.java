@@ -5,6 +5,7 @@
  */
 package level.model;
 
+import java.awt.Point;
 import java.util.Arrays;
 
 /**
@@ -13,6 +14,7 @@ import java.util.Arrays;
  */
 public class LevelMap {
     private Tile[][] tileMap;
+    private Point fireHousePos;
     
     public LevelMap(int width, int height){
         tileMap = new Tile[width][height];
@@ -25,8 +27,25 @@ public class LevelMap {
         return tileMap;
     }
 
-    public void setTileMap(Tile[][] tileMap) {
-        this.tileMap = tileMap;
+    public void setTile(int x, int y, Tile toSet){
+        if(fireHousePos != null){
+            //If setting to firestation then update the location
+            if(toSet == Tile.FIRE_STATION){
+                //Revert the firehouse into a regular house
+                tileMap[fireHousePos.x][fireHousePos.y] = Tile.HOUSE;
+                fireHousePos.x = x;
+                fireHousePos.y = y;
+            }else{
+                //If setting the firestation to a non-firestation then unset
+                if(x == fireHousePos.x && y == fireHousePos.y){
+                    fireHousePos = null;
+                }
+            }
+        }else if(toSet == Tile.FIRE_STATION){
+            fireHousePos = new Point(x, y);
+        }
+        
+        tileMap[x][y] = toSet;
     }
     
     public void resize(int newWidth, int newHeight){
