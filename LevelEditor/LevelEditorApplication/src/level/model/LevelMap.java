@@ -26,6 +26,14 @@ public class LevelMap {
     public Tile[][] getTileMap() {
         return tileMap;
     }
+    
+    public Point getFireHousePos(){
+        return fireHousePos;
+    }
+    
+    public void setFireHousePos(Point fireHousePos){
+        this.fireHousePos = fireHousePos;
+    }
 
     public void setTile(int x, int y, Tile toSet){
         if(fireHousePos != null){
@@ -70,5 +78,19 @@ public class LevelMap {
         }
         
         tileMap = newMap;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        
+        for(int y=0; y<tileMap[0].length; y++){
+            for(int x=0; x<tileMap.length; x++){
+                builder.append(tileMap[x][y].toString());
+            }
+            builder.append("\n");
+        }
+        
+        return builder.toString();
     }
 }

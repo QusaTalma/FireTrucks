@@ -5,21 +5,27 @@
  */
 package ui;
 
+import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.io.File;
+import javax.swing.JFileChooser;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import level.model.*;
+import ui.model.ArsonPathTableModel;
 
 /**
  *
  * @author asheehan
  */
-public class LevelEditorUI extends javax.swing.JFrame {
+public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableModel.TimeChangeDelegate{
     private Level level;
 
     /**
@@ -57,6 +63,36 @@ public class LevelEditorUI extends javax.swing.JFrame {
         tileButtonGroup.add(houseRadioButton);
         tileButtonGroup.add(fireStationRadioButton);
         tileButtonGroup.add(cityFillRadioButton);
+        tileButtonGroup.add(startFireRadioButton);
+        
+        fireTable.setModel(new ArsonPathTableModel(level.getArsonPath().getSteps(), this));
+        
+        final JFileChooser fc = new JFileChooser();
+        saveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int returnVal = fc.showSaveDialog(LevelEditorUI.this);
+
+                if (returnVal == JFileChooser.APPROVE_OPTION) {
+                    File file = fc.getSelectedFile();
+                    level.writeToFile(file);
+                }
+            }
+        });
+        
+        loadButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int returnVal = fc.showOpenDialog(LevelEditorUI.this);
+
+                if (returnVal == JFileChooser.APPROVE_OPTION) {
+                    File file = fc.getSelectedFile();
+                    level = Level.loadFromFile(file);
+                    mapPanel.updateMap(level);
+                    refreshList();
+                }
+            }
+        });
     }
 
     /**
@@ -83,6 +119,11 @@ public class LevelEditorUI extends javax.swing.JFrame {
         houseRadioButton = new javax.swing.JRadioButton();
         fireStationRadioButton = new javax.swing.JRadioButton();
         cityFillRadioButton = new javax.swing.JRadioButton();
+        startFireRadioButton = new javax.swing.JRadioButton();
+        fireListContainer = new javax.swing.JScrollPane();
+        fireTable = new javax.swing.JTable();
+        saveButton = new javax.swing.JButton();
+        loadButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(10000, 10000));
@@ -124,38 +165,65 @@ public class LevelEditorUI extends javax.swing.JFrame {
 
         cityFillRadioButton.setText("Fill");
 
+        startFireRadioButton.setText("Start a Fire");
+
+        fireTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        fireListContainer.setViewportView(fireTable);
+
+        saveButton.setText("Save");
+
+        loadButton.setText("Load");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(mapScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(widthLabel)
-                            .addComponent(heightLabel)
-                            .addComponent(durationLabel)
-                            .addComponent(percentLabel))
-                        .addGap(27, 27, 27)
+                        .addComponent(mapScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(widthSpinner, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
-                            .addComponent(heightSpinner)
-                            .addComponent(durationSpinner)
-                            .addComponent(winSpinner)))
-                    .addComponent(streetRadioButton)
-                    .addComponent(houseRadioButton)
-                    .addComponent(fireStationRadioButton)
-                    .addComponent(cityFillRadioButton))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(widthLabel)
+                                    .addComponent(heightLabel)
+                                    .addComponent(durationLabel)
+                                    .addComponent(percentLabel))
+                                .addGap(27, 27, 27)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(widthSpinner, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
+                                    .addComponent(heightSpinner)
+                                    .addComponent(durationSpinner)
+                                    .addComponent(winSpinner)))
+                            .addComponent(streetRadioButton)
+                            .addComponent(houseRadioButton)
+                            .addComponent(fireStationRadioButton)
+                            .addComponent(cityFillRadioButton)
+                            .addComponent(startFireRadioButton)
+                            .addComponent(fireListContainer, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(loadButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(saveButton)))
                 .addContainerGap(312, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(widthSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -179,9 +247,17 @@ public class LevelEditorUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(fireStationRadioButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cityFillRadioButton))
+                        .addComponent(cityFillRadioButton)
+                        .addGap(29, 29, 29)
+                        .addComponent(startFireRadioButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(fireListContainer, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(mapScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(506, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(saveButton)
+                    .addComponent(loadButton))
+                .addContainerGap(471, Short.MAX_VALUE))
         );
 
         pack();
@@ -191,13 +267,18 @@ public class LevelEditorUI extends javax.swing.JFrame {
     private javax.swing.JRadioButton cityFillRadioButton;
     private javax.swing.JLabel durationLabel;
     private javax.swing.JSpinner durationSpinner;
+    private javax.swing.JScrollPane fireListContainer;
     private javax.swing.JRadioButton fireStationRadioButton;
+    private javax.swing.JTable fireTable;
     private javax.swing.JLabel heightLabel;
     private javax.swing.JSpinner heightSpinner;
     private javax.swing.JRadioButton houseRadioButton;
+    private javax.swing.JButton loadButton;
     private ui.MapPanel mapPanel;
     private javax.swing.JScrollPane mapScrollPane;
     private javax.swing.JLabel percentLabel;
+    private javax.swing.JButton saveButton;
+    private javax.swing.JRadioButton startFireRadioButton;
     private javax.swing.JRadioButton streetRadioButton;
     private javax.swing.ButtonGroup tileButtonGroup;
     private javax.swing.JLabel widthLabel;
@@ -226,15 +307,34 @@ public class LevelEditorUI extends javax.swing.JFrame {
                 toSet = Tile.FIRE_STATION;
             }else if(cityFillRadioButton.isSelected()){
                 toSet = Tile.CITY_FILL;
+            }else if(startFireRadioButton.isSelected()){
+                toSet = Tile.HOUSE_ON_FIRE;
             }
 
             if(toSet != null){
                 if(x < level.getWidth() && y < level.getHeight()){
+                    if(toSet == Tile.HOUSE_ON_FIRE){
+                        level.getArsonPath().addStep(x, y);
+                    }else if(level.getMap().getTileMap()[x][y] == Tile.HOUSE_ON_FIRE){
+                        level.getArsonPath().removeStep(x, y);
+                    }
+                    
                     level.getMap().setTile(x, y, toSet);
                     mapPanel.updateMap(level);
+                    refreshList();
                 }
             }
         }
+    }
+    
+    private void refreshList(){
+        fireTable.setModel(new ArsonPathTableModel(level.getArsonPath().getSteps(), this));
+    }
+
+    @Override
+    public void setStepTime(Point location, int time) {
+        level.getArsonPath().setStepTime(location.x, location.y, time);
+        refreshList();
     }
     
     private class PanelMouseListener implements MouseListener{
@@ -295,6 +395,7 @@ public class LevelEditorUI extends javax.swing.JFrame {
             int newWidth = (int)source.getValue();
             level.resize(newWidth, level.getHeight());
             mapPanel.updateMap(level);
+            refreshList();
         }
     }
     
@@ -305,6 +406,7 @@ public class LevelEditorUI extends javax.swing.JFrame {
             int newHeight = (int)source.getValue();
             level.resize(level.getWidth(), newHeight);
             mapPanel.updateMap(level);
+            refreshList();
         }
     }
     
@@ -314,6 +416,7 @@ public class LevelEditorUI extends javax.swing.JFrame {
             JSpinner source = (JSpinner)e.getSource();
             int newDuration = (int)source.getValue();
             level.setDurationSeconds(newDuration);
+            refreshList();;
         }
     }
     

@@ -35,28 +35,39 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="mapScrollPane" min="-2" pref="512" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="widthLabel" min="-2" max="-2" attributes="0"/>
-                          <Component id="heightLabel" min="-2" max="-2" attributes="0"/>
-                          <Component id="durationLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="percentLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="mapScrollPane" min="-2" pref="512" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="widthSpinner" pref="64" max="32767" attributes="0"/>
-                          <Component id="heightSpinner" max="32767" attributes="0"/>
-                          <Component id="durationSpinner" max="32767" attributes="0"/>
-                          <Component id="winSpinner" max="32767" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="widthLabel" min="-2" max="-2" attributes="0"/>
+                                  <Component id="heightLabel" min="-2" max="-2" attributes="0"/>
+                                  <Component id="durationLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="percentLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="widthSpinner" pref="64" max="32767" attributes="0"/>
+                                  <Component id="heightSpinner" max="32767" attributes="0"/>
+                                  <Component id="durationSpinner" max="32767" attributes="0"/>
+                                  <Component id="winSpinner" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Component id="streetRadioButton" min="-2" max="-2" attributes="0"/>
+                          <Component id="houseRadioButton" min="-2" max="-2" attributes="0"/>
+                          <Component id="fireStationRadioButton" min="-2" max="-2" attributes="0"/>
+                          <Component id="cityFillRadioButton" min="-2" max="-2" attributes="0"/>
+                          <Component id="startFireRadioButton" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="fireListContainer" pref="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
-                  <Component id="streetRadioButton" min="-2" max="-2" attributes="0"/>
-                  <Component id="houseRadioButton" min="-2" max="-2" attributes="0"/>
-                  <Component id="fireStationRadioButton" min="-2" max="-2" attributes="0"/>
-                  <Component id="cityFillRadioButton" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="loadButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="saveButton" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace pref="312" max="32767" attributes="0"/>
           </Group>
@@ -66,7 +77,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="widthSpinner" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -95,10 +106,19 @@
                       <Component id="fireStationRadioButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="cityFillRadioButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                      <Component id="startFireRadioButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="fireListContainer" min="-2" pref="184" max="-2" attributes="0"/>
                   </Group>
                   <Component id="mapScrollPane" min="-2" pref="512" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="506" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="saveButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="loadButton" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="471" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -186,6 +206,42 @@
     <Component class="javax.swing.JRadioButton" name="cityFillRadioButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Fill"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="startFireRadioButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Start a Fire"/>
+      </Properties>
+    </Component>
+    <Container class="javax.swing.JScrollPane" name="fireListContainer">
+      <AuxValues>
+        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+      </AuxValues>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+      <SubComponents>
+        <Component class="javax.swing.JTable" name="fireTable">
+          <Properties>
+            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+              <Table columnCount="4" rowCount="4">
+                <Column editable="true" title="Title 1" type="java.lang.Object"/>
+                <Column editable="true" title="Title 2" type="java.lang.Object"/>
+                <Column editable="true" title="Title 3" type="java.lang.Object"/>
+                <Column editable="true" title="Title 4" type="java.lang.Object"/>
+              </Table>
+            </Property>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Component class="javax.swing.JButton" name="saveButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Save"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="loadButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Load"/>
       </Properties>
     </Component>
   </SubComponents>
