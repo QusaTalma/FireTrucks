@@ -211,11 +211,12 @@ public class Level {
         String toWrite;
         
         StringBuilder writeBuilder = new StringBuilder();
-        writeBuilder.append(String.format("%d,%d\n", width, height));
+        writeBuilder.append(String.format("%d,%d\n", width+map.getFillPadding()*2,
+                height+map.getFillPadding()*2));
         writeBuilder.append(String.format("%s", map.toString()));
         writeBuilder.append(String.format("%d\n", winPercent));
         writeBuilder.append(String.format("%d\n", durationSeconds));
-        writeBuilder.append(arsonPath.toString());
+        writeBuilder.append(arsonPath.toString(map.getFillPadding()));
         
         OutputStream fileOutput = null;
         
@@ -235,5 +236,9 @@ public class Level {
                 }
             }
         }        
+    }
+
+    public void setFillPadding(int newPadding) {
+        map.setFillPadding(newPadding);
     }
 }

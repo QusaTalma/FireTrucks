@@ -40,27 +40,29 @@
                       <Component id="mapScrollPane" min="-2" pref="512" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="widthLabel" min="-2" max="-2" attributes="0"/>
-                                  <Component id="heightLabel" min="-2" max="-2" attributes="0"/>
-                                  <Component id="durationLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="percentLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="widthSpinner" pref="64" max="32767" attributes="0"/>
-                                  <Component id="heightSpinner" max="32767" attributes="0"/>
-                                  <Component id="durationSpinner" max="32767" attributes="0"/>
-                                  <Component id="winSpinner" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
                           <Component id="streetRadioButton" min="-2" max="-2" attributes="0"/>
                           <Component id="houseRadioButton" min="-2" max="-2" attributes="0"/>
                           <Component id="fireStationRadioButton" min="-2" max="-2" attributes="0"/>
                           <Component id="cityFillRadioButton" min="-2" max="-2" attributes="0"/>
                           <Component id="startFireRadioButton" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="fireListContainer" pref="0" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="widthLabel" min="-2" max="-2" attributes="0"/>
+                                  <Component id="heightLabel" min="-2" max="-2" attributes="0"/>
+                                  <Component id="durationLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="percentLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="paddingLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="paddingSpinner" max="32767" attributes="0"/>
+                                  <Component id="widthSpinner" pref="64" max="32767" attributes="0"/>
+                                  <Component id="heightSpinner" max="32767" attributes="0"/>
+                                  <Component id="durationSpinner" max="32767" attributes="0"/>
+                                  <Component id="winSpinner" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
                       </Group>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
@@ -77,28 +79,32 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
+              <Group type="103" groupAlignment="1" max="-2" attributes="0">
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="widthSpinner" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="widthLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="heightSpinner" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="heightLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="durationLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="durationSpinner" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="percentLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="winSpinner" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="widthSpinner" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="heightLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="heightSpinner" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="durationSpinner" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="durationLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="winSpinner" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="percentLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="paddingLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="paddingSpinner" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="18" max="32767" attributes="0"/>
                       <Component id="streetRadioButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="houseRadioButton" min="-2" max="-2" attributes="0"/>
@@ -118,7 +124,7 @@
                   <Component id="saveButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="loadButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="471" max="32767" attributes="0"/>
+              <EmptySpace pref="455" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -242,6 +248,13 @@
     <Component class="javax.swing.JButton" name="loadButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Load"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JSpinner" name="paddingSpinner">
+    </Component>
+    <Component class="javax.swing.JLabel" name="paddingLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Padding"/>
       </Properties>
     </Component>
   </SubComponents>

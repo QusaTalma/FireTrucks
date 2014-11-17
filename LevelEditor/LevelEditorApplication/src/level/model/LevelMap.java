@@ -15,11 +15,12 @@ import java.util.Arrays;
 public class LevelMap {
     private Tile[][] tileMap;
     private Point fireHousePos;
+    private int fillPadding = 0;
     
     public LevelMap(int width, int height){
         tileMap = new Tile[width][height];
         for(int x=0; x<width; x++){
-            Arrays.fill(tileMap[x], Tile.CITY_FILL);
+            Arrays.fill(tileMap[x], Tile.STREET);
         }
     }
 
@@ -33,6 +34,15 @@ public class LevelMap {
     
     public void setFireHousePos(Point fireHousePos){
         this.fireHousePos = fireHousePos;
+    }
+    
+    public void setFillPadding(int fillPadding){
+        this.fillPadding = fillPadding;
+        
+    }
+    
+    public int getFillPadding(){
+        return fillPadding;
     }
 
     public void setTile(int x, int y, Tile toSet){
@@ -84,9 +94,29 @@ public class LevelMap {
     public String toString() {
         StringBuilder builder = new StringBuilder();
         
+        for(int i=0; i<fillPadding; i++){
+            for(int x=0; x<tileMap.length + fillPadding*2; x++){
+                builder.append(Tile.CITY_FILL.toString());
+            }
+            builder.append("\n");
+        }
+        
         for(int y=0; y<tileMap[0].length; y++){
+            for(int i=0; i<fillPadding; i++){
+                builder.append(Tile.CITY_FILL.toString());
+            }
             for(int x=0; x<tileMap.length; x++){
                 builder.append(tileMap[x][y].toString());
+            }
+            for(int i=0; i<fillPadding; i++){
+                builder.append(Tile.CITY_FILL.toString());
+            }
+            builder.append("\n");
+        }
+        
+        for(int i=0; i<fillPadding; i++){
+            for(int x=0; x<tileMap.length + fillPadding*2; x++){
+                builder.append(Tile.CITY_FILL.toString());
             }
             builder.append("\n");
         }

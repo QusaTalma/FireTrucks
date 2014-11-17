@@ -81,13 +81,12 @@ public class ArsonPath {
         return nextTime;
     }
 
-    @Override
-    public String toString() {
+    public String toString(int fillPadding) {
         StringBuilder builder = new StringBuilder();
         
         List<ArsonStep> stepList = getSteps();
         for(ArsonStep step : stepList){
-            builder.append(step.toString());
+            builder.append(step.toString(fillPadding));
             builder.append("\n");
         }
         

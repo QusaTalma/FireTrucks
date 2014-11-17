@@ -36,8 +36,8 @@ public class ArsonStep implements Comparable<ArsonStep>{
         return Integer.compare(time, o.getTime());
     }
 
-    @Override
-    public String toString() {
-        return String.format("%d,%d,%d", location.x, location.y, time);
+    public String toString(int fillPadding) {
+        return String.format("%d,%d,%d", location.x+fillPadding, 
+                location.y+fillPadding, time);
     }
 }

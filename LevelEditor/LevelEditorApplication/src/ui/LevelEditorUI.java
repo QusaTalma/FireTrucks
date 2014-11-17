@@ -56,6 +56,10 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
         winSpinner.setModel(winSpinnerModel);
         winSpinner.addChangeListener(new WinSpinnerChangeListener());
         
+        SpinnerModel paddingSpinnerModel = new SpinnerNumberModel(0, 0, 100, 1);
+        paddingSpinner.setModel(paddingSpinnerModel);
+        paddingSpinner.addChangeListener(new PaddingSpinnerChangeListener());
+        
         mapPanel.updateMap(level);
         mapPanel.addMouseListener(new PanelMouseListener());
         
@@ -124,6 +128,8 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
         fireTable = new javax.swing.JTable();
         saveButton = new javax.swing.JButton();
         loadButton = new javax.swing.JButton();
+        paddingSpinner = new javax.swing.JSpinner();
+        paddingLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(10000, 10000));
@@ -184,6 +190,8 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
 
         loadButton.setText("Load");
 
+        paddingLabel.setText("Padding");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -195,24 +203,26 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
                         .addComponent(mapScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(widthLabel)
-                                    .addComponent(heightLabel)
-                                    .addComponent(durationLabel)
-                                    .addComponent(percentLabel))
-                                .addGap(27, 27, 27)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(widthSpinner, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
-                                    .addComponent(heightSpinner)
-                                    .addComponent(durationSpinner)
-                                    .addComponent(winSpinner)))
                             .addComponent(streetRadioButton)
                             .addComponent(houseRadioButton)
                             .addComponent(fireStationRadioButton)
                             .addComponent(cityFillRadioButton)
                             .addComponent(startFireRadioButton)
-                            .addComponent(fireListContainer, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                            .addComponent(fireListContainer, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(widthLabel)
+                                    .addComponent(heightLabel)
+                                    .addComponent(durationLabel)
+                                    .addComponent(percentLabel)
+                                    .addComponent(paddingLabel))
+                                .addGap(27, 27, 27)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(paddingSpinner)
+                                    .addComponent(widthSpinner, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
+                                    .addComponent(heightSpinner)
+                                    .addComponent(durationSpinner)
+                                    .addComponent(winSpinner)))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(loadButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -223,24 +233,27 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(widthSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(widthLabel))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(heightSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(heightLabel))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(durationLabel)
-                            .addComponent(durationSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(percentLabel)
-                            .addComponent(winSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(widthLabel)
+                            .addComponent(widthSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(heightLabel)
+                            .addComponent(heightSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(durationSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(durationLabel))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(winSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(percentLabel))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(paddingLabel)
+                            .addComponent(paddingSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                         .addComponent(streetRadioButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(houseRadioButton)
@@ -257,7 +270,7 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(saveButton)
                     .addComponent(loadButton))
-                .addContainerGap(471, Short.MAX_VALUE))
+                .addContainerGap(455, Short.MAX_VALUE))
         );
 
         pack();
@@ -276,6 +289,8 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
     private javax.swing.JButton loadButton;
     private ui.MapPanel mapPanel;
     private javax.swing.JScrollPane mapScrollPane;
+    private javax.swing.JLabel paddingLabel;
+    private javax.swing.JSpinner paddingSpinner;
     private javax.swing.JLabel percentLabel;
     private javax.swing.JButton saveButton;
     private javax.swing.JRadioButton startFireRadioButton;
@@ -426,6 +441,15 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
             JSpinner source = (JSpinner)e.getSource();
             int newWin = (int)source.getValue();
             level.setWinPercent(newWin);
+        }
+    }
+    
+    private class PaddingSpinnerChangeListener implements ChangeListener{
+        @Override
+        public void stateChanged(ChangeEvent e) {
+            JSpinner source = (JSpinner)e.getSource();
+            int newPadding = (int)source.getValue();
+            level.setFillPadding(newPadding);
         }
     }
 }
