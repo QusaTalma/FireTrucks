@@ -135,10 +135,12 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
         setMaximumSize(new java.awt.Dimension(10000, 10000));
         setPreferredSize(new java.awt.Dimension(800, 600));
 
+        mapScrollPane.setOpaque(false);
         mapScrollPane.setPreferredSize(new java.awt.Dimension(256, 256));
         mapScrollPane.setRequestFocusEnabled(false);
         mapScrollPane.setSize(new java.awt.Dimension(256, 256));
 
+        mapPanel.setBackground(new java.awt.Color(51, 51, 255));
         mapPanel.setPreferredSize(new java.awt.Dimension(1024, 1024));
 
         javax.swing.GroupLayout mapPanelLayout = new javax.swing.GroupLayout(mapPanel);

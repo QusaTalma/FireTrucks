@@ -5,6 +5,7 @@
  */
 package ui;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -72,7 +73,12 @@ public class MapPanel extends JPanel{
     }
     
     protected void updateMapImage(Level level){
-        BufferedImage newMapImage = new BufferedImage(1024, 1024, BufferedImage.TYPE_INT_RGB);
+        final int mapImageSize = 1024;
+        BufferedImage newMapImage = new BufferedImage(mapImageSize, mapImageSize, BufferedImage.TYPE_INT_RGB);
+        Graphics g = newMapImage.createGraphics();
+        g.setColor(Color.BLUE);
+        g.fillRect(0, 0, mapImageSize, mapImageSize);
+        g.dispose();
         
         Tile[][] tileMap = level.getMap().getTileMap();
         
