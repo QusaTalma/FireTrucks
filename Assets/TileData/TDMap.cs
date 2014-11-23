@@ -3,39 +3,41 @@ using System.Collections.Generic;
 
 public class TDMap {
 	TDTile[,] _tiles;
+
 	int _width;
+	public int Width{
+		get { return _width; }
+	}
+	
 	int _height;
+	public int Height{
+		get { return _height; }
+	}
+	
+	float totalDurability;
+	Vector2 fireHousePosition;
 
-	int fireHouseX = 5;
-	int fireHouseY = 5;
+	public TDMap(TDTile[,] tiles, Vector2 fireHousePos, float totalDurability) {
+		_width = tiles.GetLength(0);
+		_height = tiles.GetLength(1);
 
-	public TDMap(int width, int height) {
-		_width = width;
-		_height = height;
+		_tiles = tiles;
 
-		_tiles = new TDTile[_width,_height];
+		this.totalDurability = totalDurability;
 
-		for (int x = 0; x< _width; x++){
-			for( int y = 0; y < _height; y++){
-				_tiles[x,y] = new TDTile(x, y);
-				if(x == 0 ||
-				   x == _width -1 ||
-				   x%3 == 0 ||
-				   y == 0 ||
-				   y == _height - 1){
-					_tiles[x,y].type = TDTile.TILE_STREET;
-				}
-			}
-		}
+		SetFireHouseCoordinates (fireHousePos);
+	}
 
-		PlaceHousesOnStreets ();
-
-		_tiles [fireHouseX, fireHouseY].type = TDTile.TILE_FIREHOUSE;
+	public void SetFireHouseCoordinates(Vector2 pos){
+		fireHousePosition = pos;
+		
+		totalDurability -= _tiles [(int)fireHousePosition.x, (int)fireHousePosition.y].GetDurability ();
+		_tiles [(int)fireHousePosition.x, (int)fireHousePosition.y].type = TDTile.TILE_FIREHOUSE;
 	}
 
 	public void GetFireHouseCoordinates(out Vector2 pos){
-		pos.x = fireHouseX;
-		pos.y = fireHouseY;
+		pos.x = fireHousePosition.x; 
+		pos.y = fireHousePosition.y;
 	}
 
 	public TDTile GetTile(int x, int y){
@@ -48,32 +50,20 @@ public class TDMap {
 		return _tiles [x, y];
 	}
 
-	void PlaceHousesOnStreets(){
+	public float GetTotalDurability(){
+		return totalDurability;
+	}
+
+	public float GetCurrentDurability(){
+		float currentDurability = 0;
 		for (int x = 0; x< _width; x++){
 			for( int y = 0; y < _height; y++){
-				if(_tiles[x,y].type == TDTile.TILE_STREET){
-					PlaceHousesOnStreet(x, y);
+				if(_tiles[x,y].type == TDTile.TILE_HOUSE){
+					currentDurability += _tiles[x,y].GetDurability();
 				}
 			}
 		}
-	}
-
-	void PlaceHousesOnStreet(int x, int y){
-		if (x > 0 && _tiles[x - 1, y].type == TDTile.TILE_CITY_FILL) {
-			_tiles[x-1,y].type = TDTile.TILE_HOUSE;
-		}
-
-		if (x < _width - 1 && _tiles [x + 1, y].type == TDTile.TILE_CITY_FILL) {
-			_tiles[x+1,y].type = TDTile.TILE_HOUSE;
-		}
-		
-		if (y > 0 && _tiles[x, y-1].type == TDTile.TILE_CITY_FILL) {
-			_tiles[x,y-1].type = TDTile.TILE_HOUSE;
-		}
-		
-		if (y < _height - 1 && _tiles [x, y+1].type == TDTile.TILE_CITY_FILL) {
-			_tiles[x,y+1].type = TDTile.TILE_HOUSE;
-		}
+		return currentDurability;
 	}
 
 	public List<TDTile> GetAdjacentTiles(TDTile tile) {

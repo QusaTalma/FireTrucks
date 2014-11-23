@@ -1,57 +1,80 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System.IO;
+
+/*****
+ * 
+ * This class handles GameObject interactions related to the map:
+ * Creates the texture for the map and displays it.
+ * Responds to touches on the map
+ *
+ *****/
 
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(MeshRenderer))]
 [RequireComponent(typeof(MeshCollider))]
 public class TGMap : MonoBehaviour {
-	public int size_x;
-	public int size_z;
 	public float tileSize;
 
 	public Texture2D terrainTiles;
 	public int tileResolution;
 
-	public GameObject firetruckPrefab;
+	public GameObject firehousePrefab;
+	public GameObject arsonistPrefab;
 
-	TDMap _map;
+	public string levelFileName;
+	public string nextLevelSceneName;
 
-	//Requested locations for new trucks to go to
-	List<Vector2> _truckSpawnQueue;
+	public TDMap Map{
+		get { return _level.Map; }
+	}
 
-	//Actual trucks that exist
-	List<EGFiretruck> _activeTrucks;
-	List<EGFiretruck> _idleTrucks;
+	public float TimeInSecondsToPlay{
+		get { return _level.TimeInSecondsToPlay; }
+	}
 
-	// Use this for initialization
+	public float PercentToWin{
+		get { return _level.PercentRemainingToWin; }
+	}
+
+	TDGameSession _gameSession;
+	TGArsonist arsonist;
+
+	TDLevel _level;
+
 	void Start () {
+		string levelText = "";
+
+		TextAsset levelFile = Resources.Load(levelFileName) as TextAsset;
+		if(levelFile != null){
+			levelText = levelFile.text;
+		}
+
+		_level = new TDLevel(levelText);
+		_gameSession = new TDGameSession(_level.TimeInSecondsToPlay);
+
+		//Create the map
 		BuildMesh ();
 		BuildTexture ();
+		//Initiate game state
+		PlaceFireHouse ();
+		PlaceArsonist ();
+
+		Time.timeScale = 1f;
 		
-		_activeTrucks = new List<EGFiretruck> ();
-		_truckSpawnQueue = new List<Vector2> ();
-		_idleTrucks = new List<EGFiretruck> ();
+		GUIManager guiManager = gameObject.GetComponent<GUIManager> ();
+		guiManager.nextLevelSceneName = nextLevelSceneName;
 	}
 
 	void Update(){
-		List<EGFiretruck> toMoveToIdle = new List<EGFiretruck> ();
-		for (int i=0; i<_activeTrucks.Count; i++) {
-			EGFiretruck truck = _activeTrucks[i];
-
-			if(!truck.IsActive()){
-				toMoveToIdle.Add(truck);
-			}
+		_gameSession.AddToCurrentTime (Time.deltaTime);
+		if (!_gameSession.IsActive()) {
+			Time.timeScale = 0f;
 		}
-
-		for (int i=0; i<toMoveToIdle.Count; i++) {
-			EGFiretruck truck = toMoveToIdle[i];
-			SetTruckIdle(truck);
-		}
-
-		//TODO only spawn when there's space for the truck
-		SpawnNextTruck ();
 	}
 
+	//Loads the texture for each tile from the sprite strip into 
+	//individual tile color data
 	Color[][] ChopUpTiles(){
 		int numTilesPerRow = terrainTiles.width / tileResolution;
 		int numRows = terrainTiles.height / tileResolution;
@@ -70,41 +93,73 @@ public class TGMap : MonoBehaviour {
 		return tiles;
 	}
 
+	//Places the firehouse GameObject on the map
+	//TODO this should be determined by the level, once levels are a thing
+	void PlaceFireHouse(){
+		Vector2 fireHouseTilePos = new Vector2 ();
+		Map.GetFireHouseCoordinates (out fireHouseTilePos);
+
+		Vector3 housePos = GetPositionForTile (Mathf.FloorToInt(fireHouseTilePos.x),
+		                                       Mathf.FloorToInt(fireHouseTilePos.y));
+
+		housePos.x += 0.5f;
+		housePos.z -= 0.5f;
+
+		GameObject house = (GameObject)Instantiate (firehousePrefab);
+		house.transform.position = housePos;
+
+		EGFirehouse firehouse = house.GetComponent<EGFirehouse>();
+		firehouse.SetTGMap(this);
+		EGDispatcher dispatcher = GetComponent<EGDispatcher>();
+		dispatcher.SetFirehouse(firehouse);
+	}
+
+	//Places the arsonist, who will wander the map starting fires
+	void PlaceArsonist(){
+		GameObject arsonistObject = (GameObject)Instantiate (arsonistPrefab);
+		arsonist = arsonistObject.GetComponent<TGArsonist> ();
+		arsonist.SetMap (this);
+		arsonist.ArsonPath = _level.ArsonPath;
+	}
+
+	//Creates the texture for the map
 	public void BuildTexture(){
-		_map = new TDMap (size_x, size_z);
-
-		int texWidth = size_x * tileResolution;
-		int textHeight = size_z * tileResolution;
+		//Create a texture of adequate size
+		int texWidth = Map.Width * tileResolution;
+		int textHeight = Map.Height * tileResolution;
 		Texture2D texture = new Texture2D(texWidth, textHeight);
-
+		//Get the tile color info
 		Color[][] tiles = ChopUpTiles ();
 
-		for(int y=0; y<size_z; y++){
-			for(int x=0; x < size_x; x++) {
-				Color[] p = tiles[_map.GetTile(x,y).type];
+		//Loop over the map, stitching tiles of the appropriate
+		//type together into the texture
+		for(int y=0; y<Map.Height; y++){
+			for(int x=0; x < Map.Width; x++) {
+				Color[] p = tiles[Map.GetTile(x,y).type];
 				texture.SetPixels(x*tileResolution, y*tileResolution,
 				                  tileResolution, tileResolution, p);
 			}
 		}
-
+		//Finalize the texture
 		texture.filterMode = FilterMode.Point;
 		texture.wrapMode = TextureWrapMode.Clamp;
 		texture.Apply ();
-		
+
+		//Apply the texture to the renderer
 		MeshRenderer mesh_rendererer = GetComponent<MeshRenderer> ();
 		mesh_rendererer.sharedMaterials [0].mainTexture = texture;
 	}
 
 	public TDTile GetTileAt(int x, int z){
-		return _map.GetTile (x, z);
+		return Map.GetTile (x, z);
 	}
 
 	public void BuildMesh()
 	{
-		int numTiles = size_x * size_z;
+		int numTiles = Map.Width * Map.Height;
 		int numTris = numTiles * 2;
-		int vsize_x = size_x + 1;
-		int vsize_z = size_z + 1;
+		int vsize_x = Map.Width + 1;
+		int vsize_z = Map.Height + 1;
 		int numVerts = vsize_x * vsize_z;
 
 		//Generate mesh data
@@ -115,18 +170,20 @@ public class TGMap : MonoBehaviour {
 		int[] triangles = new int[numTris * 3 /*3 per triangle*/];
 
 		int x, z;
+		//Create the vertices, normals, and uvs for each point in the mesh
 		for (z = 0; z < vsize_z; z++) {
 			for(x = 0; x < vsize_x; x++){
 				vertices[z * vsize_x + x] = GetPositionForTile(x, z);
 				normals[z * vsize_x + x] = Vector3.up;
-				uvs[z * vsize_x + x] = new Vector2((float)x/(float)size_x,
-				                                   (float)z/(float)size_z);
+				uvs[z * vsize_x + x] = new Vector2((float)x/(float)Map.Width,
+				                                   (float)z/(float)Map.Height);
 			}
 		}
 
-		for (z = 0; z < size_z; z++) {
-			for(x = 0; x < size_x; x++){
-				int squareIndex = z * size_x + x;
+		//Define the triangles for the mesh
+		for (z = 0; z < Map.Height; z++) {
+			for(x = 0; x < Map.Width; x++){
+				int squareIndex = z * Map.Width + x;
 				int triIndex = squareIndex * 6;
 				triangles[triIndex+0] = z * vsize_x + x + 0;
 				triangles[triIndex+2] = z * vsize_x + x + vsize_x + 0;
@@ -145,41 +202,17 @@ public class TGMap : MonoBehaviour {
 		mesh.normals = normals;
 		mesh.uv = uvs;
 
-		//Assign mesh to filter,renderer,collider
+		//Assign mesh to filter and collider
 		MeshFilter mesh_filterer = GetComponent<MeshFilter> ();
-		MeshRenderer mesh_rendererer = GetComponent<MeshRenderer> ();
 		MeshCollider mesh_colliderer = GetComponent<MeshCollider> ();
 
 		mesh_filterer.mesh = mesh;
-
 		mesh_colliderer.sharedMesh = mesh;
 	}
 
-	public void SpawnFireTruck(int x, int z){
-		Vector2 fireHouseTilePos;
-		_map.GetFireHouseCoordinates (out fireHouseTilePos);
 
-		Vector3 truckPos = GetPositionForTile (Mathf.FloorToInt(fireHouseTilePos.x),
-		                                       Mathf.FloorToInt(fireHouseTilePos.y));
-		truckPos.x += .5f;
-		truckPos.z -= .5f;
-
-		GameObject truck = (GameObject)Instantiate (firetruckPrefab);
-		truck.transform.position = truckPos;
-
-		EGFiretruck firetruck = truck.GetComponent<EGFiretruck>();
-		firetruck.SetPosition (truckPos);
-
-		TDPath truckPath = new TDPath ();
-		firetruck.SetMap (this);
-		truckPath.BuildPath (_map,
-		                     _map.GetTile(Mathf.FloorToInt(fireHouseTilePos.x), Mathf.FloorToInt(fireHouseTilePos.y)),
-		                     _map.GetTile (x, -z));
-		
-		firetruck.SetPath (truckPath);
-		_activeTrucks.Add (firetruck);
-	}
-
+	//Returns the game world position for the upper left corner
+	//of the given tile
 	public Vector3 GetPositionForTile(int x, int z){
 		Vector3 pos = new Vector3 ();
 		pos.x = tileSize * x;
@@ -188,48 +221,22 @@ public class TGMap : MonoBehaviour {
 
 		return pos;
 	}
-	
-	public void AddPositionToSpawnQueue(Vector2 truckPosition){
-		_truckSpawnQueue.Add (truckPosition);
+
+	//Returns the tile for the given world position
+	public TDTile GetTileForWorldPosition(Vector3 position){
+		int x, y;
+
+		x = Mathf.FloorToInt (position.x/tileSize);
+		y = Mathf.FloorToInt (-position.z / tileSize);
+
+		return Map.GetTile(x, y);
 	}
 
-	public void SendIdleToPosition(int x, int z){
-		if (_idleTrucks.Count > 0) {
-			EGFiretruck truck = PopIdleTruck();
-
-			TDPath truckPath = new TDPath ();
-			truckPath.BuildPath (_map,
-			                     _map.GetTile(Mathf.FloorToInt(truck.GetPosition().x), Mathf.FloorToInt(-truck.GetPosition().z)),
-			                     _map.GetTile (x, -z));
-
-			truck.SetPath(truckPath);
-
-			_activeTrucks.Add(truck);
-		}
+	public TDGameSession GetGameSession(){
+		return this._gameSession;
 	}
-	
-	public void SpawnNextTruck(){
-		if (_truckSpawnQueue.Count > 0) {
-			Vector2 truckPos = _truckSpawnQueue[0];
-			_truckSpawnQueue.Remove(truckPos);
-			SpawnFireTruck((int)truckPos.x, (int)truckPos.y);
-		}
-	}
-	
-	public EGFiretruck PopIdleTruck(){
-		EGFiretruck poppedTruck = null;
-		if (_idleTrucks.Count > 0) {
-			poppedTruck = _idleTrucks[0];
-			_idleTrucks.Remove(poppedTruck);
-		}
-		
-		return poppedTruck;
-	}
-	
-	public void SetTruckIdle(EGFiretruck truck){
-		if(truck != null){
-			_activeTrucks.Remove(truck);
-			_idleTrucks.Add(truck);
-		}
+
+	public float GetCityDurabilityPercent(){
+		return Map.GetCurrentDurability () / Map.GetTotalDurability ();
 	}
 }

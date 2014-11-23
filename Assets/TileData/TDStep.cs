@@ -4,7 +4,7 @@ public class TDStep {
 		this.tile = tile;
 	}
 
-	public string ToString(){
+	public override string ToString(){
 		return tile.ToString ();
 	}
 }
