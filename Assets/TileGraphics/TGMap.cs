@@ -22,9 +22,6 @@ public class TGMap : MonoBehaviour {
 	public GameObject firehousePrefab;
 	public GameObject arsonistPrefab;
 
-	public string levelFileName;
-	public string nextLevelSceneName;
-
 	public TDMap Map{
 		get { return _level.Map; }
 	}
@@ -43,6 +40,7 @@ public class TGMap : MonoBehaviour {
 	TDLevel _level;
 
 	void Start () {
+		string levelFileName = LevelManager.Instance.GetCurrentLevelFilePath ();
 		string levelText = "";
 
 		TextAsset levelFile = Resources.Load(levelFileName) as TextAsset;
@@ -61,9 +59,6 @@ public class TGMap : MonoBehaviour {
 		PlaceArsonist ();
 
 		Time.timeScale = 1f;
-		
-		GUIManager guiManager = gameObject.GetComponent<GUIManager> ();
-		guiManager.nextLevelSceneName = nextLevelSceneName;
 	}
 
 	void Update(){

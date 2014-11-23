@@ -10,6 +10,14 @@
 <project name="LevelEditorApplication" default="default" basedir=".">
     <description>Builds, tests, and runs the project LevelEditorApplication.</description>
     <import file="nbproject/build-impl.xml"/>
+		
+		<target name="-post-jar">
+			<mkdir dir="${dist.dir}/Resources"/>
+			<copy todir="${dist.dir}/Resources">
+				<fileset dir="${basedir}/Resources"/>
+			</copy>
+		</target>
+
     <!--
 
     There exist several targets which are by default empty and which can be 

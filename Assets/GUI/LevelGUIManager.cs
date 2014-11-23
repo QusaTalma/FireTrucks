@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GUIManager : MonoBehaviour {
+public class LevelGUIManager : MonoBehaviour {
 	public GUIStyle labelStyle;
 	public GUIStyle winLabelStyle;
 	public GUIStyle loseLabelStyle;
@@ -10,20 +10,18 @@ public class GUIManager : MonoBehaviour {
 	EGDispatcher _dispatcher;
 	TGMap _map;
 
-	string _nextLevelSceneName;
-	public string nextLevelSceneName{
-		set{_nextLevelSceneName = value;}
-	}
-
 	const float LABEL_HEIGHT = 50;
 	const float LABEL_WIDTH = 250;
 	const float TRUCK_COUNT_TOP = 20;
 	const float CITY_HEALTH_TOP = TRUCK_COUNT_TOP + LABEL_HEIGHT + 1;
 	const float TIME_REMAINING_TOP = CITY_HEALTH_TOP + LABEL_HEIGHT + 1;
 
+	private float xStart;
+
 	void Start(){
 		_dispatcher = gameObject.GetComponent<EGDispatcher> ();
 		_map = gameObject.GetComponent<TGMap> ();
+		xStart = (Screen.height / 2f) - LABEL_HEIGHT * 2;
 	}
 
 	void OnGUI(){
@@ -38,14 +36,24 @@ public class GUIManager : MonoBehaviour {
 				DrawLoseLabel();
 			}
 
+			if(DrawMenuButton()){
+				Application.LoadLevel("LevelMenu");
+				Time.timeScale = 1f;
+			}
+
 			if(DrawRestartButton()){
 				Application.LoadLevel(Application.loadedLevel);
 				Time.timeScale = 1f;
 			}
 
-			if(DrawNextButton()){
-				Application.LoadLevel(_nextLevelSceneName);
-				Time.timeScale = 1f;
+			string nextLevel = LevelManager.Instance.GetNextLevel();
+
+			if(nextLevel != null){
+				if(DrawNextButton()){
+					LevelManager.Instance.CurrentLevel = nextLevel;
+					Application.LoadLevel("GamePlay");
+					Time.timeScale = 1f;
+				}
 			}
 		}
 	}
@@ -87,7 +95,7 @@ public class GUIManager : MonoBehaviour {
 		float left, top, width, height;
 		height = LABEL_HEIGHT;
 		width = LABEL_WIDTH;
-		top = (Screen.height/2f) - height/2f;
+		top = xStart - height/2f;
 		left = (Screen.width/2f) - width/2f;
 		string winText = "YOU WIN";
 		GUI.Label (new Rect (left, top, width, height), winText, winLabelStyle); 
@@ -97,17 +105,27 @@ public class GUIManager : MonoBehaviour {
 		float left, top, width, height;
 		height = LABEL_HEIGHT;
 		width = LABEL_WIDTH;
-		top = (Screen.height/2f) - height/2f;
+		top = xStart - height/2f;
 		left = (Screen.width/2f) - width/2f;
 		string loseText = "YOU LOSE";
 		GUI.Label (new Rect (left, top, width, height), loseText, loseLabelStyle); 
+	}
+	
+	bool DrawMenuButton(){
+		float left, top, width, height;
+		height = LABEL_HEIGHT;
+		width = LABEL_WIDTH;
+		top = xStart - height/2f + height;
+		left = (Screen.width/2f) - width/2f;
+		string menuText = "MENU";
+		return GUI.Button (new Rect (left, top, width, height), menuText, restartButtonStyle);
 	}
 
 	bool DrawRestartButton(){
 		float left, top, width, height;
 		height = LABEL_HEIGHT;
 		width = LABEL_WIDTH;
-		top = (Screen.height/2f) - height/2f + height;
+		top = xStart - height/2f + height*2;
 		left = (Screen.width/2f) - width/2f;
 		string restartText = "RESTART";
 		return GUI.Button (new Rect (left, top, width, height), restartText, restartButtonStyle);
@@ -117,10 +135,9 @@ public class GUIManager : MonoBehaviour {
 		float left, top, width, height;
 		height = LABEL_HEIGHT;
 		width = LABEL_WIDTH;
-		top = (Screen.height/2f) - height/2f + height*2;//Go under the restart button
+		top = xStart - height/2f + height*3;//Go under the restart button
 		left = (Screen.width/2f) - width/2f;
 		string nextText = "NEXT";
 		return GUI.Button (new Rect (left, top, width, height), nextText, restartButtonStyle);
-
 	}
 }

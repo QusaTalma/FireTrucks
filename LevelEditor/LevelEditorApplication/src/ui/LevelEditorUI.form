@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+  <NonVisualComponents>
+    <Component class="javax.swing.ButtonGroup" name="tileButtonGroup">
+    </Component>
+  </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
     <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -31,20 +35,41 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="mapScrollPane" min="-2" pref="512" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="widthLabel" min="-2" max="-2" attributes="0"/>
-                  <Component id="heightLabel" min="-2" max="-2" attributes="0"/>
-                  <Component id="durationLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="percentLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="widthSpinner" pref="64" max="32767" attributes="0"/>
-                  <Component id="heightSpinner" max="32767" attributes="0"/>
-                  <Component id="durationSpinner" max="32767" attributes="0"/>
-                  <Component id="winSpinner" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="mapScrollPane" min="-2" pref="512" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="streetRadioButton" min="-2" max="-2" attributes="0"/>
+                          <Component id="houseRadioButton" min="-2" max="-2" attributes="0"/>
+                          <Component id="fireStationRadioButton" min="-2" max="-2" attributes="0"/>
+                          <Component id="cityFillRadioButton" min="-2" max="-2" attributes="0"/>
+                          <Component id="startFireRadioButton" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="fireListContainer" pref="0" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="widthLabel" min="-2" max="-2" attributes="0"/>
+                                  <Component id="heightLabel" min="-2" max="-2" attributes="0"/>
+                                  <Component id="durationLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="percentLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="paddingLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="paddingSpinner" max="32767" attributes="0"/>
+                                  <Component id="widthSpinner" pref="64" max="32767" attributes="0"/>
+                                  <Component id="heightSpinner" max="32767" attributes="0"/>
+                                  <Component id="durationSpinner" max="32767" attributes="0"/>
+                                  <Component id="winSpinner" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="loadButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="saveButton" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace pref="312" max="32767" attributes="0"/>
           </Group>
@@ -54,31 +79,52 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="103" groupAlignment="1" max="-2" attributes="0">
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="widthSpinner" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="widthLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="widthSpinner" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="heightSpinner" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="heightLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="heightSpinner" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="durationLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="durationSpinner" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="durationLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="percentLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="winSpinner" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="percentLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="paddingLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="paddingSpinner" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="18" max="32767" attributes="0"/>
+                      <Component id="streetRadioButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="houseRadioButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="fireStationRadioButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="cityFillRadioButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                      <Component id="startFireRadioButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="fireListContainer" min="-2" pref="184" max="-2" attributes="0"/>
                   </Group>
                   <Component id="mapScrollPane" min="-2" pref="512" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="506" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="saveButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="loadButton" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="455" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -86,6 +132,7 @@
   <SubComponents>
     <Container class="javax.swing.JScrollPane" name="mapScrollPane">
       <Properties>
+        <Property name="opaque" type="boolean" value="false"/>
         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[256, 256]"/>
         </Property>
@@ -99,6 +146,9 @@
       <SubComponents>
         <Container class="ui.MapPanel" name="mapPanel">
           <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="33" red="33" type="rgb"/>
+            </Property>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[1024, 1024]"/>
             </Property>
@@ -146,6 +196,70 @@
     <Component class="javax.swing.JSpinner" name="durationSpinner">
     </Component>
     <Component class="javax.swing.JSpinner" name="winSpinner">
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="streetRadioButton">
+      <Properties>
+        <Property name="selected" type="boolean" value="true"/>
+        <Property name="text" type="java.lang.String" value="Street"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="houseRadioButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="House"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="fireStationRadioButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Fire Station"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="cityFillRadioButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Fill"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="startFireRadioButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Start a Fire"/>
+      </Properties>
+    </Component>
+    <Container class="javax.swing.JScrollPane" name="fireListContainer">
+      <AuxValues>
+        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+      </AuxValues>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+      <SubComponents>
+        <Component class="javax.swing.JTable" name="fireTable">
+          <Properties>
+            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+              <Table columnCount="4" rowCount="4">
+                <Column editable="true" title="Title 1" type="java.lang.Object"/>
+                <Column editable="true" title="Title 2" type="java.lang.Object"/>
+                <Column editable="true" title="Title 3" type="java.lang.Object"/>
+                <Column editable="true" title="Title 4" type="java.lang.Object"/>
+              </Table>
+            </Property>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Component class="javax.swing.JButton" name="saveButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Save"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="loadButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Load"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JSpinner" name="paddingSpinner">
+    </Component>
+    <Component class="javax.swing.JLabel" name="paddingLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Padding"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>
