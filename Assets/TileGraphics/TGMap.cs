@@ -65,6 +65,10 @@ public class TGMap : MonoBehaviour {
 		_gameSession.AddToCurrentTime (Time.deltaTime);
 		if (!_gameSession.IsActive()) {
 			Time.timeScale = 0f;
+			LevelGUIManager levelManager = gameObject.GetComponent<LevelGUIManager>();
+			if(levelManager != null){
+				levelManager.ShowEndGameDialog();
+			}
 		}
 	}
 

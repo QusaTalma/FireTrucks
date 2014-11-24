@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class LevelGUIManager : MonoBehaviour {
@@ -6,6 +7,9 @@ public class LevelGUIManager : MonoBehaviour {
 	public GUIStyle winLabelStyle;
 	public GUIStyle loseLabelStyle;
 	public GUIStyle restartButtonStyle;
+
+	public Canvas endGameDialog;
+	public Button nextLevelButton;
 
 	EGDispatcher _dispatcher;
 	TGMap _map;
@@ -22,6 +26,14 @@ public class LevelGUIManager : MonoBehaviour {
 		_dispatcher = gameObject.GetComponent<EGDispatcher> ();
 		_map = gameObject.GetComponent<TGMap> ();
 		xStart = (Screen.height / 2f) - LABEL_HEIGHT * 2;
+		endGameDialog.gameObject.SetActive (false);
+	}
+
+	public void ShowEndGameDialog(){
+		endGameDialog.gameObject.SetActive (true);
+
+		string nextLevel = LevelManager.Instance.GetNextLevel();
+		nextLevelButton.gameObject.SetActive (nextLevel != null);
 	}
 
 	void OnGUI(){
@@ -35,27 +47,25 @@ public class LevelGUIManager : MonoBehaviour {
 			}else{
 				DrawLoseLabel();
 			}
-
-			if(DrawMenuButton()){
-				Application.LoadLevel("LevelMenu");
-				Time.timeScale = 1f;
-			}
-
-			if(DrawRestartButton()){
-				Application.LoadLevel(Application.loadedLevel);
-				Time.timeScale = 1f;
-			}
-
-			string nextLevel = LevelManager.Instance.GetNextLevel();
-
-			if(nextLevel != null){
-				if(DrawNextButton()){
-					LevelManager.Instance.CurrentLevel = nextLevel;
-					Application.LoadLevel("GamePlay");
-					Time.timeScale = 1f;
-				}
-			}
 		}
+	}
+
+	public void RestartClicked(){
+		Application.LoadLevel(Application.loadedLevel);
+		Time.timeScale = 1f;
+	}
+
+	public void MenuClicked(){
+		Application.LoadLevel("LevelMenu");
+		Time.timeScale = 1f;
+	}
+
+	public void NextClicked(){
+		string nextLevel = LevelManager.Instance.GetNextLevel();
+
+		LevelManager.Instance.CurrentLevel = nextLevel;
+		Application.LoadLevel("GamePlay");
+		Time.timeScale = 1f;
 	}
 
 	void DrawTruckCount(){
