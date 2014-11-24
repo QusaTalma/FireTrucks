@@ -16,6 +16,9 @@ public class LevelManager {
 	private LevelManager(){}
 
 	readonly string[] LEVELS = {
+		"Level1",
+		"Level2",
+		"Level3",
 		"MyFirstLevel",
 		"MySecondLevel",
 		"MyThirdLevel"
