@@ -9,6 +9,10 @@ public class EDArsonPath{
 		this.pathTimes = pathTimes;
 	}
 
+	public int GetStepCount(){
+		return pathSteps.Count;
+	}
+
 	public bool HasMoreSteps(){
 		return pathTimes.Count > 0 && pathSteps.Count > 0;
 	}

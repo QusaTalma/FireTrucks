@@ -81,6 +81,8 @@ public class EGFlame : MonoBehaviour {
 						egFlame.SetTile(tileToIgnite);
 						egFlame.SetMap(map);
 						egFlame.SetSpreadPrefab(spreadPrefab);
+
+						PopUpUIManager.Instance.ShowFireChief("Fires are spreading! get them under control!");
 						
 						tileToIgnite.type = TDTile.TILE_HOUSE_ON_FIRE;
 					}
@@ -104,6 +106,8 @@ public class EGFlame : MonoBehaviour {
 		} else {
 			GameObject ashes = (GameObject)Instantiate(ashesPrefab);
 			ashes.transform.position = transform.position;
+
+			PopUpUIManager.Instance.ShowMayor("Oh dear, a building burned down");
 		}
 	}
 

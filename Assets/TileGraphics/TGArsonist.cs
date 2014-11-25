@@ -8,17 +8,29 @@ public class TGArsonist : MonoBehaviour
 
 	public GameObject flamePrefab;
 
+	public bool captureShown = false;
+
 	private EDArsonPath arsonPath;
 	public EDArsonPath ArsonPath{
-		set { arsonPath = value; }
+		set { arsonPath = value;
+			arsonStepCount = value.GetStepCount(); }
+	}
+
+	private int arsonStepCount;
+
+	public void Start(){
+		PopUpUIManager.Instance.ShowPoliceChief ("Someone's starting fires in MY city!");
 	}
 
 	public void Update(){
 		elapsedTime += Time.deltaTime;
 
-		if (arsonPath.HasMoreSteps () && arsonPath.TimeForNextStep(elapsedTime) ) {
-			TDTile tileToLight = arsonPath.PopStep();
-			StartTileOnFire(tileToLight);
+		if (arsonPath.HasMoreSteps () && arsonPath.TimeForNextStep (elapsedTime)) {
+			TDTile tileToLight = arsonPath.PopStep ();
+			StartTileOnFire (tileToLight);
+		} else if (!arsonPath.HasMoreSteps () && !captureShown) {
+			captureShown = true;
+			PopUpUIManager.Instance.ShowPoliceChief("We caught him!");
 		}
 	}
 
