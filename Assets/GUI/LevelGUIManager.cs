@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class LevelGUIManager : MonoBehaviour {
-	public Canvas endGameDialog;
+	public GameObject endGameDialog;
 	public Button nextLevelButton;
 	public Text winText;
 	public Text loseText;
@@ -21,12 +21,9 @@ public class LevelGUIManager : MonoBehaviour {
 	const float CITY_HEALTH_TOP = TRUCK_COUNT_TOP + LABEL_HEIGHT + 1;
 	const float TIME_REMAINING_TOP = CITY_HEALTH_TOP + LABEL_HEIGHT + 1;
 
-	private float xStart;
-
 	void Start(){
 		_dispatcher = gameObject.GetComponent<EGDispatcher> ();
 		_map = gameObject.GetComponent<TGMap> ();
-		xStart = (Screen.height / 2f) - LABEL_HEIGHT * 2;
 		endGameDialog.gameObject.SetActive (false);
 	}
 
