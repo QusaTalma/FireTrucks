@@ -28,6 +28,11 @@ public class TGArsonist : MonoBehaviour
 		if (arsonPath.HasMoreSteps () && arsonPath.TimeForNextStep (elapsedTime)) {
 			TDTile tileToLight = arsonPath.PopStep ();
 			StartTileOnFire (tileToLight);
+			if(arsonPath.GetStepCount() == (int)(arsonStepCount/2)){
+				PopUpUIManager.Instance.ShowPoliceChief("We're hot on his trail!");
+			}else if(arsonPath.GetStepCount() == (int)(arsonStepCount/4)){
+				PopUpUIManager.Instance.ShowPoliceChief("We almost got him!");
+			}
 		} else if (!arsonPath.HasMoreSteps () && !captureShown) {
 			captureShown = true;
 			PopUpUIManager.Instance.ShowPoliceChief("We caught him!");
