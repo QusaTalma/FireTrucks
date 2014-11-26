@@ -40,7 +40,14 @@ public class TGMouse : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if (EventSystem.current.IsPointerOverGameObject()) {
+		EventSystem eventSys = EventSystem.current;
+		//Check for up to 5 pointers, after that it's just rediculous
+		if (eventSys.IsPointerOverGameObject() ||
+		    eventSys.IsPointerOverGameObject(0) ||
+		    eventSys.IsPointerOverGameObject(1) ||
+		    eventSys.IsPointerOverGameObject(2) ||
+		    eventSys.IsPointerOverGameObject(3) ||
+		    eventSys.IsPointerOverGameObject(4)){
 			return;
 		}
 		Ray rayCast;
