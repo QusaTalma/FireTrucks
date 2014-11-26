@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using System.Collections;
 
 [RequireComponent(typeof(TGMap))]
@@ -39,6 +40,9 @@ public class TGMouse : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		if (EventSystem.current.IsPointerOverGameObject()) {
+			return;
+		}
 		Ray rayCast;
 		RaycastHit hitInfo;
 		float distance = Mathf.Infinity;

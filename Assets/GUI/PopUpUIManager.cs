@@ -6,7 +6,7 @@ public class PopUpUIManager : MonoBehaviour {
 	public GameObject fireChiefImage;
 	public GameObject policeChiefImage;
 	public GameObject mayorImage;
-	public GameObject speechPanel;
+	public GameObject popUpPanel;
 	public Text alertMessage;
 
 	public const float MESSAGE_DISPLAY_TIME = 5f;
@@ -34,7 +34,7 @@ public class PopUpUIManager : MonoBehaviour {
 		timeSinceMessage = 0f;
 		mayorImage.SetActive (true);
 		alertMessage.text = message;
-		speechPanel.SetActive (true);
+		popUpPanel.SetActive (true);
 	}
 
 	public void ShowFireChief(string message){
@@ -42,7 +42,7 @@ public class PopUpUIManager : MonoBehaviour {
 		timeSinceMessage = 0f;
 		fireChiefImage.SetActive (true);
 		alertMessage.text = message;
-		speechPanel.SetActive (true);
+		popUpPanel.SetActive (true);
 	}
 
 	public void ShowPoliceChief(string message){
@@ -50,14 +50,14 @@ public class PopUpUIManager : MonoBehaviour {
 		timeSinceMessage = 0f;
 		policeChiefImage.SetActive (true);
 		alertMessage.text = message;
-		speechPanel.SetActive (true);
+		popUpPanel.SetActive (true);
 	}
 
 	public void HideAlert(){
 		mayorImage.SetActive (false);
 		policeChiefImage.SetActive (false);
 		fireChiefImage.SetActive (false);
-		speechPanel.SetActive (false);
+		popUpPanel.SetActive (false);
 	}
 
 	void OnGUI(){
