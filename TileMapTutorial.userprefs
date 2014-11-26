@@ -1,11 +1,16 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Session/LevelManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/GUI/PopUpEvent.cs">
     <Files>
+      <File FileName="Assets/GUI/PopUpUIManager.cs" Line="10" Column="27" />
+      <File FileName="Assets/GUI/LevelGUIManager.cs" Line="24" Column="15" />
       <File FileName="Assets/GUI/MenuGUIManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/Session/LevelManager.cs" Line="34" Column="47" />
-      <File FileName="Assets/TileGraphics/TGMap.cs" Line="1" Column="1" />
-      <File FileName="Assets/GUI/LevelGUIManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Session/LevelManager.cs" Line="3" Column="28" />
+      <File FileName="Assets/TileGraphics/TGMap.cs" Line="64" Column="3" />
+      <File FileName="Assets/EntityGraphics/EGFlame.cs" Line="63" Column="4" />
+      <File FileName="Assets/TileGraphics/TGArsonist.cs" Line="13" Column="32" />
+      <File FileName="Assets/TileGraphics/TGMouse.cs" Line="51" Column="11" />
+      <File FileName="Assets/GUI/PopUpEvent.cs" Line="10" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

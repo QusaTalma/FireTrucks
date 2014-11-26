@@ -39,6 +39,8 @@ public class TGMap : MonoBehaviour {
 
 	TDLevel _level;
 
+	private bool paused = false;
+
 	void Start () {
 		string levelFileName = LevelManager.Instance.GetCurrentLevelFilePath ();
 		string levelText = "";
@@ -65,7 +67,25 @@ public class TGMap : MonoBehaviour {
 		_gameSession.AddToCurrentTime (Time.deltaTime);
 		if (!_gameSession.IsActive()) {
 			Time.timeScale = 0f;
+			LevelGUIManager levelManager = gameObject.GetComponent<LevelGUIManager>();
+			if(levelManager != null){
+				levelManager.ShowEndGameDialog();
+			}
 		}
+	}
+
+	public void TogglePause(){
+		if (!paused) {
+			paused = true;
+			Time.timeScale = 0f;
+		} else {
+			paused = false;
+			Time.timeScale = 1f;
+		}
+	}
+
+	public bool IsPaused(){
+		return paused;
 	}
 
 	//Loads the texture for each tile from the sprite strip into 

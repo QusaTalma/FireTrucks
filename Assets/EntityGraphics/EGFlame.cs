@@ -15,7 +15,7 @@ public class EGFlame : MonoBehaviour {
 
 	TGMap map;
 	TDTile tile;
-	
+
 	// Update is called once per frame
 	void Update () {
 		if (tile != null) {
@@ -81,6 +81,8 @@ public class EGFlame : MonoBehaviour {
 						egFlame.SetTile(tileToIgnite);
 						egFlame.SetMap(map);
 						egFlame.SetSpreadPrefab(spreadPrefab);
+
+						PopUpUIManager.Instance.ShowFireChief("Fires are spreading! get them under control!");
 						
 						tileToIgnite.type = TDTile.TILE_HOUSE_ON_FIRE;
 					}
@@ -104,6 +106,8 @@ public class EGFlame : MonoBehaviour {
 		} else {
 			GameObject ashes = (GameObject)Instantiate(ashesPrefab);
 			ashes.transform.position = transform.position;
+
+			PopUpUIManager.Instance.ShowMayor("Oh dear, a building burned down");
 		}
 	}
 
@@ -113,6 +117,7 @@ public class EGFlame : MonoBehaviour {
 
 	public void SetTile(TDTile tile){
 		this.tile = tile;
+		EGDispatcher.Instance.AlertToFire (tile);
 	}
 
 	public void SetSpreadPrefab(GameObject prefab){
