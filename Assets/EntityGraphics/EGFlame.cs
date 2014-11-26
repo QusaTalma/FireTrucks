@@ -15,7 +15,7 @@ public class EGFlame : MonoBehaviour {
 
 	TGMap map;
 	TDTile tile;
-	
+
 	// Update is called once per frame
 	void Update () {
 		if (tile != null) {
@@ -117,6 +117,7 @@ public class EGFlame : MonoBehaviour {
 
 	public void SetTile(TDTile tile){
 		this.tile = tile;
+		EGDispatcher.Instance.AlertToFire (tile);
 	}
 
 	public void SetSpreadPrefab(GameObject prefab){
