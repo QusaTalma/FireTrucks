@@ -16,6 +16,10 @@ public class EGFlame : MonoBehaviour {
 	TGMap map;
 	TDTile tile;
 
+	void Start(){
+		PopUpUIManager.Instance.ShowFlameIndicator (this);
+	}
+
 	// Update is called once per frame
 	void Update () {
 		if (tile != null) {
@@ -117,10 +121,23 @@ public class EGFlame : MonoBehaviour {
 
 	public void SetTile(TDTile tile){
 		this.tile = tile;
-		EGDispatcher.Instance.AlertToFire (tile);
 	}
 
 	public void SetSpreadPrefab(GameObject prefab){
 		this.spreadPrefab = prefab;
+	}
+
+	public bool IsOnCamera(){
+		Vector3 camPos = Camera.main.transform.position;
+		camPos.x = camPos.x - LevelGUIManager.Instance.statusPanel.transform.localScale.x;
+		//The orthographic size if half the height of the camera
+		float vertExtent = Camera.main.orthographicSize;
+		//Calculate the half height of the screen
+		float horizExtent = Camera.main.orthographicSize * Screen.width / Screen.height;
+		horizExtent = horizExtent - LevelGUIManager.Instance.statusPanel.transform.localScale.x;
+
+		Rect cameraRect = new Rect (camPos.x - horizExtent, camPos.z - vertExtent, horizExtent * 2, vertExtent * 2);
+		Vector2 myPos = new Vector2(transform.position.x, transform.position.z);
+		return cameraRect.Contains (myPos);
 	}
 }
