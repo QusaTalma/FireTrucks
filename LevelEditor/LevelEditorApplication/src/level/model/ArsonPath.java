@@ -8,65 +8,57 @@ package level.model;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  *
  * @author asheehan
  */
 public class ArsonPath {
-    private Map<Point, ArsonStep> steps;
+    private List<ArsonStep> steps;
     
     public ArsonPath(){
-        steps = new HashMap<>();
+        steps = new ArrayList<>();
     }
     
     public List<ArsonStep> getSteps(){
-        List<ArsonStep> stepList = new ArrayList<>(steps.values());
-        
-        Collections.sort(stepList);
-        
-        return stepList;
+        return steps;
     }
     
     public void addStep(int x, int y){
         Point stepPoint = new Point(x,y);
         
-        ArsonStep step;
+        ArsonStep step = new ArsonStep(stepPoint);
         
-        if(steps.containsKey(stepPoint)){
-            step = steps.get(stepPoint);
+        if(steps.contains(step)){
+            step = steps.get(steps.indexOf(step));
         }else{
-            step = new ArsonStep(stepPoint);
+            steps.add(step);
         }
         
         step.setTime(calculateNextTime());
-        
-        steps.put(stepPoint, step);
     }
     
     public void setStepTime(int x, int y, int time){
         Point stepPoint = new Point(x,y);
-        ArsonStep step;
         
-        if(steps.containsKey(stepPoint)){
-            step = steps.get(stepPoint);
+        ArsonStep step = new ArsonStep(stepPoint);
+        
+        if(steps.contains(step)){
+            step = steps.get(steps.indexOf(step));
         }else{
-            step = new ArsonStep(stepPoint);
+            steps.add(step);
         }
         
         step.setTime(time);
-        
-        steps.put(stepPoint, step);
     }
     
     public void removeStep(int x, int y){
         Point stepPoint = new Point(x,y);
+        ArsonStep step = new ArsonStep(stepPoint);
         
-        if(steps.containsKey(stepPoint)){
-            steps.remove(stepPoint);
+        if(steps.contains(step)){
+            steps.remove(step);
         }
     }
     
@@ -85,6 +77,7 @@ public class ArsonPath {
         StringBuilder builder = new StringBuilder();
         
         List<ArsonStep> stepList = getSteps();
+        Collections.sort(stepList);
         for(ArsonStep step : stepList){
             builder.append(step.toString(fillPadding));
             builder.append("\n");
