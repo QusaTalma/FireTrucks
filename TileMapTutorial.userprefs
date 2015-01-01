@@ -1,8 +1,9 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Animation/FlameTextureAnimator.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Animation/UnifiedAnimator.cs">
     <Files>
-      <File FileName="Assets/GUI/UIFlameIndicator.cs" Line="6" Column="2" />
+      <File FileName="Assets/Animation/FlameTextureAnimator.cs" Line="12" Column="61" />
+      <File FileName="Assets/GUI/UIFlameIndicator.cs" Line="1" Column="1" />
       <File FileName="Assets/TileGraphics/TGMap.cs" Line="1" Column="1" />
       <File FileName="Assets/TileGraphics/TGMouse.cs" Line="1" Column="1" />
       <File FileName="Assets/EntityGraphics/EGFlame.cs" Line="1" Column="1" />
@@ -11,7 +12,6 @@
       <File FileName="Assets/TileGraphics/TGArsonist.cs" Line="1" Column="1" />
       <File FileName="Assets/EntityGraphics/EGHose.cs" Line="1" Column="1" />
       <File FileName="Assets/EntityGraphics/TruckVision.cs" Line="1" Column="1" />
-      <File FileName="Assets/Animation/FlameTextureAnimator.cs" Line="15" Column="16" />
       <File FileName="Assets/Animation/UnifiedAnimator.cs" Line="30" Column="20" />
     </Files>
   </MonoDevelop.Ide.Workbench>
