@@ -18,6 +18,8 @@ public class UIFlameIndicator : MonoBehaviour {
 			}else{
 				PointToFlame();
 			}
+		}else{
+			Destroy(this.transform.root.gameObject);
 		}
 	}
 

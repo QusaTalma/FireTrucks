@@ -26,11 +26,10 @@ public class UnifiedAnimator : MonoBehaviour{
 		{
 			//move to the next index
 			FlameFrame++;
-			if (FlameFrame >= flameRows * flameColumns)
+			if (FlameFrame >= flameRows * flameColumns){
 				FlameFrame = 0;
-			
-			Debug.Log("Coroutine");
-			
+			}
+
 			yield return new WaitForSeconds(1f / flameFramesPerSecond);
 		}
 		
