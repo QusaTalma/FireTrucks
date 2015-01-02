@@ -7,7 +7,6 @@ public class EGFlame : MonoBehaviour {
 	public int spreadChance;
 	public float spreadInterval;
 	public float damagePerSecond;
-	public GameObject ashesPrefab;
 
 	float timeSinceSpreadAttempt = 0;
 
@@ -106,11 +105,8 @@ public class EGFlame : MonoBehaviour {
 
 	public void PutOut(){
 		if (tile.type != TDTile.TILE_BURNED_DOWN_HOUSE) {
-			tile.type = TDTile.TILE_HOUSE;
+			tile.type = TDTile.TILE_DAMAGED_HOUSE;
 		} else {
-			GameObject ashes = (GameObject)Instantiate(ashesPrefab);
-			ashes.transform.position = transform.position;
-
 			PopUpUIManager.Instance.ShowMayor("Oh dear, a building burned down");
 		}
 	}
@@ -121,6 +117,7 @@ public class EGFlame : MonoBehaviour {
 
 	public void SetTile(TDTile tile){
 		this.tile = tile;
+		tile.type = TDTile.TILE_HOUSE_ON_FIRE;
 	}
 
 	public void SetSpreadPrefab(GameObject prefab){
