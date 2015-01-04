@@ -84,11 +84,11 @@ public class EGHose : MonoBehaviour {
 					flame.transform.localScale = flameScale;
 
 					if (flameScale.x <= waterRate) {
-						EGFlame egFlame = flame.GetComponent<EGFlame> ();
+						EGFlame egFlame = flame.transform.gameObject.GetComponent<EGFlame> ();
 						if (egFlame != null) {
 							egFlame.PutOut ();
 						}
-						Destroy (flame);
+						Destroy (flame.transform.gameObject);
 						foundFlames.Remove (flame);
 						truck.SetPuttingOutFire (false);
 					}

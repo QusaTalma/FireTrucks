@@ -8,11 +8,20 @@ public class PopUpUIManager : MonoBehaviour {
 	public GameObject mayorImage;
 	public GameObject popUpPanel;
 	public Text alertMessage;
+	public GameObject flameIndicatorPrefab;
 
 	private List<PopUpEvent> popUpQueue = new List<PopUpEvent>();
 	private bool showingAlert = false;
+	private bool radioOn = true;
+	public bool RadioOn{
+		get { return radioOn; }
+		set { radioOn = value;
+			timeSinceMessage = 0f;
+			HideAlert();
+			popUpQueue = new List<PopUpEvent>(); }
+	}
 
-	public const float MESSAGE_DISPLAY_TIME = 5f;
+	public const float MESSAGE_DISPLAY_TIME = 2.5f;
 	private float timeSinceMessage = 0f;
 	
 	private static PopUpUIManager _instance = null;
@@ -32,8 +41,12 @@ public class PopUpUIManager : MonoBehaviour {
 		HideAlert ();
 	}
 
+	public void ToggleRadio(){
+		RadioOn = !RadioOn;
+	}
+
 	public void ShowMayor(string message){
-		if (!showingAlert) {
+		if (!showingAlert && radioOn) {
 			showingAlert = true;
 			timeSinceMessage = 0f;
 			mayorImage.SetActive (true);
@@ -45,7 +58,7 @@ public class PopUpUIManager : MonoBehaviour {
 	}
 
 	public void ShowFireChief(string message){
-		if (!showingAlert) {
+		if (!showingAlert && radioOn) {
 			showingAlert = true;
 			timeSinceMessage = 0f;
 			fireChiefImage.SetActive (true);
@@ -57,7 +70,7 @@ public class PopUpUIManager : MonoBehaviour {
 	}
 
 	public void ShowPoliceChief(string message){
-		if (!showingAlert) {
+		if (!showingAlert && radioOn) {
 			showingAlert = true;
 			timeSinceMessage = 0f;
 			policeChiefImage.SetActive (true);
@@ -77,8 +90,18 @@ public class PopUpUIManager : MonoBehaviour {
 		showingAlert = popUpQueue.Count > 0;
 	}
 
+	public void ShowFlameIndicator(EGFlame flame){
+		if (radioOn) {			
+			GameObject indicatorObject = (GameObject)Instantiate (flameIndicatorPrefab);
+			UIFlameIndicator flameIndicator = indicatorObject.GetComponent<UIFlameIndicator> ();
+			if (flameIndicator != null) {
+				flameIndicator.Flame = flame;
+			}
+		}
+	}
+
 	void OnGUI(){
-		if (timeSinceMessage <= MESSAGE_DISPLAY_TIME) {
+		if (timeSinceMessage <= MESSAGE_DISPLAY_TIME && radioOn) {
 			timeSinceMessage += Time.deltaTime;
 			if(timeSinceMessage >= MESSAGE_DISPLAY_TIME){
 				HideAlert();

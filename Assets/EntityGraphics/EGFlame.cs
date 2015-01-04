@@ -7,7 +7,6 @@ public class EGFlame : MonoBehaviour {
 	public int spreadChance;
 	public float spreadInterval;
 	public float damagePerSecond;
-	public GameObject ashesPrefab;
 
 	float timeSinceSpreadAttempt = 0;
 
@@ -15,6 +14,10 @@ public class EGFlame : MonoBehaviour {
 
 	TGMap map;
 	TDTile tile;
+
+	void Start(){
+		PopUpUIManager.Instance.ShowFlameIndicator (this);
+	}
 
 	// Update is called once per frame
 	void Update () {
@@ -31,20 +34,20 @@ public class EGFlame : MonoBehaviour {
 	void UpdateScale(){
 		float delta = Time.deltaTime;
 		
-		Vector3 scale = transform.localScale;
+		Vector3 scale = transform.root.localScale;
 
 		if(tile.type == TDTile.TILE_BURNED_DOWN_HOUSE){
 			scale.x -= growthRate * delta;
 			scale.y -= growthRate * delta;
 			scale.z -= growthRate * delta;
 			
-			transform.localScale = scale;
-		}else if (scale.x < maxSize){
+			transform.root.localScale = scale;
+		}else if (scale.x < maxSize && scale.x > 0){
 			scale.x += Mathf.Min(growthRate * delta, maxSize);
 			scale.y += Mathf.Min(growthRate * delta, maxSize);
 			scale.z += Mathf.Min(growthRate * delta, maxSize);
 			
-			transform.localScale = scale;
+			transform.root.localScale = scale;
 		}
 
 		if(scale.x <= 0){
@@ -56,7 +59,7 @@ public class EGFlame : MonoBehaviour {
 	void UpdateSpread(){
 		float delta = Time.deltaTime;
 		
-		Vector3 scale = transform.localScale;
+		Vector3 scale = transform.root.localScale;
 		
 		if (scale.x >= maxSize || tile.type == TDTile.TILE_BURNED_DOWN_HOUSE) {
 			timeSinceSpreadAttempt += delta;
@@ -95,18 +98,15 @@ public class EGFlame : MonoBehaviour {
 
 	void DoDamage(){
 		float deltaTime = Time.deltaTime;
-		Vector3 scale = transform.localScale;
+		Vector3 scale = transform.root.localScale;
 		float damage = (deltaTime * damagePerSecond * (scale.x / maxSize));
 		tile.Damage (damage);
 	}
 
 	public void PutOut(){
 		if (tile.type != TDTile.TILE_BURNED_DOWN_HOUSE) {
-			tile.type = TDTile.TILE_HOUSE;
+			tile.type = TDTile.TILE_DAMAGED_HOUSE;
 		} else {
-			GameObject ashes = (GameObject)Instantiate(ashesPrefab);
-			ashes.transform.position = transform.position;
-
 			PopUpUIManager.Instance.ShowMayor("Oh dear, a building burned down");
 		}
 	}
@@ -117,10 +117,24 @@ public class EGFlame : MonoBehaviour {
 
 	public void SetTile(TDTile tile){
 		this.tile = tile;
-		EGDispatcher.Instance.AlertToFire (tile);
+		tile.type = TDTile.TILE_HOUSE_ON_FIRE;
 	}
 
 	public void SetSpreadPrefab(GameObject prefab){
 		this.spreadPrefab = prefab;
+	}
+
+	public bool IsOnCamera(){
+		Vector3 camPos = Camera.main.transform.position;
+		camPos.x = camPos.x - LevelGUIManager.Instance.statusPanel.transform.root.localScale.x;
+		//The orthographic size if half the height of the camera
+		float vertExtent = Camera.main.orthographicSize;
+		//Calculate the half height of the screen
+		float horizExtent = Camera.main.orthographicSize * Screen.width / Screen.height;
+		horizExtent = horizExtent - LevelGUIManager.Instance.statusPanel.transform.root.localScale.x;
+
+		Rect cameraRect = new Rect (camPos.x - horizExtent, camPos.z - vertExtent, horizExtent * 2, vertExtent * 2);
+		Vector2 myPos = new Vector2(transform.position.x, transform.position.z);
+		return cameraRect.Contains (myPos);
 	}
 }

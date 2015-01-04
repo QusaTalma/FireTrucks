@@ -93,6 +93,11 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
                     File file = fc.getSelectedFile();
                     level = Level.loadFromFile(file);
                     mapPanel.updateMap(level);
+                    winSpinner.setValue(level.getWinPercent());
+                    durationSpinner.setValue(level.getDurationSeconds());
+                    widthSpinner.setValue(level.getWidth());
+                    heightSpinner.setValue(level.getHeight());
+                    
                     refreshList();
                 }
             }

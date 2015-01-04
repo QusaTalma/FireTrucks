@@ -36,6 +36,16 @@ public class ArsonStep implements Comparable<ArsonStep>{
         return Integer.compare(time, o.getTime());
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof ArsonStep){
+            ArsonStep other = (ArsonStep)obj;
+            return other.getLocation().equals(location);
+        }
+        
+        return false; 
+    }
+
     public String toString(int fillPadding) {
         return String.format("%d,%d,%d", location.x+fillPadding, 
                 location.y+fillPadding, time);

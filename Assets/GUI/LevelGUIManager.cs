@@ -11,17 +11,25 @@ public class LevelGUIManager : MonoBehaviour {
 	public Text timeRemaining;
 	public Text currentPercent;
 	public Text winPercent;
+	public GameObject statusPanel;
 
 	EGDispatcher _dispatcher;
 	TGMap _map;
-
-	const float LABEL_HEIGHT = 50;
-	const float LABEL_WIDTH = 250;
-	const float TRUCK_COUNT_TOP = 20;
-	const float CITY_HEALTH_TOP = TRUCK_COUNT_TOP + LABEL_HEIGHT + 1;
-	const float TIME_REMAINING_TOP = CITY_HEALTH_TOP + LABEL_HEIGHT + 1;
+	
+	private static LevelGUIManager _instance = null;
+	
+	public static LevelGUIManager Instance{
+		get {
+			if (_instance == null) {
+				_instance = new LevelGUIManager ();
+			}
+			
+			return _instance;
+		}
+	}
 
 	void Start(){
+		_instance = this;
 		_dispatcher = gameObject.GetComponent<EGDispatcher> ();
 		_map = gameObject.GetComponent<TGMap> ();
 		endGameDialog.gameObject.SetActive (false);

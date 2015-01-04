@@ -174,7 +174,7 @@ public class Level {
     }
 
     private int readLevelParams(String[] splitLevelData, int offset){
-        winPercent = Integer.parseInt(splitLevelData[offset])/100;
+        winPercent = Integer.parseInt(splitLevelData[offset]);
         offset++;
         durationSeconds = Integer.parseInt(splitLevelData [offset]);
         offset++;

@@ -8,6 +8,7 @@ public class TDTile {
 	public const int TILE_HOUSE_ON_FIRE  = 3;
 	public const int TILE_FIREHOUSE = 4;
 	public const int TILE_BURNED_DOWN_HOUSE = 5;
+	public const int TILE_DAMAGED_HOUSE = 6;
 
 	public int type = TILE_CITY_FILL;
 	public float maxDurability = 15;
