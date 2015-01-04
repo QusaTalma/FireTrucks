@@ -133,14 +133,4 @@ public class EGDispatcher : MonoBehaviour {
 			_dispatcher.AddActiveTruck(truckToSend);
 		}
 	}
-
-	public void AlertToFire(TDTile tileOnFire){
-		Debug.Log ("A fire has appeared at: " + tileOnFire.ToString ());
-		//TODO: show alert to user about fires that are off screen
-
-		//TODO: will also need to have the TGMouse run an update on UP events
-		//that will remove alerts to fires that are now on screen
-
-		//TODO: tap on alerts to dismiss them
-	}
 }

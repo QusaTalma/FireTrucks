@@ -21,6 +21,7 @@ public class TGMap : MonoBehaviour {
 
 	public GameObject firehousePrefab;
 	public GameObject arsonistPrefab;
+	public GameObject housePrefab;
 
 	public TDMap Map{
 		get { return _level.Map; }
@@ -58,6 +59,7 @@ public class TGMap : MonoBehaviour {
 		BuildTexture ();
 		//Initiate game state
 		PlaceFireHouse ();
+		PlaceHouses();
 		PlaceArsonist ();
 
 		Time.timeScale = 1f;
@@ -113,20 +115,44 @@ public class TGMap : MonoBehaviour {
 	void PlaceFireHouse(){
 		Vector2 fireHouseTilePos = new Vector2 ();
 		Map.GetFireHouseCoordinates (out fireHouseTilePos);
+		
+		GameObject house = (GameObject)Instantiate (firehousePrefab);
 
 		Vector3 housePos = GetPositionForTile (Mathf.FloorToInt(fireHouseTilePos.x),
 		                                       Mathf.FloorToInt(fireHouseTilePos.y));
 
 		housePos.x += 0.5f;
+		housePos.y = house.transform.position.y;
 		housePos.z -= 0.5f;
 
-		GameObject house = (GameObject)Instantiate (firehousePrefab);
 		house.transform.position = housePos;
 
 		EGFirehouse firehouse = house.GetComponent<EGFirehouse>();
 		firehouse.SetTGMap(this);
 		EGDispatcher dispatcher = GetComponent<EGDispatcher>();
 		dispatcher.SetFirehouse(firehouse);
+	}
+
+	void PlaceHouses(){
+		for(int x = 0; x < Map.Width; x++){
+			for(int y = 0; y < Map.Height; y++){
+				TDTile tile = Map.GetTile(x,y);
+				if(tile.type == TDTile.TILE_HOUSE){
+					GameObject house = (GameObject)Instantiate(housePrefab);
+					Vector3 housePos = GetPositionForTile (Mathf.FloorToInt(x),
+					                                       Mathf.FloorToInt(y));
+					
+					housePos.x += 0.5f;
+					housePos.y = house.transform.position.y;
+					housePos.z -= 0.5f;
+					
+					house.transform.position = housePos;
+
+					EGHouse egHouse = house.GetComponent<EGHouse>();
+					egHouse.setTile(tile);
+				}
+			}
+		}
 	}
 
 	//Places the arsonist, who will wander the map starting fires
@@ -150,7 +176,12 @@ public class TGMap : MonoBehaviour {
 		//type together into the texture
 		for(int y=0; y<Map.Height; y++){
 			for(int x=0; x < Map.Width; x++) {
-				Color[] p = tiles[Map.GetTile(x,y).type];
+				int tileIndex = Map.GetTile(x,y).type;
+				if(tileIndex == TDTile.TILE_HOUSE || tileIndex == TDTile.TILE_FIREHOUSE){
+					tileIndex = TDTile.TILE_STREET;
+				}
+
+				Color[] p = tiles[tileIndex];
 				texture.SetPixels(x*tileResolution, y*tileResolution,
 				                  tileResolution, tileResolution, p);
 			}

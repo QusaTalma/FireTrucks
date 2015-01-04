@@ -9,9 +9,7 @@ public class TruckVision : MonoBehaviour {
 		if(!transform.root.Equals(other.transform.root)){
 			string otherTag = other.gameObject.tag;
 			if(otherTag.Equals("Fire")){
-				hose.AddFlame(other.gameObject);
-			//}else if(otherTag.Equals("Truck")){
-			//	truck.addOtherTruck(other.gameObject);
+				hose.AddFlame(other.gameObject.transform.root.gameObject);
 			}
 		}
 	}
@@ -20,9 +18,7 @@ public class TruckVision : MonoBehaviour {
 		if(!transform.root.Equals(other.transform.root)){
 			string otherTag = other.gameObject.tag;
 			if(otherTag.Equals("Fire")){
-				hose.RemoveFlame(other.gameObject);
-			//}else if(otherTag.Equals("Truck")){
-			//	truck.removeOtherTruck(other.gameObject);
+				hose.RemoveFlame(other.gameObject.transform.root.gameObject);
 			}
 		}
 	}

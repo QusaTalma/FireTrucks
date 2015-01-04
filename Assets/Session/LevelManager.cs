@@ -34,7 +34,7 @@ public class LevelManager {
 		return LEVELS.Length;
 	}
 
-	private string _currentLevel = "MyFirstLevel";
+	private string _currentLevel = "Level3";
 	public string CurrentLevel{
 		get{
 			return _currentLevel;
