@@ -87,7 +87,8 @@ public class TGMouse : MonoBehaviour {
 			}
 		}
 
-		if(Physics.Raycast(rayCast, out hitInfo, distance)) {
+		int layerMask = 1 << 8;//Layer 8
+		if(Physics.Raycast(rayCast, out hitInfo, distance, layerMask)) {
 			bool onTruck = hitInfo.transform.root.gameObject.tag.Equals("TruckRoot");
 			if(onTruck){
 				if(down){
@@ -119,9 +120,12 @@ public class TGMouse : MonoBehaviour {
 	}
 
 	void HandleTouchTruckStart(RaycastHit hitInfo){
-		EGFiretruck truck = hitInfo.transform.root.gameObject.GetComponent<EGFiretruck> ();
-		if (truck != null) {
-			_dispatcher.SetSelectedTruck(truck);
+		Debug.Log (hitInfo.transform.gameObject.tag);
+		if (hitInfo.transform.gameObject.tag.Equals("Truck")) {
+			EGFiretruck truck = hitInfo.transform.root.gameObject.GetComponent<EGFiretruck> ();
+			if (truck != null) {
+				_dispatcher.SetSelectedTruck(truck);
+			}
 		}
 	}
 
@@ -133,9 +137,11 @@ public class TGMouse : MonoBehaviour {
 		singleTouchDown = false;
 		dragging = false;
 
-		EGFiretruck truck = hitInfo.transform.root.gameObject.GetComponent<EGFiretruck> ();
-		if (truck != null) {
-			_dispatcher.SetSelectedTruck(truck);
+		if (hitInfo.transform.gameObject.tag.Equals("Truck")) {
+			EGFiretruck truck = hitInfo.transform.root.gameObject.GetComponent<EGFiretruck> ();
+			if (truck != null) {
+				_dispatcher.SetSelectedTruck(truck);
+			}
 		}
 	}
 

@@ -11,6 +11,7 @@ public class EGFiretruck : MonoBehaviour, EDTruckControls{
 
 	bool puttingOutFire = false;
 	bool idle = false;
+	bool selected = false;
 
 	Vector3 velocity = Vector3.forward;
 
@@ -220,5 +221,13 @@ public class EGFiretruck : MonoBehaviour, EDTruckControls{
 
 	public Vector3 GetLeft(){
 		return -transform.right;
+	}
+
+	public void SetSelected(bool newSelected){
+		selected = newSelected;
+	}
+
+	public bool IsSelected(){
+		return selected;
 	}
 }
