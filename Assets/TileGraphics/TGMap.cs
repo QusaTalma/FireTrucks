@@ -111,7 +111,6 @@ public class TGMap : MonoBehaviour {
 	}
 
 	//Places the firehouse GameObject on the map
-	//TODO this should be determined by the level, once levels are a thing
 	void PlaceFireHouse(){
 		Vector2 fireHouseTilePos = new Vector2 ();
 		Map.GetFireHouseCoordinates (out fireHouseTilePos);
@@ -129,6 +128,13 @@ public class TGMap : MonoBehaviour {
 
 		EGFirehouse firehouse = house.GetComponent<EGFirehouse>();
 		firehouse.SetTGMap(this);
+
+		Vector3 camPos = Camera.main.transform.position;
+		camPos.x = housePos.x;
+		camPos.z = housePos.z;
+
+		Camera.main.transform.position = camPos;
+
 		EGDispatcher dispatcher = GetComponent<EGDispatcher>();
 		dispatcher.SetFirehouse(firehouse);
 	}
