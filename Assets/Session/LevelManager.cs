@@ -16,9 +16,10 @@ public class LevelManager {
 	private LevelManager(){}
 
 	readonly string[] LEVELS = {
-		"Level1",
-		"Level2",
-		"Level3",
+		"test1",
+		"test2",
+		//"test3",
+		"test4",
 		"MyFirstLevel",
 		"MySecondLevel",
 		"MyThirdLevel"
@@ -34,7 +35,7 @@ public class LevelManager {
 		return LEVELS.Length;
 	}
 
-	private string _currentLevel = "Level3";
+	private string _currentLevel = "test4";
 	public string CurrentLevel{
 		get{
 			return _currentLevel;
