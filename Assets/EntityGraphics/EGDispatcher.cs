@@ -99,7 +99,12 @@ public class EGDispatcher : MonoBehaviour {
 	}
 
 	public void SetSelectedTruck(EGFiretruck selected){
+		if (selectedTruck != null) {
+			selectedTruck.SetSelected(false);
+		}
+
 		selectedTruck = selected;
+		selectedTruck.SetSelected (true);
 	}
 	
 	public void AddPositionToSpawnQueue(Vector2 truckPosition){
@@ -116,6 +121,7 @@ public class EGDispatcher : MonoBehaviour {
 		if (selectedTruck != null) {
 			truckToSend = selectedTruck;
 			_dispatcher.RemoveIdleTruck (truckToSend);
+			selectedTruck.SetSelected(false);
 			selectedTruck = null;
 		} else if (_dispatcher.GetIdleTrucks().Count > 0) {
 			truckToSend = _dispatcher.PopIdleTruck ();
