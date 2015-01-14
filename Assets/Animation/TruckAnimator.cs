@@ -46,7 +46,7 @@ public class TruckAnimator : MonoBehaviour {
 			//split into x and y indexes
 			Vector2 offset = new Vector2(offsetX, offsetY);
 
-			renderer.material.SetTextureOffset("_MainTex", offset);
+//			renderer.material.SetTextureOffset("_MainTex", offset);
 		}
 	}
 }
