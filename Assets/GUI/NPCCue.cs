@@ -7,12 +7,12 @@ public class NPCCue {
 	}
 
 	private string npcToShow;
-	public float NPCToShow{
+	public string NPCToShow{
 		get { return npcToShow; }
 	}
 
 	private string textToShow;
-	public float TextToShow{
+	public string TextToShow{
 		get { return textToShow; }
 	}
 

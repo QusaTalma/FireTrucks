@@ -126,7 +126,7 @@ public class TDLevel {
 	}
 
 	int ReadNPCCues(string[] splitLevelData, int offset){
-		npcCues = new List<NPCCues> ();
+		npcCues = new List<NPCCue> ();
 
 		int numCues = int.Parse(splitLevelData[offset]);
 		offset++;
