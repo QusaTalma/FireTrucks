@@ -15,15 +15,24 @@ public class NPCCue {
     public float getTimeToShow() {
         return timeToShow;
     }
+    public void setTimeToShow(float timeToShow){
+        this.timeToShow = timeToShow;
+    }
     
     private String npcToShow;
     public String getNpcToShow() {
         return npcToShow;
     }
+    public void setNPCToShow(String npcToShow){
+        this.npcToShow = npcToShow;
+    }
 
     private String textToShow;
     public String getTextToShow() {
         return textToShow;
+    }
+    public void setTextToShow(String textToShow){
+        this.textToShow = textToShow;
     }
     
     public NPCCue(float timeToShow, String npcToShow, String textToShow){

@@ -275,6 +275,7 @@ public class Level {
     }
 
     private int readNPCCues(String[] splitLevelData, int offset) {
+        npcCues = new ArrayList<NPCCue>();
         if(offset >= splitLevelData.length){
             return offset;
         }
@@ -297,6 +298,9 @@ public class Level {
             float timeToShow = Float.parseFloat(cueData[0]);
             String npcToShow = cueData[1];
             String textToShow = cueData[2];
+            
+            NPCCue cue = new NPCCue(timeToShow, npcToShow, textToShow);
+            npcCues.add(cue);
             
             offset++;
         }

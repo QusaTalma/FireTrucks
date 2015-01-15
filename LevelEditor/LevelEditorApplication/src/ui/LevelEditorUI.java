@@ -20,6 +20,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import level.model.*;
 import ui.model.ArsonPathTableModel;
+import ui.model.NPCCueTableModel;
 
 /**
  *
@@ -69,7 +70,9 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
         tileButtonGroup.add(cityFillRadioButton);
         tileButtonGroup.add(startFireRadioButton);
         
-        fireTable.setModel(new ArsonPathTableModel(level.getArsonPath().getSteps(), this));
+        npcCueTable.addMouseListener(new NPCCueTableMouseListener());
+        //Creates list models
+        refreshList();
         
         final JFileChooser fc = new JFileChooser();
         saveButton.addActionListener(new ActionListener() {
@@ -135,6 +138,8 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
         loadButton = new javax.swing.JButton();
         paddingSpinner = new javax.swing.JSpinner();
         paddingLabel = new javax.swing.JLabel();
+        npcCueContainer = new javax.swing.JScrollPane();
+        npcCueTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(10000, 10000));
@@ -199,38 +204,52 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
 
         paddingLabel.setText("Padding");
 
+        npcCueTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        npcCueContainer.setViewportView(npcCueTable);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(mapScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(streetRadioButton)
-                            .addComponent(houseRadioButton)
-                            .addComponent(fireStationRadioButton)
-                            .addComponent(cityFillRadioButton)
-                            .addComponent(startFireRadioButton)
-                            .addComponent(fireListContainer, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(widthLabel)
-                                    .addComponent(heightLabel)
-                                    .addComponent(durationLabel)
-                                    .addComponent(percentLabel)
-                                    .addComponent(paddingLabel))
-                                .addGap(27, 27, 27)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(paddingSpinner)
-                                    .addComponent(widthSpinner, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
-                                    .addComponent(heightSpinner)
-                                    .addComponent(durationSpinner)
-                                    .addComponent(winSpinner)))))
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(mapScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 512, Short.MAX_VALUE)
+                    .addComponent(npcCueContainer))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(streetRadioButton)
+                        .addComponent(houseRadioButton)
+                        .addComponent(fireStationRadioButton)
+                        .addComponent(cityFillRadioButton)
+                        .addComponent(startFireRadioButton)
+                        .addComponent(fireListContainer, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(widthLabel)
+                                .addComponent(heightLabel)
+                                .addComponent(durationLabel)
+                                .addComponent(percentLabel)
+                                .addComponent(paddingLabel))
+                            .addGap(27, 27, 27)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(paddingSpinner)
+                                .addComponent(widthSpinner, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
+                                .addComponent(heightSpinner)
+                                .addComponent(durationSpinner)
+                                .addComponent(winSpinner))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(loadButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(saveButton)))
@@ -274,10 +293,12 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
                         .addComponent(fireListContainer, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(mapScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(saveButton)
-                    .addComponent(loadButton))
-                .addContainerGap(455, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(saveButton)
+                        .addComponent(loadButton))
+                    .addComponent(npcCueContainer, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(324, Short.MAX_VALUE))
         );
 
         pack();
@@ -296,6 +317,8 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
     private javax.swing.JButton loadButton;
     private ui.MapPanel mapPanel;
     private javax.swing.JScrollPane mapScrollPane;
+    private javax.swing.JScrollPane npcCueContainer;
+    private javax.swing.JTable npcCueTable;
     private javax.swing.JLabel paddingLabel;
     private javax.swing.JSpinner paddingSpinner;
     private javax.swing.JLabel percentLabel;
@@ -351,6 +374,7 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
     
     private void refreshList(){
         fireTable.setModel(new ArsonPathTableModel(level.getArsonPath().getSteps(), this));
+        npcCueTable.setModel(new NPCCueTableModel(level.getNPCCues()));
     }
 
     @Override
@@ -457,6 +481,35 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
             JSpinner source = (JSpinner)e.getSource();
             int newPadding = (int)source.getValue();
             level.setFillPadding(newPadding);
+        }
+    }
+    
+    private class NPCCueTableMouseListener implements MouseListener{
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            int rowClicked = npcCueTable.rowAtPoint(e.getPoint());
+            if(rowClicked >= level.getNPCCues().size()){
+                NPCCue cue = new NPCCue(0f, "m", "Don't go into the light");
+                level.addNPCCue(cue);
+                refreshList();
+            }
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            System.out.println("Entered NPC table");
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
         }
     }
 }

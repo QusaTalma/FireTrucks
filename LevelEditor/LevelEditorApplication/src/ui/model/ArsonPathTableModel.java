@@ -78,9 +78,7 @@ public class ArsonPathTableModel extends AbstractTableModel{
             int time = step.getTime();
             try{
                 time = Integer.parseInt(aValue.toString());
-            }catch(NumberFormatException e){
-                
-            }
+            }catch(NumberFormatException e){}
             
             if(timeChangeDelegate != null){
                 timeChangeDelegate.setStepTime(step.getLocation(), time);
