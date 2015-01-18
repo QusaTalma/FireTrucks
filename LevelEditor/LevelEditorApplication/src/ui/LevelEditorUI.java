@@ -61,6 +61,7 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
         paddingSpinner.setModel(paddingSpinnerModel);
         paddingSpinner.addChangeListener(new PaddingSpinnerChangeListener());
         
+        mapScrollPane.setLayout(null);
         mapPanel.updateMap(level);
         mapPanel.addMouseListener(new PanelMouseListener());
         
@@ -142,26 +143,26 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
         npcCueTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(10000, 10000));
-        setPreferredSize(new java.awt.Dimension(800, 600));
 
-        mapScrollPane.setOpaque(false);
+        mapScrollPane.setBackground(new java.awt.Color(204, 204, 204));
+        mapScrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+        mapScrollPane.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         mapScrollPane.setPreferredSize(new java.awt.Dimension(256, 256));
         mapScrollPane.setRequestFocusEnabled(false);
-        mapScrollPane.setSize(new java.awt.Dimension(256, 256));
 
-        mapPanel.setBackground(new java.awt.Color(51, 51, 255));
-        mapPanel.setPreferredSize(new java.awt.Dimension(1024, 1024));
+        mapPanel.setBackground(new java.awt.Color(255, 255, 255));
+        mapPanel.setMaximumSize(new java.awt.Dimension(10000, 10000));
+        mapPanel.setPreferredSize(null);
 
         javax.swing.GroupLayout mapPanelLayout = new javax.swing.GroupLayout(mapPanel);
         mapPanel.setLayout(mapPanelLayout);
         mapPanelLayout.setHorizontalGroup(
             mapPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1024, Short.MAX_VALUE)
+            .addGap(0, 435, Short.MAX_VALUE)
         );
         mapPanelLayout.setVerticalGroup(
             mapPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1024, Short.MAX_VALUE)
+            .addGap(0, 311, Short.MAX_VALUE)
         );
 
         mapScrollPane.setViewportView(mapPanel);
@@ -224,7 +225,7 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(mapScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 512, Short.MAX_VALUE)
+                    .addComponent(mapScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(npcCueContainer))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -253,13 +254,13 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
                         .addComponent(loadButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(saveButton)))
-                .addContainerGap(312, Short.MAX_VALUE))
+                .addContainerGap(370, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(widthLabel)
@@ -279,7 +280,7 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(paddingLabel)
                             .addComponent(paddingSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addComponent(streetRadioButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(houseRadioButton)
@@ -291,14 +292,16 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
                         .addComponent(startFireRadioButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(fireListContainer, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(mapScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(mapScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(npcCueContainer, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(saveButton)
-                        .addComponent(loadButton))
-                    .addComponent(npcCueContainer, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(324, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(saveButton)
+                    .addComponent(loadButton))
+                .addContainerGap(461, Short.MAX_VALUE))
         );
 
         pack();
@@ -441,6 +444,7 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
             int newWidth = (int)source.getValue();
             level.resize(newWidth, level.getHeight());
             mapPanel.updateMap(level);
+            mapScrollPane.revalidate();
             refreshList();
         }
     }
@@ -452,6 +456,7 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
             int newHeight = (int)source.getValue();
             level.resize(level.getWidth(), newHeight);
             mapPanel.updateMap(level);
+            mapScrollPane.revalidate();
             refreshList();
         }
     }

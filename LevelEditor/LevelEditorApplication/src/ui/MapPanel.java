@@ -8,11 +8,13 @@ package ui;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
+import javax.swing.Scrollable;
 import level.model.Level;
 import level.model.Tile;
 
@@ -20,7 +22,7 @@ import level.model.Tile;
  *
  * @author asheehan
  */
-public class MapPanel extends JPanel{
+public class MapPanel extends JPanel implements Scrollable{
     public static final int TILE_SIZE = 16;
     private static final String TILE_SET_TEXTURE_FILE = "./Resources/FiretruckCityTextures.jpg";
     private BufferedImage tileSet;
@@ -68,8 +70,11 @@ public class MapPanel extends JPanel{
     }
     
     protected void resizePanel(int width, int height){
-        setSize(width, height);
-        setPreferredSize(new Dimension(width, height));
+        int scaledWidth = width*TILE_SIZE;
+        int scaledHeight = height*TILE_SIZE;
+        setSize(scaledWidth, scaledHeight);
+        setPreferredSize(new Dimension(scaledWidth, scaledHeight));
+        invalidate();
     }
     
     protected void updateMapImage(Level level){
@@ -114,5 +119,30 @@ public class MapPanel extends JPanel{
         }
         
         mapImage = newMapImage;
+    }
+
+    @Override
+    public Dimension getPreferredScrollableViewportSize() {
+        return new Dimension(256,256);
+    }
+
+    @Override
+    public int getScrollableUnitIncrement(Rectangle visibleRect, int orientation, int direction) {
+        return TILE_SIZE;
+    }
+
+    @Override
+    public int getScrollableBlockIncrement(Rectangle visibleRect, int orientation, int direction) {
+        return TILE_SIZE;
+    }
+
+    @Override
+    public boolean getScrollableTracksViewportWidth() {
+        return false;
+    }
+
+    @Override
+    public boolean getScrollableTracksViewportHeight() {
+        return false;
     }
 }
