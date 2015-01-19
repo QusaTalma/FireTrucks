@@ -1,6 +1,10 @@
 using System;
 
 public class NPCCue {
+	public const string MAYOR = "m";
+	public const string FIRE_CHIEF = "f";
+	public const string POLICE_CHIEF = "p";
+
 	private float timeToShow;
 	public float TimeToShow{
 		get { return timeToShow; }

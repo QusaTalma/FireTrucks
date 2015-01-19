@@ -52,7 +52,7 @@ public class TGMap : MonoBehaviour {
 		}
 
 		_level = new TDLevel(levelText);
-		_gameSession = new TDGameSession(_level.TimeInSecondsToPlay);
+		_gameSession = new TDGameSession(_level.TimeInSecondsToPlay, _level.NPCCues);
 
 		//Create the map
 		BuildMesh ();
@@ -67,12 +67,14 @@ public class TGMap : MonoBehaviour {
 
 	void Update(){
 		_gameSession.AddToCurrentTime (Time.deltaTime);
-		if (!_gameSession.IsActive()) {
+		if (!_gameSession.IsActive ()) {
 			Time.timeScale = 0f;
-			LevelGUIManager levelManager = gameObject.GetComponent<LevelGUIManager>();
-			if(levelManager != null){
-				levelManager.ShowEndGameDialog();
+			LevelGUIManager levelManager = gameObject.GetComponent<LevelGUIManager> ();
+			if (levelManager != null) {
+				levelManager.ShowEndGameDialog ();
 			}
+		} else {
+			_gameSession.ShowNPCCueIfReady ();
 		}
 	}
 
