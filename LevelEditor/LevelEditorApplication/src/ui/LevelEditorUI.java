@@ -444,7 +444,6 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
             int newWidth = (int)source.getValue();
             level.resize(newWidth, level.getHeight());
             mapPanel.updateMap(level);
-            mapScrollPane.revalidate();
             refreshList();
         }
     }
@@ -456,7 +455,6 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
             int newHeight = (int)source.getValue();
             level.resize(level.getWidth(), newHeight);
             mapPanel.updateMap(level);
-            mapScrollPane.revalidate();
             refreshList();
         }
     }

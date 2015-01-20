@@ -74,7 +74,7 @@ public class MapPanel extends JPanel implements Scrollable{
         int scaledHeight = height*TILE_SIZE;
         setSize(scaledWidth, scaledHeight);
         setPreferredSize(new Dimension(scaledWidth, scaledHeight));
-        invalidate();
+        repaint();
     }
     
     protected void updateMapImage(Level level){
