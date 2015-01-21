@@ -8,6 +8,7 @@ package ui;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -35,6 +36,8 @@ public class MapPanel extends JPanel implements Scrollable{
     
     private BufferedImage mapImage;
     
+    private Point selectedPoint = null; 
+    
     public MapPanel(){
         super();
         try{
@@ -58,6 +61,19 @@ public class MapPanel extends JPanel implements Scrollable{
         if(mapImage != null){
             g.drawImage(mapImage, 0, 0, null);
         }
+        
+        if(selectedPoint != null){
+            g.setColor(Color.RED);
+            g.fillOval(selectedPoint.x*TILE_SIZE,
+                    selectedPoint.y*TILE_SIZE,
+                    TILE_SIZE, 
+                    TILE_SIZE);
+        }
+    }
+    
+    public void setSelectedPoint(Point point){
+        this.selectedPoint = point;
+        repaint();
     }
     
     public void updateMap(Level level){

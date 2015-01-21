@@ -12,12 +12,16 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.io.File;
+import javafx.scene.control.SelectionMode;
 import javax.swing.JFileChooser;
 import javax.swing.JSpinner;
+import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import level.model.*;
 import ui.model.ArsonPathTableModel;
 import ui.model.NPCCueTableModel;
@@ -26,7 +30,7 @@ import ui.model.NPCCueTableModel;
  *
  * @author asheehan
  */
-public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableModel.TimeChangeDelegate{
+public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableModel.ArsonStepChangeListener{
     private Level level;
 
     /**
@@ -71,7 +75,12 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
         tileButtonGroup.add(cityFillRadioButton);
         tileButtonGroup.add(startFireRadioButton);
         
+        fireTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        fireTable.getSelectionModel().addListSelectionListener(new FireListSelectionListener());
+                
         npcCueTable.addMouseListener(new NPCCueTableMouseListener());
+        npcCueTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        
         //Creates list models
         refreshList();
         
@@ -484,6 +493,22 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
             JSpinner source = (JSpinner)e.getSource();
             int newPadding = (int)source.getValue();
             level.setFillPadding(newPadding);
+        }
+    }
+    
+    private class FireListSelectionListener implements ListSelectionListener{
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+            int row = fireTable.getSelectedRow();
+            
+            Point firePos = null;
+            
+            if(row >= 0){
+                ArsonStep step = level.getArsonPath().getSteps().get(row);
+                firePos = step.getLocation();
+            }
+            
+            mapPanel.setSelectedPoint(firePos);
         }
     }
     
