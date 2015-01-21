@@ -84,6 +84,9 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
         //Creates list models
         refreshList();
         
+        
+        npcDeleteButton.addActionListener(new DeleteNPCClickListener());
+        
         final JFileChooser fc = new JFileChooser();
         saveButton.addActionListener(new ActionListener() {
             @Override
@@ -150,6 +153,7 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
         paddingLabel = new javax.swing.JLabel();
         npcCueContainer = new javax.swing.JScrollPane();
         npcCueTable = new javax.swing.JTable();
+        npcDeleteButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -161,7 +165,6 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
 
         mapPanel.setBackground(new java.awt.Color(255, 255, 255));
         mapPanel.setMaximumSize(new java.awt.Dimension(10000, 10000));
-        mapPanel.setPreferredSize(null);
 
         javax.swing.GroupLayout mapPanelLayout = new javax.swing.GroupLayout(mapPanel);
         mapPanel.setLayout(mapPanelLayout);
@@ -227,15 +230,20 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
         ));
         npcCueContainer.setViewportView(npcCueTable);
 
+        npcDeleteButton.setText("Delete selected mesage");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(mapScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(npcCueContainer))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(mapScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(npcCueContainer)))
+                    .addComponent(npcDeleteButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -269,7 +277,7 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(widthLabel)
@@ -300,17 +308,18 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
                         .addGap(29, 29, 29)
                         .addComponent(startFireRadioButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(fireListContainer, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(fireListContainer, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(saveButton)
+                            .addComponent(loadButton))
+                        .addContainerGap(461, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(mapScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(npcCueContainer, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(saveButton)
-                    .addComponent(loadButton))
-                .addContainerGap(461, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(npcDeleteButton)
+                        .addGap(465, 465, 465))))
         );
 
         pack();
@@ -331,6 +340,7 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
     private javax.swing.JScrollPane mapScrollPane;
     private javax.swing.JScrollPane npcCueContainer;
     private javax.swing.JTable npcCueTable;
+    private javax.swing.JButton npcDeleteButton;
     private javax.swing.JLabel paddingLabel;
     private javax.swing.JSpinner paddingSpinner;
     private javax.swing.JLabel percentLabel;
@@ -517,27 +527,30 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
         public void mouseClicked(MouseEvent e) {
             int rowClicked = npcCueTable.rowAtPoint(e.getPoint());
             if(rowClicked >= level.getNPCCues().size()){
-                NPCCue cue = new NPCCue(0f, "m", "Don't go into the light");
+                NPCCue cue = new NPCCue(0f, "m", "");
                 level.addNPCCue(cue);
                 refreshList();
             }
         }
-
         @Override
-        public void mousePressed(MouseEvent e) {
-        }
-
+        public void mousePressed(MouseEvent e) {}
         @Override
-        public void mouseReleased(MouseEvent e) {
-        }
-
+        public void mouseReleased(MouseEvent e) {}
         @Override
-        public void mouseEntered(MouseEvent e) {
-            System.out.println("Entered NPC table");
-        }
-
+        public void mouseEntered(MouseEvent e) {}
         @Override
-        public void mouseExited(MouseEvent e) {
+        public void mouseExited(MouseEvent e) {}
+    }
+    
+    private class DeleteNPCClickListener implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            int selectedNPC = npcCueTable.getSelectedRow();
+            
+            if(selectedNPC >= 0){
+                level.getNPCCues().remove(selectedNPC);
+                refreshList();
+            }
         }
     }
 }
