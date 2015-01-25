@@ -57,6 +57,6 @@ public class TGArsonist : MonoBehaviour
 		egFlame.SetMap(_map);
 		egFlame.SetSpreadPrefab(flamePrefab);
 		
-		tile.type = TDTile.TILE_HOUSE_ON_FIRE;
+		tile.OnFire = true;
 	}
 }

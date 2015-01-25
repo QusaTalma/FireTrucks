@@ -39,7 +39,7 @@ public class LevelManager {
 		return LEVELS.Length;
 	}
 
-	private string _currentLevel = "MyFirstLevel";
+	private string _currentLevel = "FunInTheSun";
 	public string CurrentLevel{
 		get{
 			return _currentLevel;

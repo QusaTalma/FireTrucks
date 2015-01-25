@@ -63,7 +63,7 @@ public class EGDispatcher : MonoBehaviour {
 			
 			TDTile truckTile = _map.GetTileForWorldPosition(truck.transform.position);
 			//Trucks that are idle at the firehouse need to be removed
-			if(truckTile.type == TDTile.TILE_FIREHOUSE){
+			if(truckTile.type == TDTile.Type.FIREHOUSE){
 				toDestroy.Add(truck);
 			}
 		}

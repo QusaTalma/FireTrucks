@@ -22,22 +22,12 @@ public class EGHouse : MonoBehaviour {
 			float offsetX = (float)lastIndex / UnifiedAnimator.FLAME_COLUMNS - (lastIndex / UnifiedAnimator.FLAME_COLUMNS);
 			int state = HOUSE_ROWS - 1;
 
-			switch(_tile.type){
-			case TDTile.TILE_HOUSE:
-				state = 3;
-				break;
-
-			case TDTile.TILE_HOUSE_ON_FIRE:
+			if(_tile.OnFire){
 				state = 2;
-				break;
-
-			case TDTile.TILE_DAMAGED_HOUSE:
+			}else if(_tile.durability <= 0){
 				state = 1;
-				break;
-
-			case TDTile.TILE_BURNED_DOWN_HOUSE:
+			}else if(_tile.IsDamaged()){
 				state = 0;
-				break;
 			}
 
 			float offsetY = ((float)state/HOUSE_ROWS);

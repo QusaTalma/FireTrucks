@@ -36,7 +36,7 @@ public class EGFlame : MonoBehaviour {
 		
 		Vector3 scale = transform.root.localScale;
 
-		if(tile.type == TDTile.TILE_BURNED_DOWN_HOUSE){
+		if(tile.durability <= 0){
 			scale.x -= growthRate * delta;
 			scale.y -= growthRate * delta;
 			scale.z -= growthRate * delta;
@@ -61,13 +61,13 @@ public class EGFlame : MonoBehaviour {
 		
 		Vector3 scale = transform.root.localScale;
 		
-		if (scale.x >= maxSize || tile.type == TDTile.TILE_BURNED_DOWN_HOUSE) {
+		if (scale.x >= maxSize || tile.durability <= 0) {
 			timeSinceSpreadAttempt += delta;
 			
 			if(timeSinceSpreadAttempt >= spreadInterval){
 				int rand = Random.Range (0, spreadChance);
 				if (rand % spreadChance == 0){
-					List<TDTile> houses = map.Map.FindAdjacentTilesOfType(tile, TDTile.TILE_HOUSE);
+					List<TDTile> houses = map.Map.FindAdjacentFlammableTiles(tile);
 					
 					if(houses.Count > 0) {
 						rand = Random.Range(0, houses.Count);
@@ -87,7 +87,7 @@ public class EGFlame : MonoBehaviour {
 
 						PopUpUIManager.Instance.ShowFireChief("Fires are spreading! get them under control!");
 						
-						tileToIgnite.type = TDTile.TILE_HOUSE_ON_FIRE;
+						tileToIgnite.OnFire = true;
 					}
 					
 					timeSinceSpreadAttempt = 0;
@@ -104,9 +104,7 @@ public class EGFlame : MonoBehaviour {
 	}
 
 	public void PutOut(){
-		if (tile.type != TDTile.TILE_BURNED_DOWN_HOUSE) {
-			tile.type = TDTile.TILE_DAMAGED_HOUSE;
-		} else {
+		if (tile.durability <= 0) {
 			PopUpUIManager.Instance.ShowMayor("Oh dear, a building burned down");
 		}
 	}
@@ -117,7 +115,7 @@ public class EGFlame : MonoBehaviour {
 
 	public void SetTile(TDTile tile){
 		this.tile = tile;
-		tile.type = TDTile.TILE_HOUSE_ON_FIRE;
+		tile.OnFire = true;
 	}
 
 	public void SetSpreadPrefab(GameObject prefab){

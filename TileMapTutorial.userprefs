@@ -1,16 +1,13 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/EntityGraphics/EGFiretruck.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/TileData/TDLevel.cs">
     <Files>
+      <File FileName="Assets/TileData/TDTile.cs" Line="133" Column="18" />
       <File FileName="Assets/Animation/TruckAnimator.cs" Line="1" Column="1" />
-      <File FileName="Assets/EntityGraphics/EGHouse.cs" Line="1" Column="1" />
-      <File FileName="Assets/EntityGraphics/EGFiretruck.cs" Line="10" Column="46" />
+      <File FileName="Assets/EntityGraphics/EGHouse.cs" Line="29" Column="30" />
       <File FileName="Assets/TileGraphics/TGMouse.cs" Line="1" Column="1" />
-      <File FileName="Assets/EntityGraphics/EGDispatcher.cs" Line="1" Column="1" />
-      <File FileName="Assets/GUI/TitleScript.cs" Line="1" Column="1" />
-      <File FileName="Assets/GUI/NPC.cs" Line="1" Column="1" />
-      <File FileName="Assets/TileData/TDLevel.cs" Line="125" Column="17" />
-      <File FileName="Assets/GUI/NPCCue.cs" Line="1" Column="1" />
+      <File FileName="Assets/Session/LevelManager.cs" Line="42" Column="45" />
+      <File FileName="Assets/TileData/TDLevel.cs" Line="75" Column="43" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
