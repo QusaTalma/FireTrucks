@@ -230,7 +230,17 @@ public class Level {
             String timeString = stepData[2].replaceAll("(\\r|\\n)", "");
             int time = Integer.parseInt(timeString);
             arsonPath.setStepTime(x, y, time);
-            map.getTileMap()[x][y] = Tile.HOUSE_ON_FIRE;
+            Tile tile = map.getTileMap()[x][y];
+            
+            if(tile == Tile.HOUSE){
+                tile = Tile.HOUSE_ON_FIRE;
+            }else if(tile == Tile.GREEN_HOUSE){
+                tile = Tile.GREEN_HOUSE_ON_FIRE;
+            }else if(tile == Tile.YELLOW_HOUSE){
+                tile = Tile.YELLOW_HOUSE_ON_FIRE;
+            }
+            
+            map.setTile(x, y, tile);
             
             offset++;
         }

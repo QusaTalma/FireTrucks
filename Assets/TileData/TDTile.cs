@@ -13,16 +13,15 @@ public class TDTile {
 	public const int BLUE_HOUSE_INDEX = 2;
 	public const int HOUSE_ON_FIRE_INDEX = 3;
 	public const int FIRE_STATION_INDEX = 4;
-	public const int START_FIRE_INDEX = 5;
+	public const int APPLE_CART_INDEX = 5;
 	public const int WATER_INDEX = 6;
-	public const int CONSTRUCTION_INDEX = 7;
+	public const int GRASS_INDEX = 7;
 	public const int TREE_INDEX = 8;
-	public const int GRASS_INDEX = 9;
-	public const int APPLE_CART_INDEX = 10;
-	public const int GREEN_HOUSE_INDEX = 11;
-	public const int GREEN_HOUSE_ON_FIRE_INDEX = 12;
-	public const int YELLOW_HOUSE_INDEX = 13;
-	public const int YELLOW_HOUSE_ON_FIRE_INDEX = 14;
+	public const int CONSTRUCTION_INDEX = 9;
+	public const int GREEN_HOUSE_INDEX = 10;
+	public const int GREEN_HOUSE_ON_FIRE_INDEX = 11;
+	public const int YELLOW_HOUSE_INDEX = 12;
+	public const int YELLOW_HOUSE_ON_FIRE_INDEX = 13;
 
 	public const string FILL_CHAR = "f";
 	public const string WATER_CHAR = "~";
@@ -125,13 +124,18 @@ public class TDTile {
 			index = GRASS_INDEX;
 			break;
 		case Type.GREEN_HOUSE:
-			index = GREEN_HOUSE_INDEX;
+			//Since there's an animated house for this show a street background
+			index = STREET_INDEX;
 			break;
 		case Type.STREET:
 			index = STREET_INDEX;
 			break;
 		case Type.TREE:
 			index = TREE_INDEX;
+			break;
+		case Type.YELLOW_HOUSE:
+			//Since there's an animated house for this show a street background
+			index = STREET_INDEX;
 			break;
 		case Type.WATER:
 			index = WATER_INDEX;

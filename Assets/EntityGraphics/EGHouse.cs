@@ -25,9 +25,9 @@ public class EGHouse : MonoBehaviour {
 			if(_tile.OnFire){
 				state = 2;
 			}else if(_tile.durability <= 0){
-				state = 1;
-			}else if(_tile.IsDamaged()){
 				state = 0;
+			}else if(_tile.IsDamaged()){
+				state = 1;
 			}
 
 			float offsetY = ((float)state/HOUSE_ROWS);

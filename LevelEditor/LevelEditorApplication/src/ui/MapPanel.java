@@ -73,6 +73,7 @@ public class MapPanel extends JPanel implements Scrollable{
             greenHouseRGB = tileSet.getRGB(TILE_SIZE*10, 0, TILE_SIZE, TILE_SIZE, null, 0, TILE_SIZE);
             greenOnFireRGB = tileSet.getRGB(TILE_SIZE*11, 0, TILE_SIZE, TILE_SIZE, null, 0, TILE_SIZE);
             yellowHouseRGB = tileSet.getRGB(TILE_SIZE*12, 0, TILE_SIZE, TILE_SIZE, null, 0, TILE_SIZE);
+            yellowOnFireRGB = tileSet.getRGB(TILE_SIZE*13, 0, TILE_SIZE, TILE_SIZE, null, 0, TILE_SIZE);
         }
     }
 
@@ -166,19 +167,19 @@ public class MapPanel extends JPanel implements Scrollable{
                         break;
                 
                     case GREEN_HOUSE:
-                        tileRGB = MapPanel.greenHouseRGB;
+                        tileRGB = greenHouseRGB;
                         break;
 
                     case YELLOW_HOUSE:
-                        tileRGB = MapPanel.yellowHouseRGB;
+                        tileRGB = yellowHouseRGB;
                         break;
 
                     case GREEN_HOUSE_ON_FIRE:
-                        tileRGB = MapPanel.greenOnFireRGB;
+                        tileRGB = greenOnFireRGB;
                         break;
 
                     case YELLOW_HOUSE_ON_FIRE:
-                        tileRGB = MapPanel.yellowOnFireRGB;
+                        tileRGB = yellowOnFireRGB;
                         break;
                         
                     default:

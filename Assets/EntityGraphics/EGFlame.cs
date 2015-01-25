@@ -72,22 +72,24 @@ public class EGFlame : MonoBehaviour {
 					if(houses.Count > 0) {
 						rand = Random.Range(0, houses.Count);
 						TDTile tileToIgnite = houses[rand];
-						GameObject flame = (GameObject)Instantiate (spreadPrefab);
-						
-						Vector3 flamePos = map.GetPositionForTile (tileToIgnite.GetX(), tileToIgnite.GetY());
-						flamePos.x += 0.5f;
-						flamePos.z -= 0.5f;
-						
-						flame.transform.position = flamePos;
-						
-						EGFlame egFlame = flame.GetComponent<EGFlame>();
-						egFlame.SetTile(tileToIgnite);
-						egFlame.SetMap(map);
-						egFlame.SetSpreadPrefab(spreadPrefab);
-
-						PopUpUIManager.Instance.ShowFireChief("Fires are spreading! get them under control!");
-						
-						tileToIgnite.OnFire = true;
+						if(!tileToIgnite.OnFire && tile.durability > 0){
+							GameObject flame = (GameObject)Instantiate (spreadPrefab);
+							
+							Vector3 flamePos = map.GetPositionForTile (tileToIgnite.GetX(), tileToIgnite.GetY());
+							flamePos.x += 0.5f;
+							flamePos.z -= 0.5f;
+							
+							flame.transform.position = flamePos;
+							
+							EGFlame egFlame = flame.GetComponent<EGFlame>();
+							egFlame.SetTile(tileToIgnite);
+							egFlame.SetMap(map);
+							egFlame.SetSpreadPrefab(spreadPrefab);
+							
+							PopUpUIManager.Instance.ShowFireChief("Fires are spreading! get them under control!");
+							
+							tileToIgnite.OnFire = true;
+						}
 					}
 					
 					timeSinceSpreadAttempt = 0;
@@ -107,6 +109,8 @@ public class EGFlame : MonoBehaviour {
 		if (tile.durability <= 0) {
 			PopUpUIManager.Instance.ShowMayor("Oh dear, a building burned down");
 		}
+
+		tile.OnFire = false;
 	}
 
 	public void SetMap(TGMap map){

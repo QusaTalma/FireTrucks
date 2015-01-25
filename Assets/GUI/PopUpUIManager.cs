@@ -21,7 +21,7 @@ public class PopUpUIManager : MonoBehaviour {
 			popUpQueue = new List<PopUpEvent>(); }
 	}
 
-	public const float MESSAGE_DISPLAY_TIME = 2.5f;
+	public const float MESSAGE_DISPLAY_TIME = 3.5f;
 	private float timeSinceMessage = 0f;
 	
 	private static PopUpUIManager _instance = null;
