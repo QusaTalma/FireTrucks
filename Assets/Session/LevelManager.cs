@@ -16,6 +16,13 @@ public class LevelManager {
 	private LevelManager(){}
 
 	readonly string[] LEVELS = {
+		"FunInTheSun",
+		"LostOfFunInTheSun",
+		"MoreFunInTheSun",
+		"SunBurn",
+		"SunBurn2",
+		"SunBurn3",
+		"SunBurn4",
 		"MyFirstLevel",
 		"MySecondLevel",
 		"MyThirdLevel",
