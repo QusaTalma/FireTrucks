@@ -28,11 +28,24 @@ public class MapPanel extends JPanel implements Scrollable{
     private static final String TILE_SET_TEXTURE_FILE = "./Resources/FiretruckCityTextures.jpg";
     private BufferedImage tileSet;
     
-    private int[] cityFillRGB;
-    private int[] streetRGB;
-    private int[] houseRGB;
-    private int[] onFireHouseRGB;
-    private int[] fireStationRGB;
+    public static int[] cityFillRGB;
+    public static int[] appleCartRGB;
+    public static int[] constructionRGB;
+    public static int[] grassRGB;
+    public static int[] treeRGB;
+    public static int[] riverRGB;
+    
+    public static int[] streetRGB;
+    
+    public static int[] houseRGB;
+    public static int[] greenHouseRGB;
+    public static int[] yellowHouseRGB;
+    
+    public static int[] onFireHouseRGB;
+    public static int[] greenOnFireRGB;
+    public static int[] yellowOnFireRGB;
+    
+    public static int[] fireStationRGB;
     
     private BufferedImage mapImage;
     
@@ -52,6 +65,14 @@ public class MapPanel extends JPanel implements Scrollable{
             houseRGB = tileSet.getRGB(TILE_SIZE*2, 0, TILE_SIZE, TILE_SIZE, null, 0, TILE_SIZE);
             onFireHouseRGB = tileSet.getRGB(TILE_SIZE*3, 0, TILE_SIZE, TILE_SIZE, null, 0, TILE_SIZE);
             fireStationRGB = tileSet.getRGB(TILE_SIZE*4, 0, TILE_SIZE, TILE_SIZE, null, 0, TILE_SIZE);
+            appleCartRGB = tileSet.getRGB(TILE_SIZE*5, 0, TILE_SIZE, TILE_SIZE, null, 0, TILE_SIZE);
+            riverRGB = tileSet.getRGB(TILE_SIZE*6, 0, TILE_SIZE, TILE_SIZE, null, 0, TILE_SIZE);
+            grassRGB = tileSet.getRGB(TILE_SIZE*7, 0, TILE_SIZE, TILE_SIZE, null, 0, TILE_SIZE);
+            treeRGB = tileSet.getRGB(TILE_SIZE*8, 0, TILE_SIZE, TILE_SIZE, null, 0, TILE_SIZE);
+            constructionRGB = tileSet.getRGB(TILE_SIZE*9, 0, TILE_SIZE, TILE_SIZE, null, 0, TILE_SIZE);
+            greenHouseRGB = tileSet.getRGB(TILE_SIZE*10, 0, TILE_SIZE, TILE_SIZE, null, 0, TILE_SIZE);
+            greenOnFireRGB = tileSet.getRGB(TILE_SIZE*11, 0, TILE_SIZE, TILE_SIZE, null, 0, TILE_SIZE);
+            yellowHouseRGB = tileSet.getRGB(TILE_SIZE*12, 0, TILE_SIZE, TILE_SIZE, null, 0, TILE_SIZE);
         }
     }
 
@@ -122,6 +143,42 @@ public class MapPanel extends JPanel implements Scrollable{
                         
                     case FIRE_STATION:
                         tileRGB = fireStationRGB;
+                        break;
+                        
+                    case APPLE_CART:
+                        tileRGB = appleCartRGB;
+                        break;
+                        
+                    case CONSTRUCTION:
+                        tileRGB = constructionRGB;
+                        break;
+                        
+                    case GRASS:
+                        tileRGB = grassRGB;
+                        break;
+                        
+                    case TREE:
+                        tileRGB = treeRGB;
+                        break;
+                        
+                    case RIVER:
+                        tileRGB = riverRGB;
+                        break;
+                
+                    case GREEN_HOUSE:
+                        tileRGB = MapPanel.greenHouseRGB;
+                        break;
+
+                    case YELLOW_HOUSE:
+                        tileRGB = MapPanel.yellowHouseRGB;
+                        break;
+
+                    case GREEN_HOUSE_ON_FIRE:
+                        tileRGB = MapPanel.greenOnFireRGB;
+                        break;
+
+                    case YELLOW_HOUSE_ON_FIRE:
+                        tileRGB = MapPanel.yellowOnFireRGB;
                         break;
                         
                     default:

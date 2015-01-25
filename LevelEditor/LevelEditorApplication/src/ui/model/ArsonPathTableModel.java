@@ -7,8 +7,6 @@ package ui.model;
 
 import java.awt.Point;
 import java.util.List;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
 import level.model.ArsonStep;
 
@@ -17,8 +15,8 @@ import level.model.ArsonStep;
  * @author asheehan
  */
 public class ArsonPathTableModel extends AbstractTableModel{
-    private List<ArsonStep> steps;
-    private ArsonStepChangeListener timeChangeDelegate;
+    private final List<ArsonStep> steps;
+    private final ArsonStepChangeListener timeChangeDelegate;
     
     public ArsonPathTableModel(List<ArsonStep> steps, ArsonStepChangeListener delegate){
         this.steps = steps;

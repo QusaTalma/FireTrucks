@@ -173,8 +173,20 @@ public class Level {
         for (int y=offset; y<height+offset; y++) {
             String mapRowData = splitLevelData[y];
             for(int x=0; x<width; x++){
-                int type = Integer.parseInt(Character.toString(mapRowData.charAt(x)));
-                Tile tile = Tile.fromVal(type);
+                int type = -1;
+                String rowString = Character.toString(mapRowData.charAt(x));
+                try{
+                    type = Integer.parseInt(rowString);
+                }catch(NumberFormatException e){
+                }
+
+                Tile tile;
+                if(type >= 0){
+                    tile = Tile.fromVal(type);
+                }else{
+                    tile = Tile.fromString(rowString);
+                }
+                
                 if(tile == Tile.FIRE_STATION){
                     map.setFireHousePos(new Point(x, y-offset));
                 }

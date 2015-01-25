@@ -12,7 +12,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.io.File;
-import javafx.scene.control.SelectionMode;
 import javax.swing.JFileChooser;
 import javax.swing.JSpinner;
 import javax.swing.ListSelectionModel;
@@ -25,6 +24,8 @@ import javax.swing.event.ListSelectionListener;
 import level.model.*;
 import ui.model.ArsonPathTableModel;
 import ui.model.NPCCueTableModel;
+import ui.model.TileListModel;
+import ui.renderer.TilePaletteRenderer;
 
 /**
  *
@@ -69,12 +70,6 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
         mapPanel.updateMap(level);
         mapPanel.addMouseListener(new PanelMouseListener());
         
-        tileButtonGroup.add(streetRadioButton);
-        tileButtonGroup.add(houseRadioButton);
-        tileButtonGroup.add(fireStationRadioButton);
-        tileButtonGroup.add(cityFillRadioButton);
-        tileButtonGroup.add(startFireRadioButton);
-        
         fireTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         fireTable.getSelectionModel().addListSelectionListener(new FireListSelectionListener());
                 
@@ -84,6 +79,9 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
         //Creates list models
         refreshList();
         
+        paletteList.setModel(new TileListModel());
+        paletteList.setCellRenderer(new TilePaletteRenderer());
+        paletteList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         
         npcDeleteButton.addActionListener(new DeleteNPCClickListener());
         
@@ -140,11 +138,6 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
         percentLabel = new javax.swing.JLabel();
         durationSpinner = new javax.swing.JSpinner();
         winSpinner = new javax.swing.JSpinner();
-        streetRadioButton = new javax.swing.JRadioButton();
-        houseRadioButton = new javax.swing.JRadioButton();
-        fireStationRadioButton = new javax.swing.JRadioButton();
-        cityFillRadioButton = new javax.swing.JRadioButton();
-        startFireRadioButton = new javax.swing.JRadioButton();
         fireListContainer = new javax.swing.JScrollPane();
         fireTable = new javax.swing.JTable();
         saveButton = new javax.swing.JButton();
@@ -154,6 +147,8 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
         npcCueContainer = new javax.swing.JScrollPane();
         npcCueTable = new javax.swing.JTable();
         npcDeleteButton = new javax.swing.JButton();
+        paletteScrollPane = new javax.swing.JScrollPane();
+        paletteList = new javax.swing.JList();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -186,17 +181,6 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
         durationLabel.setText("Level Duration");
 
         percentLabel.setText("Percent to win");
-
-        streetRadioButton.setSelected(true);
-        streetRadioButton.setText("Street");
-
-        houseRadioButton.setText("House");
-
-        fireStationRadioButton.setText("Fire Station");
-
-        cityFillRadioButton.setText("Fill");
-
-        startFireRadioButton.setText("Start a Fire");
 
         fireTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -232,6 +216,13 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
 
         npcDeleteButton.setText("Delete selected mesage");
 
+        paletteList.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        paletteScrollPane.setViewportView(paletteList);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -245,32 +236,27 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
                             .addComponent(npcCueContainer)))
                     .addComponent(npcDeleteButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(streetRadioButton)
-                        .addComponent(houseRadioButton)
-                        .addComponent(fireStationRadioButton)
-                        .addComponent(cityFillRadioButton)
-                        .addComponent(startFireRadioButton)
-                        .addComponent(fireListContainer, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(widthLabel)
-                                .addComponent(heightLabel)
-                                .addComponent(durationLabel)
-                                .addComponent(percentLabel)
-                                .addComponent(paddingLabel))
-                            .addGap(27, 27, 27)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(paddingSpinner)
-                                .addComponent(widthSpinner, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
-                                .addComponent(heightSpinner)
-                                .addComponent(durationSpinner)
-                                .addComponent(winSpinner))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(fireListContainer, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(widthLabel)
+                            .addComponent(heightLabel)
+                            .addComponent(durationLabel)
+                            .addComponent(percentLabel)
+                            .addComponent(paddingLabel))
+                        .addGap(27, 27, 27)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(paddingSpinner)
+                            .addComponent(widthSpinner, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
+                            .addComponent(heightSpinner)
+                            .addComponent(durationSpinner)
+                            .addComponent(winSpinner)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(loadButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(saveButton)))
+                        .addComponent(saveButton))
+                    .addComponent(paletteScrollPane))
                 .addContainerGap(370, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -297,16 +283,8 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(paddingLabel)
                             .addComponent(paddingSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(streetRadioButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(houseRadioButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(fireStationRadioButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cityFillRadioButton)
-                        .addGap(29, 29, 29)
-                        .addComponent(startFireRadioButton)
+                        .addComponent(paletteScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(fireListContainer, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -326,15 +304,12 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JRadioButton cityFillRadioButton;
     private javax.swing.JLabel durationLabel;
     private javax.swing.JSpinner durationSpinner;
     private javax.swing.JScrollPane fireListContainer;
-    private javax.swing.JRadioButton fireStationRadioButton;
     private javax.swing.JTable fireTable;
     private javax.swing.JLabel heightLabel;
     private javax.swing.JSpinner heightSpinner;
-    private javax.swing.JRadioButton houseRadioButton;
     private javax.swing.JButton loadButton;
     private ui.MapPanel mapPanel;
     private javax.swing.JScrollPane mapScrollPane;
@@ -343,10 +318,10 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
     private javax.swing.JButton npcDeleteButton;
     private javax.swing.JLabel paddingLabel;
     private javax.swing.JSpinner paddingSpinner;
+    private javax.swing.JList paletteList;
+    private javax.swing.JScrollPane paletteScrollPane;
     private javax.swing.JLabel percentLabel;
     private javax.swing.JButton saveButton;
-    private javax.swing.JRadioButton startFireRadioButton;
-    private javax.swing.JRadioButton streetRadioButton;
     private javax.swing.ButtonGroup tileButtonGroup;
     private javax.swing.JLabel widthLabel;
     private javax.swing.JSpinner widthSpinner;
@@ -364,26 +339,30 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
             prevX = x;
             prevY = y;
 
+            int index = paletteList.getSelectedIndex();
             Tile toSet = null;
-
-            if(streetRadioButton.isSelected()){
-                toSet = Tile.STREET;
-            }else if(houseRadioButton.isSelected()){
-                toSet = Tile.HOUSE;
-            }else if(fireStationRadioButton.isSelected()){
-                toSet = Tile.FIRE_STATION;
-            }else if(cityFillRadioButton.isSelected()){
-                toSet = Tile.CITY_FILL;
-            }else if(startFireRadioButton.isSelected()){
-                toSet = Tile.HOUSE_ON_FIRE;
+            if(index >= 0){
+                toSet = (Tile)paletteList.getModel().getElementAt(index);
             }
 
             if(toSet != null){
                 if(x < level.getWidth() && y < level.getHeight()){
+                    Tile currentTile = level.getMap().getTileMap()[x][y];
+                    
                     if(toSet == Tile.HOUSE_ON_FIRE){
                         level.getArsonPath().addStep(x, y);
-                    }else if(level.getMap().getTileMap()[x][y] == Tile.HOUSE_ON_FIRE){
+                    }else if(currentTile == Tile.HOUSE_ON_FIRE || 
+                            currentTile == Tile.GREEN_HOUSE_ON_FIRE ||
+                            currentTile == Tile.YELLOW_HOUSE_ON_FIRE){
                         level.getArsonPath().removeStep(x, y);
+                    }
+                    
+                    if((currentTile == Tile.GREEN_HOUSE || currentTile == Tile.GREEN_HOUSE_ON_FIRE) &&
+                            toSet == Tile.HOUSE_ON_FIRE){
+                        toSet = Tile.GREEN_HOUSE_ON_FIRE;
+                    }else if((currentTile == Tile.YELLOW_HOUSE || currentTile == Tile.YELLOW_HOUSE_ON_FIRE) &&
+                            toSet == Tile.HOUSE_ON_FIRE){
+                        toSet = Tile.YELLOW_HOUSE_ON_FIRE;
                     }
                     
                     level.getMap().setTile(x, y, toSet);
