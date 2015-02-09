@@ -1,0 +1,66 @@
+53,29
+HHHHHHHHHHHHHHHHHHH|TTTTTGTTGTGGTTTGTTGGGG-----TTTGGG
+H-H-H-H-H-H-H-H-H-H-TGG----TT---TTGT--G----G-GGG----G
+H-H-H-H-H-H-H-H-H-H----------------TT----GGG-G|G-GG-T
+H-----------------H--|G~--~~GGTG----T---GGTTTTTT-GG-T
+HHH-|H|-|HT-|H|-HHH--T~~--~~~~~~G-------TTTGTT|G-G--T
+T~~-H|H-H|H-HTH-----T~~~--~~~~~~~GT---TTTGGG-GGG---GT
+T~~--HT-|HT-TH------|~~-------~~~~~----------------G|
+YY~~--------------HH~~~-HH--------~x-~GGG----@----G~~
+-YY~~HHHHHHHHH--HHH~~~--HH--HHHHH-~x-~~~~GGG---GGG~~~
+--YY~~~~~~~~~HHHH~~~----HH--HHHHH-xx-~~~~~~~GGG~~~~~~
+|--YY~~~~~~~~~~~~~~HH-HHH------------x~~~~~~~~~~~~~~T
+||--YYYYYY~~~~~~~~HHH-HHH---HHH-HHxx-xG~~~~~~~~~~GGGT
+T|--------YYYT||-HH---------HHH-HH---x-GGG~~~~~GGG--T
+T|TYYY-----------HH--T|T------H----------GGGG~GG----T
+TTTT|TTY-------------TT|--F---H-||----------GGG-----T
+YYT---|Y-YYYYTT------|TT------H----GGG-----------GGGT
+-YT-T-TY--Y~~~T|-HHH--------HHH-HH---GGGG----GG--GGGT
+----T-TY--YY~~~--HHHH-HHH---HHH-HH-GGG--GGG-GTTG---G|
+TTTTT-|YY--Y~~~~---HH-HHH----------GGG----G--GGTG--G|
+TTYTY------Y~~~~~~----------HHHHH------TTTGG--GTTG-GG
+T|Y-Y--YYYYYY~~~~~~~--HHHH--HHHHH---|T---TTGG--GTG---
+TT----------YYYY~~~~~-HHHH--------YTTTTT-T~~GG--G--GG
+Y--Y--T|YY-----YYYY~~~------------YTT~~TGT~~~GG---GG~
+T-TY-TTTYYTT------Y~~~Y-YY--YY-YYYYT~~~TT~~~~~GG-GG~~
+T-YY--YY--YY--YYYY~~~YY-YY--YY-YYYYTTTTTTYYY~~~G-G~~~
+Y-YY--YY--YY--YYY~~~YY--xx--YY----YYYYYYY---Y~~G-G~~~
+T-TYYYYTT-TT-----xxx----YY----------------YYY~~GGG~~~
+Y------------TTT-xxx----YY--YYYYY-----------Y~~~~~~~~
+YYTTYYYYTYYTYY|TY~~~YYY-----------YYYYYYYYYYTT~~~~~~~
+50
+90
+15
+18,11,4
+20,11,9
+22,11,13
+24,11,15
+28,12,20
+30,14,23
+29,16,25
+28,17,28
+28,19,28
+30,20,32
+32,19,35
+35,18,39
+37,18,42
+39,16,45
+40,17,48
+17
+0.000000,m,Oh Hello! You must be the new dispatcher 
+4.000000,f,Sorry to interupt Mr Mayor but there's a fire
+8.000000,m,Oh Dear! OH DEAR!
+11.000000,f,The kid just needs to find the building on fire and touch it.
+15.000000,m,Oh Dear! OH DEAR!
+18.000000,f,Every touch will make us send a firetruck
+22.000000,m,Oh Dear! Can the trucks go any faster?
+25.000000,f,No but we should have enough trucks to get the job done.
+28.000000,m,Chief! There's more fires!
+30.000000,f,We know Mr Mayor. We have indicators for any that are not in view.
+32.000000,m,Oh! Just by dragging around the city?
+34.000000,f,That's it. Just drag your finger around.
+36.000000,m,and tap buildings on fire! 
+38.000000,f,Mr Mayor you sound like you could be the dispatcher
+40.000000,m,Oh it's far too hard. I can't manage the trucks.
+42.000000,f,That's because you can also tap a truck and tell it to go to a new location.
+45.000000,m,Well TAP faster! The fires are in the Green Estates.
