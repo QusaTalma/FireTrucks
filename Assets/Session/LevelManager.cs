@@ -16,7 +16,6 @@ public class LevelManager {
 	private LevelManager(){}
 
 	readonly string[] LEVELS = {
-		"Awesomiton1",
 		"FunInTheSun",
 		"LostOfFunInTheSun",
 		"MoreFunInTheSun",
@@ -47,7 +46,7 @@ public class LevelManager {
 		return LEVELS.Length;
 	}
 
-	private string _currentLevel = "Awesomiton1";
+	private string _currentLevel = "SunBurn";
 	public string CurrentLevel{
 		get{
 			return _currentLevel;
