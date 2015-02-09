@@ -21,7 +21,7 @@ public class PopUpUIManager : MonoBehaviour {
 			popUpQueue = new List<PopUpEvent>(); }
 	}
 
-	public const float MESSAGE_DISPLAY_TIME = 2.5f;
+	public const float MESSAGE_DISPLAY_TIME = 3.5f;
 	private float timeSinceMessage = 0f;
 	
 	private static PopUpUIManager _instance = null;
@@ -45,8 +45,9 @@ public class PopUpUIManager : MonoBehaviour {
 		RadioOn = !RadioOn;
 	}
 
-	public void ShowMayor(string message){
-		if (!showingAlert && radioOn) {
+	public void ShowMayor(string message, bool force=false){
+		if ((!showingAlert || force) && radioOn) {
+			HideAlert();
 			showingAlert = true;
 			timeSinceMessage = 0f;
 			mayorImage.SetActive (true);
@@ -57,8 +58,9 @@ public class PopUpUIManager : MonoBehaviour {
 		}
 	}
 
-	public void ShowFireChief(string message){
-		if (!showingAlert && radioOn) {
+	public void ShowFireChief(string message, bool force=false){
+		if ((!showingAlert || force) && radioOn) {
+			HideAlert();
 			showingAlert = true;
 			timeSinceMessage = 0f;
 			fireChiefImage.SetActive (true);
@@ -69,8 +71,9 @@ public class PopUpUIManager : MonoBehaviour {
 		}
 	}
 
-	public void ShowPoliceChief(string message){
-		if (!showingAlert && radioOn) {
+	public void ShowPoliceChief(string message, bool force=false){
+		if ((!showingAlert || force) && radioOn) {
+			HideAlert();
 			showingAlert = true;
 			timeSinceMessage = 0f;
 			policeChiefImage.SetActive (true);

@@ -8,8 +8,16 @@ public class TDLevel {
 	 *<width x height grid of characters, each representing a tile>
 	 *<int % value of city needed to win>
 	 *<int seconds of play time>
-	 *<any number of lines representing arsonist steps, format on following line>
+	 *<int number of arsonist steps>
+	 *<previous number of lines representing arsonist steps, format on following line>
 	 *<int fireX, int fireY, float timeToPlace> //Note, these MUST be in chronological order
+	 *<int number of NPC cues in the level>
+	 *<previous number of lines representing NPC cues, format on following line>
+	 *<float timeToShow, string npcToShow(f=firechief, p=policechief, m=mayor), string textToShow
+	 *
+	 *Update 1: 1/11/2015
+	 *Added count for arson steps
+	 *Added count and data for npc cues
 	 *****/
 
 	private int mapWidth = 26;
@@ -42,11 +50,17 @@ public class TDLevel {
 		get { return firehouseLocation; }
 	}
 
+	private List<NPCCue> npcCues;
+	public List<NPCCue> NPCCues{
+		get { return npcCues; }
+	}
+
 	public TDLevel(string levelData){
 		string[] splitLevelData = levelData.Split ('\n');
 		int offset = ReadInMap (splitLevelData);
 		offset = ReadLevelParams (splitLevelData, offset);
-		ReadArsonPath (splitLevelData, offset);
+		offset = ReadArsonPath (splitLevelData, offset);
+		offset = ReadNPCCues (splitLevelData, offset);
 
 		_map = new TDMap(tiles, firehouseLocation, totalDurability);
 	}
@@ -58,16 +72,15 @@ public class TDLevel {
 		mapHeight = int.Parse (mapSizes [1]);
 		int offset = 1;//Read one line for width and height
 
-
 		tiles = new TDTile[mapWidth, mapHeight];
 		for (int y=offset; y<mapHeight+offset; y++) {
 			string mapRowData = splitLevelData[y];
 			for(int x=0; x<mapWidth; x++){
 				TDTile tile = new TDTile(x,y-offset);
-				tile.type = int.Parse(mapRowData[x].ToString());
-				if(tile.type == TDTile.TILE_FIREHOUSE){
+				tile.type = TDTile.GetTypeForString(mapRowData[x].ToString());
+				if(tile.type == TDTile.Type.FIREHOUSE){
 					firehouseLocation = new Vector2(x,y-offset);
-				}else if(tile.type == TDTile.TILE_HOUSE){
+				}else if(tile.IsFlammable()){
 					totalDurability += tile.durability;
 				}
 
@@ -86,22 +99,47 @@ public class TDLevel {
 		return offset;
 	}
 
-	void ReadArsonPath(string[] splitLevelData, int offset){
+	int ReadArsonPath(string[] splitLevelData, int offset){
+		int numSteps = int.Parse(splitLevelData [offset]);
+		offset++;
 		List<TDTile> pathSteps = new List<TDTile> ();
 		List<float> pathTimes = new List<float> ();
-		for(int i=offset; i<splitLevelData.Length; i++){
-			if(splitLevelData[i] == null || !splitLevelData[i].Contains(",")){
+		for(int i=0; i<numSteps; i++){
+			if(splitLevelData[offset] == null || !splitLevelData[offset].Contains(",")){
 				continue;
 			}
-			string[] stepData = splitLevelData[i].Split(',');
+			string[] stepData = splitLevelData[offset].Split(',');
 			int x = int.Parse(stepData[0]);
 			int y = int.Parse(stepData[1]);
 			pathSteps.Add(tiles[x,y]);
 
 			float time = float.Parse(stepData[2]);
 			pathTimes.Add(time);
+
+			offset++;
 		}
 
 		arsonPath = new EDArsonPath (pathSteps, pathTimes);
+
+		return offset;
+	}
+
+	int ReadNPCCues(string[] splitLevelData, int offset){
+		npcCues = new List<NPCCue> ();
+
+		int numCues = int.Parse(splitLevelData[offset]);
+		offset++;
+
+		for (int i=0; i<numCues; i++) {
+			string[] cueData = splitLevelData[offset].Split(',');
+			float timeToShow = float.Parse(cueData[0]);
+			string npcToShow = cueData[1];
+			string textToShow = cueData[2];
+
+			npcCues.Add(new NPCCue(timeToShow, npcToShow, textToShow));
+
+			offset++;
+		}
+		return offset;
 	}
 }

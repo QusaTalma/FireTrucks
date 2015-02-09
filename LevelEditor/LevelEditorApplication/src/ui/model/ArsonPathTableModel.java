@@ -15,10 +15,10 @@ import level.model.ArsonStep;
  * @author asheehan
  */
 public class ArsonPathTableModel extends AbstractTableModel{
-    private List<ArsonStep> steps;
-    private TimeChangeDelegate timeChangeDelegate;
+    private final List<ArsonStep> steps;
+    private final ArsonStepChangeListener timeChangeDelegate;
     
-    public ArsonPathTableModel(List<ArsonStep> steps, TimeChangeDelegate delegate){
+    public ArsonPathTableModel(List<ArsonStep> steps, ArsonStepChangeListener delegate){
         this.steps = steps;
         this.timeChangeDelegate = delegate;
     }
@@ -78,9 +78,7 @@ public class ArsonPathTableModel extends AbstractTableModel{
             int time = step.getTime();
             try{
                 time = Integer.parseInt(aValue.toString());
-            }catch(NumberFormatException e){
-                
-            }
+            }catch(NumberFormatException e){}
             
             if(timeChangeDelegate != null){
                 timeChangeDelegate.setStepTime(step.getLocation(), time);
@@ -88,7 +86,7 @@ public class ArsonPathTableModel extends AbstractTableModel{
         }
     }
     
-    public static interface TimeChangeDelegate{
+    public static interface ArsonStepChangeListener{
         public void setStepTime(Point location, int time);
     }
 }

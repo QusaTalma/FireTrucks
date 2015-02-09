@@ -37,8 +37,8 @@ public class TDPath {
 	}
 
 	public void BuildPath(TDMap map, TDTile start, TDTile end){
-		if (end.type != TDTile.TILE_STREET && end.type != TDTile.TILE_FIREHOUSE) {
-			List<TDTile> nearbyStreets = map.FindAdjacentTilesOfType(end, TDTile.TILE_STREET);
+		if (end.type != TDTile.Type.STREET && end.type != TDTile.Type.FIREHOUSE) {
+			List<TDTile> nearbyStreets = map.FindAdjacentTilesOfType(end, TDTile.Type.STREET);
 			if(nearbyStreets.Count > 0){
 				end = nearbyStreets[0];
 			}
@@ -60,8 +60,8 @@ public class TDPath {
 			open.Remove(current);
 			closed.Add(current);
 
-			if(end.type == TDTile.TILE_FIREHOUSE){
-				List<TDTile> firestation = map.FindAdjacentTilesOfType(current, TDTile.TILE_FIREHOUSE);
+			if(end.type == TDTile.Type.FIREHOUSE){
+				List<TDTile> firestation = map.FindAdjacentTilesOfType(current, TDTile.Type.FIREHOUSE);
 				for(int i=0; i<firestation.Count; i++){
 					TDTile station = firestation[i];
 					if(closed.Contains(station)){
@@ -77,7 +77,7 @@ public class TDPath {
 				}
 			}
 
-			List<TDTile> neighborStreets = map.FindAdjacentTilesOfType(current, TDTile.TILE_STREET);
+			List<TDTile> neighborStreets = map.FindAdjacentTilesOfType(current, TDTile.Type.STREET);
 
 			for(int i=0; i<neighborStreets.Count; i++){
 				TDTile neighbor = neighborStreets[i];

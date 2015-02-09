@@ -8,11 +8,14 @@ package ui;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
+import javax.swing.Scrollable;
 import level.model.Level;
 import level.model.Tile;
 
@@ -20,18 +23,33 @@ import level.model.Tile;
  *
  * @author asheehan
  */
-public class MapPanel extends JPanel{
+public class MapPanel extends JPanel implements Scrollable{
     public static final int TILE_SIZE = 16;
     private static final String TILE_SET_TEXTURE_FILE = "./Resources/FiretruckCityTextures.jpg";
     private BufferedImage tileSet;
     
-    private int[] cityFillRGB;
-    private int[] streetRGB;
-    private int[] houseRGB;
-    private int[] onFireHouseRGB;
-    private int[] fireStationRGB;
+    public static int[] cityFillRGB;
+    public static int[] appleCartRGB;
+    public static int[] constructionRGB;
+    public static int[] grassRGB;
+    public static int[] treeRGB;
+    public static int[] riverRGB;
+    
+    public static int[] streetRGB;
+    
+    public static int[] houseRGB;
+    public static int[] greenHouseRGB;
+    public static int[] yellowHouseRGB;
+    
+    public static int[] onFireHouseRGB;
+    public static int[] greenOnFireRGB;
+    public static int[] yellowOnFireRGB;
+    
+    public static int[] fireStationRGB;
     
     private BufferedImage mapImage;
+    
+    private Point selectedPoint = null; 
     
     public MapPanel(){
         super();
@@ -47,6 +65,15 @@ public class MapPanel extends JPanel{
             houseRGB = tileSet.getRGB(TILE_SIZE*2, 0, TILE_SIZE, TILE_SIZE, null, 0, TILE_SIZE);
             onFireHouseRGB = tileSet.getRGB(TILE_SIZE*3, 0, TILE_SIZE, TILE_SIZE, null, 0, TILE_SIZE);
             fireStationRGB = tileSet.getRGB(TILE_SIZE*4, 0, TILE_SIZE, TILE_SIZE, null, 0, TILE_SIZE);
+            appleCartRGB = tileSet.getRGB(TILE_SIZE*5, 0, TILE_SIZE, TILE_SIZE, null, 0, TILE_SIZE);
+            riverRGB = tileSet.getRGB(TILE_SIZE*6, 0, TILE_SIZE, TILE_SIZE, null, 0, TILE_SIZE);
+            grassRGB = tileSet.getRGB(TILE_SIZE*7, 0, TILE_SIZE, TILE_SIZE, null, 0, TILE_SIZE);
+            treeRGB = tileSet.getRGB(TILE_SIZE*8, 0, TILE_SIZE, TILE_SIZE, null, 0, TILE_SIZE);
+            constructionRGB = tileSet.getRGB(TILE_SIZE*9, 0, TILE_SIZE, TILE_SIZE, null, 0, TILE_SIZE);
+            greenHouseRGB = tileSet.getRGB(TILE_SIZE*10, 0, TILE_SIZE, TILE_SIZE, null, 0, TILE_SIZE);
+            greenOnFireRGB = tileSet.getRGB(TILE_SIZE*11, 0, TILE_SIZE, TILE_SIZE, null, 0, TILE_SIZE);
+            yellowHouseRGB = tileSet.getRGB(TILE_SIZE*12, 0, TILE_SIZE, TILE_SIZE, null, 0, TILE_SIZE);
+            yellowOnFireRGB = tileSet.getRGB(TILE_SIZE*13, 0, TILE_SIZE, TILE_SIZE, null, 0, TILE_SIZE);
         }
     }
 
@@ -56,6 +83,19 @@ public class MapPanel extends JPanel{
         if(mapImage != null){
             g.drawImage(mapImage, 0, 0, null);
         }
+        
+        if(selectedPoint != null){
+            g.setColor(Color.RED);
+            g.fillOval(selectedPoint.x*TILE_SIZE,
+                    selectedPoint.y*TILE_SIZE,
+                    TILE_SIZE, 
+                    TILE_SIZE);
+        }
+    }
+    
+    public void setSelectedPoint(Point point){
+        this.selectedPoint = point;
+        repaint();
     }
     
     public void updateMap(Level level){
@@ -68,8 +108,11 @@ public class MapPanel extends JPanel{
     }
     
     protected void resizePanel(int width, int height){
-        setSize(width, height);
-        setPreferredSize(new Dimension(width, height));
+        int scaledWidth = width*TILE_SIZE;
+        int scaledHeight = height*TILE_SIZE;
+        setSize(scaledWidth, scaledHeight);
+        setPreferredSize(new Dimension(scaledWidth, scaledHeight));
+        repaint();
     }
     
     protected void updateMapImage(Level level){
@@ -103,6 +146,42 @@ public class MapPanel extends JPanel{
                         tileRGB = fireStationRGB;
                         break;
                         
+                    case APPLE_CART:
+                        tileRGB = appleCartRGB;
+                        break;
+                        
+                    case CONSTRUCTION:
+                        tileRGB = constructionRGB;
+                        break;
+                        
+                    case GRASS:
+                        tileRGB = grassRGB;
+                        break;
+                        
+                    case TREE:
+                        tileRGB = treeRGB;
+                        break;
+                        
+                    case RIVER:
+                        tileRGB = riverRGB;
+                        break;
+                
+                    case GREEN_HOUSE:
+                        tileRGB = greenHouseRGB;
+                        break;
+
+                    case YELLOW_HOUSE:
+                        tileRGB = yellowHouseRGB;
+                        break;
+
+                    case GREEN_HOUSE_ON_FIRE:
+                        tileRGB = greenOnFireRGB;
+                        break;
+
+                    case YELLOW_HOUSE_ON_FIRE:
+                        tileRGB = yellowOnFireRGB;
+                        break;
+                        
                     default:
                     case CITY_FILL:
                         tileRGB = cityFillRGB;
@@ -114,5 +193,30 @@ public class MapPanel extends JPanel{
         }
         
         mapImage = newMapImage;
+    }
+
+    @Override
+    public Dimension getPreferredScrollableViewportSize() {
+        return new Dimension(256,256);
+    }
+
+    @Override
+    public int getScrollableUnitIncrement(Rectangle visibleRect, int orientation, int direction) {
+        return TILE_SIZE;
+    }
+
+    @Override
+    public int getScrollableBlockIncrement(Rectangle visibleRect, int orientation, int direction) {
+        return TILE_SIZE;
+    }
+
+    @Override
+    public boolean getScrollableTracksViewportWidth() {
+        return false;
+    }
+
+    @Override
+    public boolean getScrollableTracksViewportHeight() {
+        return false;
     }
 }

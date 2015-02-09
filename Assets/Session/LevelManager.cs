@@ -16,13 +16,24 @@ public class LevelManager {
 	private LevelManager(){}
 
 	readonly string[] LEVELS = {
-		"test1",
-		"test2",
-		//"test3",
-		"test4",
+		"FunInTheSun",
+		"LostOfFunInTheSun",
+		"MoreFunInTheSun",
+		"SunBurn",
+		"SunBurn2",
+		"SunBurn3",
+		"SunBurn4",
 		"MyFirstLevel",
 		"MySecondLevel",
-		"MyThirdLevel"
+		"MyThirdLevel",
+		"Level1",
+		"Level2",
+		"Level3",
+		"Level4",
+		"test1",
+		"test2",
+		"test3",
+		"test4"
 	};
 
 	public string[] Levels{
@@ -35,7 +46,7 @@ public class LevelManager {
 		return LEVELS.Length;
 	}
 
-	private string _currentLevel = "test4";
+	private string _currentLevel = "SunBurn";
 	public string CurrentLevel{
 		get{
 			return _currentLevel;

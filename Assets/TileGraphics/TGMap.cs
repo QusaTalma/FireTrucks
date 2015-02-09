@@ -21,7 +21,9 @@ public class TGMap : MonoBehaviour {
 
 	public GameObject firehousePrefab;
 	public GameObject arsonistPrefab;
-	public GameObject housePrefab;
+	public GameObject blueHousePrefab;
+	public GameObject greenHousePrefab;
+	public GameObject yellowHousePrefab;
 
 	public TDMap Map{
 		get { return _level.Map; }
@@ -52,7 +54,7 @@ public class TGMap : MonoBehaviour {
 		}
 
 		_level = new TDLevel(levelText);
-		_gameSession = new TDGameSession(_level.TimeInSecondsToPlay);
+		_gameSession = new TDGameSession(_level.TimeInSecondsToPlay, _level.NPCCues);
 
 		//Create the map
 		BuildMesh ();
@@ -67,12 +69,14 @@ public class TGMap : MonoBehaviour {
 
 	void Update(){
 		_gameSession.AddToCurrentTime (Time.deltaTime);
-		if (!_gameSession.IsActive()) {
+		if (!_gameSession.IsActive ()) {
 			Time.timeScale = 0f;
-			LevelGUIManager levelManager = gameObject.GetComponent<LevelGUIManager>();
-			if(levelManager != null){
-				levelManager.ShowEndGameDialog();
+			LevelGUIManager levelManager = gameObject.GetComponent<LevelGUIManager> ();
+			if (levelManager != null) {
+				levelManager.ShowEndGameDialog ();
 			}
+		} else {
+			_gameSession.ShowNPCCueIfReady ();
 		}
 	}
 
@@ -143,8 +147,8 @@ public class TGMap : MonoBehaviour {
 		for(int x = 0; x < Map.Width; x++){
 			for(int y = 0; y < Map.Height; y++){
 				TDTile tile = Map.GetTile(x,y);
-				if(tile.type == TDTile.TILE_HOUSE){
-					GameObject house = (GameObject)Instantiate(housePrefab);
+				if(tile.type == TDTile.Type.BLUE_HOUSE){
+					GameObject house = (GameObject)Instantiate(blueHousePrefab);
 					Vector3 housePos = GetPositionForTile (Mathf.FloorToInt(x),
 					                                       Mathf.FloorToInt(y));
 					
@@ -154,6 +158,32 @@ public class TGMap : MonoBehaviour {
 					
 					house.transform.position = housePos;
 
+					EGHouse egHouse = house.GetComponent<EGHouse>();
+					egHouse.setTile(tile);
+				}else if(tile.type == TDTile.Type.GREEN_HOUSE){
+					GameObject house = (GameObject)Instantiate(greenHousePrefab);
+					Vector3 housePos = GetPositionForTile (Mathf.FloorToInt(x),
+					                                       Mathf.FloorToInt(y));
+					
+					housePos.x += 0.5f;
+					housePos.y = house.transform.position.y;
+					housePos.z -= 0.5f;
+					
+					house.transform.position = housePos;
+					
+					EGHouse egHouse = house.GetComponent<EGHouse>();
+					egHouse.setTile(tile);
+				}else if(tile.type == TDTile.Type.YELLOW_HOUSE){
+					GameObject house = (GameObject)Instantiate(yellowHousePrefab);
+					Vector3 housePos = GetPositionForTile (Mathf.FloorToInt(x),
+					                                       Mathf.FloorToInt(y));
+					
+					housePos.x += 0.5f;
+					housePos.y = house.transform.position.y;
+					housePos.z -= 0.5f;
+					
+					house.transform.position = housePos;
+					
 					EGHouse egHouse = house.GetComponent<EGHouse>();
 					egHouse.setTile(tile);
 				}
@@ -182,12 +212,9 @@ public class TGMap : MonoBehaviour {
 		//type together into the texture
 		for(int y=0; y<Map.Height; y++){
 			for(int x=0; x < Map.Width; x++) {
-				int tileIndex = Map.GetTile(x,y).type;
-				if(tileIndex == TDTile.TILE_HOUSE || tileIndex == TDTile.TILE_FIREHOUSE){
-					tileIndex = TDTile.TILE_STREET;
-				}
-
+				int tileIndex = Map.GetTile(x,y).GetIndex();
 				Color[] p = tiles[tileIndex];
+
 				texture.SetPixels(x*tileResolution, y*tileResolution,
 				                  tileResolution, tileResolution, p);
 			}

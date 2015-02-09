@@ -12,28 +12,32 @@ public class MenuGUIManager : MonoBehaviour {
 	const int COLUMN_COUNT = 4;
 
 	void OnGUI() {
-		int row = 0;
-		int column = 0;
-		int x = LEVEL_BUTTON_PADDING;
-		int y = LEVEL_BUTTON_PADDING;
+//		int row = 0;
+//		int column = 0;
+//		int x = LEVEL_BUTTON_PADDING;
+//		int y = LEVEL_BUTTON_PADDING;
+//
+//		string[] levels = LevelManager.Instance.Levels;
+//		for (int i=0; i<levels.Length; i++) {
+//			if(column >= COLUMN_COUNT){
+//				row++;
+//				x = LEVEL_BUTTON_PADDING;
+//				column = 0;
+//				y += LEVEL_BUTTON_PADDING + (int)LEVEL_BUTTON_HEIGHT;
+//			}
+//
+//			string level = levels[i];
+//
+//			if(GUI.Button(new Rect(x, y, LEVEL_BUTTON_WIDTH, LEVEL_BUTTON_HEIGHT), i.ToString(), LevelButtonStyle)){
+//				LoadLevel(level);
+//			}
+//
+//			x += LEVEL_BUTTON_PADDING + (int)LEVEL_BUTTON_WIDTH ;
+//		}
+	}
 
-		string[] levels = LevelManager.Instance.Levels;
-		for (int i=0; i<levels.Length; i++) {
-			if(column >= COLUMN_COUNT){
-				row++;
-				x = LEVEL_BUTTON_PADDING;
-				column = 0;
-				y += LEVEL_BUTTON_PADDING + (int)LEVEL_BUTTON_HEIGHT;
-			}
-
-			string level = levels[i];
-
-			if(GUI.Button(new Rect(x, y, LEVEL_BUTTON_WIDTH, LEVEL_BUTTON_HEIGHT), i.ToString(), LevelButtonStyle)){
-				LevelManager.Instance.CurrentLevel = level;
-				Application.LoadLevel("GamePlay");
-			}
-
-			x += LEVEL_BUTTON_PADDING + (int)LEVEL_BUTTON_WIDTH ;
-		}
+	public void LoadLevel(string levelName){
+		LevelManager.Instance.CurrentLevel = levelName;
+		Application.LoadLevel("GamePlay");
 	}
 }

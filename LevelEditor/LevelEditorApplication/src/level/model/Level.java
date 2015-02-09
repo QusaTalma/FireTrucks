@@ -13,6 +13,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -46,6 +48,7 @@ public class Level {
     private int durationSeconds;
     private int winPercent;
     private ArsonPath arsonPath;
+    private List<NPCCue> npcCues;
     
     public Level(){
         width = MIN_WIDTH;
@@ -54,6 +57,7 @@ public class Level {
         durationSeconds = DEFAULT_DURATION;
         winPercent = DEFAULT_PERCENT;
         arsonPath = new ArsonPath();
+        npcCues = new ArrayList<NPCCue>();
     }
 
     public int getWidth() {
@@ -90,6 +94,14 @@ public class Level {
     
     public ArsonPath getArsonPath(){
         return arsonPath;
+    }
+    
+    public List<NPCCue> getNPCCues(){
+        return npcCues;
+    }
+    
+    public void addNPCCue(NPCCue cue){
+        npcCues.add(cue);
     }
     
     public void resize(int newWidth, int newHeight){
@@ -141,7 +153,8 @@ public class Level {
 
             int offset = level.readInMap (splitLevelData);
             offset = level.readLevelParams (splitLevelData, offset);
-            level.readArsonPath (splitLevelData, offset);
+            offset = level.readArsonPath (splitLevelData, offset);
+            offset = level.readNPCCues(splitLevelData, offset);
         }
         
         return level;
@@ -160,8 +173,20 @@ public class Level {
         for (int y=offset; y<height+offset; y++) {
             String mapRowData = splitLevelData[y];
             for(int x=0; x<width; x++){
-                int type = Integer.parseInt(Character.toString(mapRowData.charAt(x)));
-                Tile tile = Tile.fromVal(type);
+                int type = -1;
+                String rowString = Character.toString(mapRowData.charAt(x));
+                try{
+                    type = Integer.parseInt(rowString);
+                }catch(NumberFormatException e){
+                }
+
+                Tile tile;
+                if(type >= 0){
+                    tile = Tile.fromVal(type);
+                }else{
+                    tile = Tile.fromString(rowString);
+                }
+                
                 if(tile == Tile.FIRE_STATION){
                     map.setFireHousePos(new Point(x, y-offset));
                 }
@@ -181,12 +206,22 @@ public class Level {
         return offset;
     }
 
-    private void readArsonPath(String[] splitLevelData, int offset){
-        for(int i=offset; i<splitLevelData.length; i++){
-            if(splitLevelData[i] == null || !splitLevelData[i].contains(",")){
+    private int readArsonPath(String[] splitLevelData, int offset){
+        int endIndex;
+        
+        try{
+            int steps = Integer.parseInt(splitLevelData[offset]);
+            offset++;
+            endIndex = offset + steps;
+        }catch(NumberFormatException e){
+            endIndex = splitLevelData.length;
+        }
+        
+        while(offset < endIndex) {
+            if(splitLevelData[offset] == null || !splitLevelData[offset].contains(",")){
                     continue;
             }
-            String[] stepData = splitLevelData[i].split(",");
+            String[] stepData = splitLevelData[offset].split(",");
             int x = Integer.parseInt(stepData[0]);
             int y = Integer.parseInt(stepData[1]);
 
@@ -195,8 +230,22 @@ public class Level {
             String timeString = stepData[2].replaceAll("(\\r|\\n)", "");
             int time = Integer.parseInt(timeString);
             arsonPath.setStepTime(x, y, time);
-            map.getTileMap()[x][y] = Tile.HOUSE_ON_FIRE;
+            Tile tile = map.getTileMap()[x][y];
+            
+            if(tile == Tile.HOUSE){
+                tile = Tile.HOUSE_ON_FIRE;
+            }else if(tile == Tile.GREEN_HOUSE){
+                tile = Tile.GREEN_HOUSE_ON_FIRE;
+            }else if(tile == Tile.YELLOW_HOUSE){
+                tile = Tile.YELLOW_HOUSE_ON_FIRE;
+            }
+            
+            map.setTile(x, y, tile);
+            
+            offset++;
         }
+        
+        return offset;
     }
 
     public void writeToFile(File file) {
@@ -216,7 +265,12 @@ public class Level {
         writeBuilder.append(String.format("%s", map.toString()));
         writeBuilder.append(String.format("%d\n", winPercent));
         writeBuilder.append(String.format("%d\n", durationSeconds));
+        writeBuilder.append(String.format("%d\n", arsonPath.getSteps().size()));
         writeBuilder.append(arsonPath.toString(map.getFillPadding()));
+        writeBuilder.append(String.format("%d\n", npcCues.size()));
+        for(int i=0; i<npcCues.size(); i++){
+            writeBuilder.append(npcCues.get(i).toString().concat("\n"));
+        }
         
         OutputStream fileOutput = null;
         
@@ -240,5 +294,39 @@ public class Level {
 
     public void setFillPadding(int newPadding) {
         map.setFillPadding(newPadding);
+    }
+
+    private int readNPCCues(String[] splitLevelData, int offset) {
+        npcCues = new ArrayList<NPCCue>();
+        if(offset >= splitLevelData.length){
+            return offset;
+        }
+        int endIndex;
+        
+        try{
+            int numCues = Integer.parseInt(splitLevelData[offset]);
+            offset++;
+            endIndex = offset + numCues;
+        }catch(NumberFormatException e){
+            endIndex = splitLevelData.length;
+        }
+        
+        while(offset < endIndex) {
+            if(splitLevelData[offset] == null || !splitLevelData[offset].contains(",")){
+                    continue;
+            }
+            
+            String[] cueData = splitLevelData[offset].split(",");
+            float timeToShow = Float.parseFloat(cueData[0]);
+            String npcToShow = cueData[1];
+            String textToShow = cueData[2];
+            
+            NPCCue cue = new NPCCue(timeToShow, npcToShow, textToShow);
+            npcCues.add(cue);
+            
+            offset++;
+        }
+        
+        return offset;
     }
 }

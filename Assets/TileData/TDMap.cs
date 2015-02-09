@@ -32,7 +32,7 @@ public class TDMap {
 		fireHousePosition = pos;
 		
 		totalDurability -= _tiles [(int)fireHousePosition.x, (int)fireHousePosition.y].GetDurability ();
-		_tiles [(int)fireHousePosition.x, (int)fireHousePosition.y].type = TDTile.TILE_FIREHOUSE;
+		_tiles [(int)fireHousePosition.x, (int)fireHousePosition.y].type = TDTile.Type.FIREHOUSE;
 	}
 
 	public void GetFireHouseCoordinates(out Vector2 pos){
@@ -58,7 +58,7 @@ public class TDMap {
 		float currentDurability = 0;
 		for (int x = 0; x< _width; x++){
 			for( int y = 0; y < _height; y++){
-				if(_tiles[x,y].type == TDTile.TILE_HOUSE){
+				if(_tiles[x,y].IsFlammable()){
 					currentDurability += _tiles[x,y].GetDurability();
 				}
 			}
@@ -91,7 +91,21 @@ public class TDMap {
 		return adjacent;
 	}
 
-	public List<TDTile> FindAdjacentTilesOfType(TDTile tile, int tileType) {
+	public List<TDTile> FindAdjacentFlammableTiles(TDTile tile){
+		List<TDTile> adjacentFlammable = new List<TDTile> ();
+		List<TDTile> allAdjacent = GetAdjacentTiles (tile);
+		
+		for(int i=0; i<allAdjacent.Count; i++){
+			TDTile other = allAdjacent[i];
+			if(other.IsFlammable()){
+				adjacentFlammable.Add(other);
+			}
+		}
+		
+		return adjacentFlammable;
+	}
+
+	public List<TDTile> FindAdjacentTilesOfType(TDTile tile, TDTile.Type tileType) {
 		List<TDTile> adjacentOfType = new List<TDTile> ();
 		List<TDTile> allAdjacent = GetAdjacentTiles (tile);
 
