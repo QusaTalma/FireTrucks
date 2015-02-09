@@ -38,7 +38,11 @@ public class LevelGUIManager : MonoBehaviour {
 	public void ShowEndGameDialog(){
 		endGameDialog.gameObject.SetActive (true);
 
-		if (_map.GetCityDurabilityPercent () >= _map.PercentToWin) {
+		bool levelWon = _map.GetCityDurabilityPercent () >= _map.PercentToWin;
+
+		if (levelWon) {
+			int nextindex = LevelManager.Instance.GetIndexForLevel(LevelManager.Instance.CurrentLevel)+1;
+			LevelManager.Instance.UnlockLevel(nextindex);
 			loseText.gameObject.SetActive (false);
 			winText.gameObject.SetActive (true);
 			

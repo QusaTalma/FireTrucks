@@ -1,14 +1,17 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/TileData/TDTile.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/EntityGraphics/EGHouse.cs">
     <Files>
-      <File FileName="Assets/TileData/TDTile.cs" Line="7" Column="41" />
+      <File FileName="Assets/TileGraphics/TGMap.cs" Line="163" Column="52" />
+      <File FileName="Assets/TileData/TDTile.cs" Line="138" Column="25" />
       <File FileName="Assets/Animation/TruckAnimator.cs" Line="1" Column="1" />
-      <File FileName="Assets/EntityGraphics/EGHouse.cs" Line="1" Column="1" />
+      <File FileName="Assets/EntityGraphics/EGHouse.cs" Line="12" Column="14" />
       <File FileName="Assets/TileGraphics/TGMouse.cs" Line="1" Column="1" />
-      <File FileName="Assets/Session/LevelManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Session/LevelManager.cs" Line="25" Column="14" />
       <File FileName="Assets/TileData/TDLevel.cs" Line="1" Column="1" />
       <File FileName="Assets/TileData/TDMap.cs" Line="1" Column="1" />
+      <File FileName="Assets/EntityGraphics/EGFlame.cs" Line="75" Column="53" />
+      <File FileName="Assets/GUI/PopUpUIManager.cs" Line="24" Column="45" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
