@@ -43,6 +43,8 @@ public class NPCCue {
     
     @Override
     public String toString(){
-        return String.format("%f,%s,%s", timeToShow, npcToShow, textToShow);
+        return String.format("%f%s%s%s%s", timeToShow, Level.VALUE_DELIMITER, 
+                                           npcToShow, Level.VALUE_DELIMITER, 
+                                           textToShow);
     }
 }

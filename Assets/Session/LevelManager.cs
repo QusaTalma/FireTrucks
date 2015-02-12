@@ -19,6 +19,7 @@ public class LevelManager {
 	private LevelManager(){}
 
 	readonly string[] LEVELS = {
+		"Awesomiton1",
 		"FunInTheSun",
 		"LostOfFunInTheSun",
 		"MoreFunInTheSun",
@@ -26,21 +27,7 @@ public class LevelManager {
 		"SunBurn",
 		"SunBurn2",
 		"SunBurn3",
-		"SunBurn4",
-
-		"MyFirstLevel",
-		"MySecondLevel",
-		"MyThirdLevel",
-
-		"Level1",
-		"Level2",
-		"Level3",
-		"Level4",
-
-		"test1",
-		"test2",
-		"test3",
-		"test4"
+		"SunBurn4"
 	};
 
 	public string[] Levels{
@@ -102,7 +89,6 @@ public class LevelManager {
 		int index = GetIndexForLevel (level);
 		string key = LOCK_KEY + index.ToString();
 		int lockValue = PlayerPrefs.GetInt (key, 0);
-		Debug.Log (key + " is " + lockValue.ToString ());
 		return lockValue == 1;
 	}
 }

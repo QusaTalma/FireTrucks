@@ -30,6 +30,8 @@ import java.util.List;
     *<int fireX, int fireY, float timeToPlace> //Note, these MUST be in chronological order
 *****/
 public class Level {
+    public static final String VALUE_DELIMITER = "|";
+    public static final String VALUE_DELIMITER_REGEX = "\\|";
     public static final int MIN_WIDTH = 26;
     public static final int MIN_HEIGHT = 14;
     public static final int MAX_WIDTH = 128;
@@ -163,7 +165,7 @@ public class Level {
 
     private int readInMap(String[] splitLevelData){
         String mapSize = splitLevelData [0];
-        String[] mapSizes = mapSize.split (",");
+        String[] mapSizes = mapSize.split (VALUE_DELIMITER_REGEX);
         width = Integer.parseInt(mapSizes [0]);
         height = Integer.parseInt(mapSizes [1]);
         int offset = 1;//Read one line for width and height
@@ -218,10 +220,10 @@ public class Level {
         }
         
         while(offset < endIndex) {
-            if(splitLevelData[offset] == null || !splitLevelData[offset].contains(",")){
+            if(splitLevelData[offset] == null || !splitLevelData[offset].contains(VALUE_DELIMITER)){
                     continue;
             }
-            String[] stepData = splitLevelData[offset].split(",");
+            String[] stepData = splitLevelData[offset].split(VALUE_DELIMITER_REGEX);
             int x = Integer.parseInt(stepData[0]);
             int y = Integer.parseInt(stepData[1]);
 
@@ -312,11 +314,11 @@ public class Level {
         }
         
         while(offset < endIndex) {
-            if(splitLevelData[offset] == null || !splitLevelData[offset].contains(",")){
+            if(splitLevelData[offset] == null || !splitLevelData[offset].contains(VALUE_DELIMITER)){
                     continue;
             }
             
-            String[] cueData = splitLevelData[offset].split(",");
+            String[] cueData = splitLevelData[offset].split(VALUE_DELIMITER_REGEX);
             float timeToShow = Float.parseFloat(cueData[0]);
             String npcToShow = cueData[1];
             String textToShow = cueData[2];

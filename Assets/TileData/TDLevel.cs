@@ -4,21 +4,25 @@ using UnityEngine;
 public class TDLevel {
 	/*****
 	 *Level text file format
-	 *<int width>,<int height>
+	 *<int width>|<int height>
 	 *<width x height grid of characters, each representing a tile>
 	 *<int % value of city needed to win>
 	 *<int seconds of play time>
 	 *<int number of arsonist steps>
 	 *<previous number of lines representing arsonist steps, format on following line>
-	 *<int fireX, int fireY, float timeToPlace> //Note, these MUST be in chronological order
+	 *<int fireX| int fireY| float timeToPlace> //Note, these MUST be in chronological order
 	 *<int number of NPC cues in the level>
 	 *<previous number of lines representing NPC cues, format on following line>
-	 *<float timeToShow, string npcToShow(f=firechief, p=policechief, m=mayor), string textToShow
+	 *<float timeToShow| string npcToShow(f=firechief, p=policechief, m=mayor)| string textToShow
 	 *
 	 *Update 1: 1/11/2015
 	 *Added count for arson steps
 	 *Added count and data for npc cues
+	 *
+	 *Update 2: 2/11/2015
+	 *Changed delimiter from , to |
 	 *****/
+	private const char VALUE_DELIMITER = '|';
 
 	private int mapWidth = 26;
 	private int mapHeight = 13;
@@ -67,7 +71,7 @@ public class TDLevel {
 
 	int ReadInMap(string[] splitLevelData){
 		string mapSize = splitLevelData [0];
-		string[] mapSizes = mapSize.Split (',');
+		string[] mapSizes = mapSize.Split (VALUE_DELIMITER);
 		mapWidth = int.Parse (mapSizes [0]);
 		mapHeight = int.Parse (mapSizes [1]);
 		int offset = 1;//Read one line for width and height
@@ -105,10 +109,10 @@ public class TDLevel {
 		List<TDTile> pathSteps = new List<TDTile> ();
 		List<float> pathTimes = new List<float> ();
 		for(int i=0; i<numSteps; i++){
-			if(splitLevelData[offset] == null || !splitLevelData[offset].Contains(",")){
+			if(splitLevelData[offset] == null || !splitLevelData[offset].Contains(VALUE_DELIMITER.ToString())){
 				continue;
 			}
-			string[] stepData = splitLevelData[offset].Split(',');
+			string[] stepData = splitLevelData[offset].Split(VALUE_DELIMITER);
 			int x = int.Parse(stepData[0]);
 			int y = int.Parse(stepData[1]);
 			pathSteps.Add(tiles[x,y]);
@@ -131,7 +135,7 @@ public class TDLevel {
 		offset++;
 
 		for (int i=0; i<numCues; i++) {
-			string[] cueData = splitLevelData[offset].Split(',');
+			string[] cueData = splitLevelData[offset].Split(VALUE_DELIMITER);
 			float timeToShow = float.Parse(cueData[0]);
 			string npcToShow = cueData[1];
 			string textToShow = cueData[2];
