@@ -48,6 +48,10 @@ public class TGMouse : MonoBehaviour {
 		    eventSys.IsPointerOverGameObject(2) ||
 		    eventSys.IsPointerOverGameObject(3) ||
 		    eventSys.IsPointerOverGameObject(4)){
+			if(Input.touchCount > 0 ||
+			   Input.GetMouseButtonDown(0)){
+				PopUpUIManager.Instance.HideAlert();
+			}
 			return;
 		}
 		Ray rayCast;
@@ -57,7 +61,7 @@ public class TGMouse : MonoBehaviour {
 		bool moved = false;
 		bool up = false;
 		Vector2 mapMovePos = new Vector2();
-		if (Input.touchCount == 1) {
+		if (Input.touchCount > 0) {
 			Touch touch = Input.GetTouch (0);
 			rayCast = Camera.main.ScreenPointToRay (touch.position);
 
