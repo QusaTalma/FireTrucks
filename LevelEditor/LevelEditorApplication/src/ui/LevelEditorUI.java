@@ -12,6 +12,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.io.File;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
@@ -22,6 +24,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableColumn;
 import level.model.*;
 import ui.model.ArsonPathTableModel;
 import ui.model.NPCCueTableModel;
@@ -395,11 +399,29 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
     private void refreshList(){
         fireTable.setModel(new ArsonPathTableModel(level.getArsonPath().getSteps(), this));
         npcCueTable.setModel(new NPCCueTableModel(level.getNPCCues()));
-        npcCueTable.getColumnModel().getColumn(0).setMinWidth(100);
-        npcCueTable.getColumnModel().getColumn(0).setMaxWidth(100);
-        npcCueTable.getColumnModel().getColumn(1).setMinWidth(100);
-        npcCueTable.getColumnModel().getColumn(1).setMaxWidth(100);
-        npcCueTable.getColumnModel().getColumn(2).setMaxWidth(1000);
+        
+        TableColumn column0 = npcCueTable.getColumnModel().getColumn(0);
+        column0.setMinWidth(100);
+        column0.setMaxWidth(100);
+        
+        //Set a combo box for npc options: fire chief, mayor, and police chief
+        TableColumn column1 = npcCueTable.getColumnModel().getColumn(1);
+        column1.setMinWidth(100);
+        column1.setMaxWidth(100);
+        final JComboBox npcComboBox = new JComboBox();
+        npcComboBox.addItem("f");
+        npcComboBox.addItem("m");
+        npcComboBox.addItem("p");
+        npcComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                npcComboBox.hidePopup();
+            }
+        });
+        column1.setCellEditor(new DefaultCellEditor(npcComboBox));
+        
+        TableColumn column2 = npcCueTable.getColumnModel().getColumn(2);
+        column2.setMaxWidth(1000);
     }
 
     @Override
