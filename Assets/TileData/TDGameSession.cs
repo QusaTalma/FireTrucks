@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 /**
  * 
@@ -9,9 +10,11 @@ public class TDGameSession{
 	float targetTime;
 	float currentTime;
 	List<NPCCue> cues;
+	TGArsonist arsonist;
 
-	public TDGameSession (float targetTime, List<NPCCue> cues){
+	public TDGameSession (float targetTime, List<NPCCue> cues, TGArsonist arsonist){
 		this.targetTime = targetTime;
+		this.arsonist = arsonist;
 		currentTime = 0;
 		this.cues = cues;
 	}
@@ -25,7 +28,18 @@ public class TDGameSession{
 	}
 
 	public bool IsActive(){
-		return GetRemainingTime() > 0;
+		bool active = false;
+		bool timeRemaining = GetRemainingTime () > 0;
+		if (timeRemaining) {
+			if(arsonist.ArsonStepCount == 0){
+				GameObject[] fires = GameObject.FindGameObjectsWithTag("Fire");
+				Debug.Log("Fire count: " + fires.Length);
+				active = fires.Length > 0;
+			}else{
+				active = true;
+			}
+		}
+		return active;
 	}
 
 	public void ShowNPCCueIfReady(){

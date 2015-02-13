@@ -54,7 +54,6 @@ public class TGMap : MonoBehaviour {
 		}
 
 		_level = new TDLevel(levelText);
-		_gameSession = new TDGameSession(_level.TimeInSecondsToPlay, _level.NPCCues);
 
 		//Create the map
 		BuildMesh ();
@@ -63,6 +62,8 @@ public class TGMap : MonoBehaviour {
 		PlaceFireHouse ();
 		PlaceHouses();
 		PlaceArsonist ();
+		
+		_gameSession = new TDGameSession(_level.TimeInSecondsToPlay, _level.NPCCues, arsonist);
 
 		Time.timeScale = 1f;
 	}

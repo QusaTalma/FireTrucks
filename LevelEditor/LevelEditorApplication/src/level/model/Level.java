@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -259,10 +260,13 @@ public class Level {
             }
         }
         
+        Collections.sort(npcCues);
+        
         String toWrite;
         
         StringBuilder writeBuilder = new StringBuilder();
-        writeBuilder.append(String.format("%d,%d\n", width+map.getFillPadding()*2,
+        writeBuilder.append(String.format("%d%s%d\n", width+map.getFillPadding()*2,
+                VALUE_DELIMITER,
                 height+map.getFillPadding()*2));
         writeBuilder.append(String.format("%s", map.toString()));
         writeBuilder.append(String.format("%d\n", winPercent));
