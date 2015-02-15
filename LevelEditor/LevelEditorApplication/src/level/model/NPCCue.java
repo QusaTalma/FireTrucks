@@ -9,7 +9,7 @@ package level.model;
  *
  * @author asheehan
  */
-public class NPCCue {
+public class NPCCue implements Comparable<NPCCue>{
     
     private float timeToShow;
     public float getTimeToShow() {
@@ -43,6 +43,17 @@ public class NPCCue {
     
     @Override
     public String toString(){
-        return String.format("%f,%s,%s", timeToShow, npcToShow, textToShow);
+        return String.format("%f%s%s%s%s", timeToShow, Level.VALUE_DELIMITER, 
+                                           npcToShow, Level.VALUE_DELIMITER, 
+                                           textToShow);
+    }
+
+    @Override
+    public int compareTo(NPCCue o) {
+        if(o == null){
+            return 1;
+        }
+        
+        return Float.compare(this.getTimeToShow(), o.getTimeToShow());
     }
 }

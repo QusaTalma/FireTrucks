@@ -47,7 +47,8 @@ public class ArsonStep implements Comparable<ArsonStep>{
     }
 
     public String toString(int fillPadding) {
-        return String.format("%d,%d,%d", location.x+fillPadding, 
-                location.y+fillPadding, time);
+        return String.format("%d%s%d%s%d", location.x+fillPadding, Level.VALUE_DELIMITER,
+                location.y+fillPadding, Level.VALUE_DELIMITER,
+                time);
     }
 }
