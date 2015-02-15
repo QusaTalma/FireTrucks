@@ -46,6 +46,20 @@ public class NPCCueTableModel extends AbstractTableModel{
     public int getColumnCount() {
         return 3;
     }
+//
+//    @Override
+//    public Class<?> getColumnClass(int columnIndex) {
+//        switch(columnIndex){
+//            case 0:
+//                return Float.class;
+//            case 1:
+//                return String.class;
+//            case 2:
+//                return String.class;
+//        }
+//        
+//        return super.getColumnClass(columnIndex); //To change body of generated methods, choose Tools | Templates.
+//    }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {

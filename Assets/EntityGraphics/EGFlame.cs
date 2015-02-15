@@ -110,7 +110,9 @@ public class EGFlame : MonoBehaviour {
 			PopUpUIManager.Instance.ShowMayor("Oh dear, a building burned down");
 		}
 
-		tile.OnFire = false;
+		if (tile.OnFire) {
+			tile.OnFire = false;
+		}
 	}
 
 	public void SetMap(TGMap map){

@@ -17,6 +17,9 @@ public class TGArsonist : MonoBehaviour
 	}
 
 	private int arsonStepCount;
+	public int ArsonStepCount {
+		get { return arsonPath.GetStepCount (); }
+	}
 
 	public void Start(){
 		PopUpUIManager.Instance.ShowPoliceChief ("Someone's starting fires in MY city!");
