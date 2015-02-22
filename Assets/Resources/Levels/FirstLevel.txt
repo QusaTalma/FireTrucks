@@ -1,0 +1,50 @@
+31|19
+fffffffffffffffffffffffffffffff
+fffffffffffffffffffffffffffffff
+fffffffffffffffffffffffffffffff
+fffffffffffffffffffffffffffffff
+ffffff~~~------------TT||ffffff
+ffffff~~~H-HHH----------Tffffff
+ffffff~~GH-HHH---HHG-HH-Tffffff
+ffffff~H---------HHH-HH-|ffffff
+ffffff~H--T|T------H----|ffffff
+ffffff~---TT|--F---H-TT|Tffffff
+ffffff~---|TT------H----Tffffff
+ffffff~GY--------HHH-HH-|ffffff
+ffffff~HHH-HHH---YHH-HY-Tffffff
+ffffff~-HH-HHH----------Tffffff
+ffffff~---------------TT|ffffff
+fffffffffffffffffffffffffffffff
+fffffffffffffffffffffffffffffff
+fffffffffffffffffffffffffffffff
+fffffffffffffffffffffffffffffff
+60
+60
+17
+8|12|2
+7|8|3
+8|6|6
+12|6|8
+13|6|9
+18|6|12
+21|7|14
+19|9|16
+19|10|17
+22|11|20
+21|12|22
+18|12|25
+17|12|25
+13|13|28
+11|12|31
+8|13|34
+11|13|36
+9
+0.000000|m|Oh Hello! You must be the new radio dispatcher.
+4.000000|f|Mr. Mayor! Chief Grumbles just informed me that there's a building on fire.
+8.000000|m|The Arsonist is back?! OH DEAR!
+11.000000|f|Don't Worry. The Dispatcher just needs to find the building on fire and tap it.
+15.000000|m|What will that do?
+19.000000|f|Every building the Dispatcher touches will send a firetruck.
+23.000000|m|Do we need to send more Firetrucks?
+32.000000|m|What about now? Do we need to send more Firetrucks?
+41.000000|m|Surely now we should send more Firetrucks!
