@@ -90,15 +90,8 @@ public class EGFirehouse : MonoBehaviour {
 		
 		EGFiretruck firetruck = truck.GetComponent<EGFiretruck>();
 		firetruck.SetPosition (truckPos);
-		
-		TDPath truckPath = new TDPath ();
-		TDMap dataMap = _map.Map;
 		firetruck.SetMap (_map);
-		truckPath.BuildPath (dataMap,
-		                     dataMap.GetTile(Mathf.FloorToInt(fireHouseTilePos.x), Mathf.FloorToInt(fireHouseTilePos.y)),
-		                     dataMap.GetTile (x, -z));
-		
-		firetruck.SetPath (truckPath);
-		_dispatcher.AddActiveTruck(firetruck);
+
+		EGDispatcher.Instance.SendTruckToTile (firetruck, x, -z);
 	}
 }

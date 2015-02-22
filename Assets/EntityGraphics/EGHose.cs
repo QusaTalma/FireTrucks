@@ -26,11 +26,12 @@ public class EGHose : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (truck.IsActive () && !truck.IsWaitingForTraffic ()) {
+		if (truck.IsActive () && !truck.IsWaitingForTraffic () && !truck.IsPuttingOutFire()) {
 			if (waterStream != null) {
 					Destroy (waterStream);
 					waterStream = null;
 					truck.SetPuttingOutFire (false);
+					truck.TargetFlame = null;
 			}
 		} else if (!truck.IsActive () || truck.IsWaitingForTraffic ()) {
 			if (foundFlames.Count > 0) {
@@ -52,6 +53,7 @@ public class EGHose : MonoBehaviour {
 				}
 
 				if (flame != null) {
+					truck.TargetFlame = flame;
 					float dist = Vector3.Distance (transform.position, flame.transform.position);
 					Vector3 streamScale = waterStream.transform.localScale;
 					streamScale.x = dist;
@@ -91,6 +93,7 @@ public class EGHose : MonoBehaviour {
 						Destroy (flame.transform.gameObject);
 						foundFlames.Remove (flame);
 						truck.SetPuttingOutFire (false);
+						truck.TargetFlame = null;
 					}
 				}
 			} else {
@@ -99,9 +102,11 @@ public class EGHose : MonoBehaviour {
 					waterStream = null;
 				}
 				truck.SetPuttingOutFire (false);
+				truck.TargetFlame = null;
 			}
 		} else {
 			truck.SetPuttingOutFire (false);
+			truck.TargetFlame = null;
 		}
 	}
 }

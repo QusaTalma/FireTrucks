@@ -128,15 +128,19 @@ public class EGDispatcher : MonoBehaviour {
 		}
 		
 		if(truckToSend != null){
-			TDPath truckPath = new TDPath ();
-			TDMap dataMap = _map.Map;
-			truckPath.BuildPath (dataMap,
-			                     dataMap.GetTile(Mathf.FloorToInt(truckToSend.GetPosition().x), Mathf.FloorToInt(-truckToSend.GetPosition().z)),
-			                     dataMap.GetTile (x, -z));
-			truckToSend.SetPath(truckPath);
-			truckToSend.SetIdle(false);
-
-			_dispatcher.AddActiveTruck(truckToSend);
+			SendTruckToTile(truckToSend, x, -z);
 		}
+	}
+
+	public void SendTruckToTile(EGFiretruck truckToSend, int x, int y){
+		TDPath truckPath = new TDPath ();
+		TDMap dataMap = _map.Map;
+		truckPath.BuildPath (dataMap,
+		                     dataMap.GetTile(Mathf.FloorToInt(truckToSend.GetPosition().x), Mathf.FloorToInt(-truckToSend.GetPosition().z)),
+		                     dataMap.GetTile (x, y));
+		truckToSend.SetPath(truckPath);
+		truckToSend.SetIdle(false);
+		
+		_dispatcher.AddActiveTruck(truckToSend);
 	}
 }

@@ -319,4 +319,8 @@ public class TGMap : MonoBehaviour {
 	public float GetCityDurabilityPercent(){
 		return Map.GetCurrentDurability () / Map.GetTotalDurability ();
 	}
+
+	public string ToString(){
+		return "width = " + Map.Width + "\nheight = " + Map.Height;
+	}
 }

@@ -124,7 +124,6 @@ public class TGMouse : MonoBehaviour {
 	}
 
 	void HandleTouchTruckStart(RaycastHit hitInfo){
-		Debug.Log (hitInfo.transform.gameObject.tag);
 		if (hitInfo.transform.gameObject.tag.Equals("Truck")) {
 			EGFiretruck truck = hitInfo.transform.root.gameObject.GetComponent<EGFiretruck> ();
 			if (truck != null) {
