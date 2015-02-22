@@ -55,10 +55,10 @@ fffffffffffffffffffffffffffffff
 13|15|67
 17|15|70
 7
-5.000000|m|It's the Arsonist! He's back!
-8.000000|f|Time for a promotion! Now you'll dispatch for a larger area.
-12.000000|f|Dispatcher, you'll need to scroll your screen to see all the fires this time.
-20.000000|m|We need more Firetrucks!
-23.000000|f|Not more, just smarter! Tap a firetruck and then tap a new fire.
-28.000000|p|Don't worry about the Arsonist! We'll catch him. You just worry about the fires.
-35.000000|m|So much fire! We need more firetrucks!
+5.000000|3|m|It's the Arsonist! He's back!
+8.000000|3|f|Time for a promotion! Now you'll dispatch for a larger area.
+12.000000|3|f|Dispatcher, you'll need to scroll your screen to see all the fires this time.
+20.000000|3|m|We need more Firetrucks!
+23.000000|3|f|Not more, just smarter! Tap a firetruck and then tap a new fire.
+28.000000|3|p|Don't worry about the Arsonist! We'll catch him. You just worry about the fires.
+35.000000|3|m|So much fire! We need more firetrucks!

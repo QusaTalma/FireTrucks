@@ -71,15 +71,15 @@ fffffffffffffffff~~~YGY-----------YHHGYGHYYHTT~~~~~~~
 24|8|125
 25|7|127
 12
-0.000000|m|Send MORE! NOW!!!
-4.000000|m|Buildings on fire!? Oohh, it's the Arsonist again!
-7.000000|m|He's BACK for REVENGE!!!
-10.000000|f|Why do you always think it's an arsonist?
-14.000000|m|It's ALWAYS the ARSONIST!
-17.000000|m|And this wouldn't be such a problem if Grumbles could keep him locked up!
-22.000000|p|Don't blame me for this! You're the one who doesn't fund our prisons!
-25.000000|m|I don't want excuses! I want results!
-30.000000|f|Gentlemen! Focus on what matters here: the City is on Fire!
-45.000000|m|FIRE!? Still?! Dispatcher you better get these fires under control!
-60.000000|m|As mayor, I DEMAND that you send more FIRETRUCKS!
-90.000000|m|I still think you haven't sent enough Firetrucks...
+0.000000|4|m|Send MORE! NOW!!!
+4.000000|3|m|Buildings on fire!? Oohh, it's the Arsonist again!
+7.000000|3|m|He's BACK for REVENGE!!!
+10.000000|3|f|Why do you always think it's an arsonist?
+14.000000|3|m|It's ALWAYS the ARSONIST!
+17.000000|3|m|And this wouldn't be such a problem if Grumbles could keep him locked up!
+22.000000|3|p|Don't blame me for this! You're the one who doesn't fund our prisons!
+25.000000|3|m|I don't want excuses! I want results!
+30.000000|3|f|Gentlemen! Focus on what matters here: the City is on Fire!
+45.000000|3|m|FIRE!? Still?! Dispatcher you better get these fires under control!
+60.000000|3|m|As mayor, I DEMAND that you send more FIRETRUCKS!
+90.000000|3|m|I still think you haven't sent enough Firetrucks...
