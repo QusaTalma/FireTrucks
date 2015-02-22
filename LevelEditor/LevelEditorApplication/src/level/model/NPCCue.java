@@ -10,6 +10,7 @@ package level.model;
  * @author asheehan
  */
 public class NPCCue implements Comparable<NPCCue>{
+    public static final float DEFAULT_DURATION = 2.5f;
     
     private float timeToShow;
     public float getTimeToShow() {
@@ -17,6 +18,14 @@ public class NPCCue implements Comparable<NPCCue>{
     }
     public void setTimeToShow(float timeToShow){
         this.timeToShow = timeToShow;
+    }
+    
+    private float duration;
+    public float getDuration(){
+        return duration;
+    }
+    public void setDuration(float duration){
+        this.duration = duration;
     }
     
     private String npcToShow;
@@ -35,15 +44,17 @@ public class NPCCue implements Comparable<NPCCue>{
         this.textToShow = textToShow;
     }
     
-    public NPCCue(float timeToShow, String npcToShow, String textToShow){
+    public NPCCue(float timeToShow, float duration, String npcToShow, String textToShow){
         this.timeToShow = timeToShow;
+        this.duration = duration;
         this.npcToShow = npcToShow;
         this.textToShow = textToShow;
     }
     
     @Override
     public String toString(){
-        return String.format("%f%s%s%s%s", timeToShow, Level.VALUE_DELIMITER, 
+        return String.format("%f%s%f%s%s%s%s", timeToShow, Level.VALUE_DELIMITER, 
+                                           duration, Level.VALUE_DELIMITER,
                                            npcToShow, Level.VALUE_DELIMITER, 
                                            textToShow);
     }

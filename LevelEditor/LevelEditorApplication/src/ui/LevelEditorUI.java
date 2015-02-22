@@ -552,7 +552,7 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
         public void mouseClicked(MouseEvent e) {
             int rowClicked = npcCueTable.rowAtPoint(e.getPoint());
             if(rowClicked >= level.getNPCCues().size()){
-                NPCCue cue = new NPCCue(0f, "m", "");
+                NPCCue cue = new NPCCue(0f, NPCCue.DEFAULT_DURATION, "m", "");
                 level.addNPCCue(cue);
                 refreshList();
             }

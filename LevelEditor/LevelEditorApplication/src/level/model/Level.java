@@ -324,10 +324,11 @@ public class Level {
             
             String[] cueData = splitLevelData[offset].split(VALUE_DELIMITER_REGEX);
             float timeToShow = Float.parseFloat(cueData[0]);
-            String npcToShow = cueData[1];
-            String textToShow = cueData[2];
+            float duration = Float.parseFloat(cueData[1]);
+            String npcToShow = cueData[2];
+            String textToShow = cueData[3];
             
-            NPCCue cue = new NPCCue(timeToShow, npcToShow, textToShow);
+            NPCCue cue = new NPCCue(timeToShow, duration, npcToShow, textToShow);
             npcCues.add(cue);
             
             offset++;
