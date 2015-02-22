@@ -33,7 +33,6 @@ public class TDGameSession{
 		if (timeRemaining) {
 			if(arsonist.ArsonStepCount == 0){
 				GameObject[] fires = GameObject.FindGameObjectsWithTag("Fire");
-				Debug.Log("Fire count: " + fires.Length);
 				active = fires.Length > 0;
 			}else{
 				active = true;
@@ -48,15 +47,15 @@ public class TDGameSession{
 			if(nextCue.TimeToShow <= currentTime){
 				switch(nextCue.NPCToShow){
 				case NPCCue.MAYOR:
-					PopUpUIManager.Instance.ShowMayor(nextCue.TextToShow, true);
+					PopUpUIManager.Instance.ShowMayor(nextCue.TextToShow, nextCue.Duration, true);
 					break;
 
 				case NPCCue.FIRE_CHIEF:
-					PopUpUIManager.Instance.ShowFireChief(nextCue.TextToShow, true);
+					PopUpUIManager.Instance.ShowFireChief(nextCue.TextToShow, nextCue.Duration, true);
 					break;
 
 				case NPCCue.POLICE_CHIEF:
-					PopUpUIManager.Instance.ShowPoliceChief(nextCue.TextToShow, true);
+					PopUpUIManager.Instance.ShowPoliceChief(nextCue.TextToShow, nextCue.Duration, true);
 					break;
 				}
 

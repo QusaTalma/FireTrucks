@@ -137,10 +137,11 @@ public class TDLevel {
 		for (int i=0; i<numCues; i++) {
 			string[] cueData = splitLevelData[offset].Split(VALUE_DELIMITER);
 			float timeToShow = float.Parse(cueData[0]);
-			string npcToShow = cueData[1];
-			string textToShow = cueData[2];
+			float duration = float.Parse(cueData[1]);
+			string npcToShow = cueData[2];
+			string textToShow = cueData[3];
 
-			npcCues.Add(new NPCCue(timeToShow, npcToShow, textToShow));
+			npcCues.Add(new NPCCue(timeToShow, duration, npcToShow, textToShow));
 
 			offset++;
 		}

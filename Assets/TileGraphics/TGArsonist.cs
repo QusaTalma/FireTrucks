@@ -22,7 +22,7 @@ public class TGArsonist : MonoBehaviour
 	}
 
 	public void Start(){
-		PopUpUIManager.Instance.ShowPoliceChief ("Someone's starting fires in MY city!");
+		PopUpUIManager.Instance.ShowFiresStartingMessage ();
 	}
 
 	public void Update(){
@@ -32,13 +32,13 @@ public class TGArsonist : MonoBehaviour
 			TDTile tileToLight = arsonPath.PopStep ();
 			StartTileOnFire (tileToLight);
 			if(arsonPath.GetStepCount() == (int)(arsonStepCount/2)){
-				PopUpUIManager.Instance.ShowPoliceChief("We're hot on his trail!");
+				PopUpUIManager.Instance.ShowFiresHalfFinishedMessage();
 			}else if(arsonPath.GetStepCount() == (int)(arsonStepCount/4)){
-				PopUpUIManager.Instance.ShowPoliceChief("We almost got him!");
+				PopUpUIManager.Instance.ShowFiresAlmostFinishedMessage();
 			}
 		} else if (!arsonPath.HasMoreSteps () && !captureShown) {
 			captureShown = true;
-			PopUpUIManager.Instance.ShowPoliceChief("We caught him!");
+			PopUpUIManager.Instance.ShowFiresFinishedMessage();
 		}
 	}
 

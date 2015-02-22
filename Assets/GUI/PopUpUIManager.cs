@@ -22,7 +22,16 @@ public class PopUpUIManager : MonoBehaviour {
 	}
 
 	public const float MESSAGE_DISPLAY_TIME = 3.5f;
+
+	private const string FIRE_SPREAD_MESSAGE = "Fires are spreading! Get them under control!";
+	private const string BUILDING_BURNED_DOWN_MESSAGE = "Oh dear, a building burned down!";
+	private const string FIRE_START_MESSAGE = "Someone's starting fires in MY city!";
+	private const string HALF_FINISHED_MESSAGE = "We're hot on his trail!";
+	private const string ALMOST_FINISHED_MESSAGE = "We almost got him!";
+	private const string FINISHED_MESSAGE = "We caught him!";
+
 	private float timeSinceMessage = 0f;
+	private float currentMessageDuration = 0f;
 	
 	private static PopUpUIManager _instance = null;
 	
@@ -45,42 +54,51 @@ public class PopUpUIManager : MonoBehaviour {
 		RadioOn = !RadioOn;
 	}
 
-	public void ShowMayor(string message, bool force=false){
+	public void ShowMayor(string message, float duration, bool force=false){
 		if ((!showingAlert || force) && radioOn) {
-			HideAlert();
-			showingAlert = true;
-			timeSinceMessage = 0f;
-			mayorImage.SetActive (true);
-			alertMessage.text = message;
-			popUpPanel.SetActive (true);
+			ShowNPCMessage(mayorImage, message, duration);
 		} else {
-			popUpQueue.Add(new PopUpEvent(message, NPC.MAYOR));
+			popUpQueue.Add(new PopUpEvent(message, duration, NPC.MAYOR));
 		}
 	}
 
-	public void ShowFireChief(string message, bool force=false){
+	public void ShowBuildingBurnedDownMessage(){
+		ShowMayor(BUILDING_BURNED_DOWN_MESSAGE, MESSAGE_DISPLAY_TIME);
+	}
+
+	public void ShowFireSpreadNPCMessage(){
+		ShowFireChief(FIRE_SPREAD_MESSAGE, MESSAGE_DISPLAY_TIME);
+	}
+	
+	public void ShowFireChief(string message, float duration, bool force=false){
 		if ((!showingAlert || force) && radioOn) {
-			HideAlert();
-			showingAlert = true;
-			timeSinceMessage = 0f;
-			fireChiefImage.SetActive (true);
-			alertMessage.text = message;
-			popUpPanel.SetActive (true);
+			ShowNPCMessage(fireChiefImage, message, duration);
 		} else {
-			popUpQueue.Add(new PopUpEvent(message, NPC.FIRECHIEF));
+			popUpQueue.Add(new PopUpEvent(message, duration, NPC.FIRECHIEF));
 		}
 	}
 
-	public void ShowPoliceChief(string message, bool force=false){
+	public void ShowFiresStartingMessage(){
+		ShowPoliceChief (FIRE_START_MESSAGE, MESSAGE_DISPLAY_TIME);
+	}
+
+	public void ShowFiresHalfFinishedMessage(){
+		ShowPoliceChief(HALF_FINISHED_MESSAGE, MESSAGE_DISPLAY_TIME);
+	}
+
+	public void ShowFiresAlmostFinishedMessage(){
+		ShowPoliceChief (ALMOST_FINISHED_MESSAGE, MESSAGE_DISPLAY_TIME);
+	}
+
+	public void ShowFiresFinishedMessage(){
+		ShowPoliceChief (FINISHED_MESSAGE, MESSAGE_DISPLAY_TIME);
+	}
+
+	public void ShowPoliceChief(string message, float duration, bool force=false){
 		if ((!showingAlert || force) && radioOn) {
-			HideAlert();
-			showingAlert = true;
-			timeSinceMessage = 0f;
-			policeChiefImage.SetActive (true);
-			alertMessage.text = message;
-			popUpPanel.SetActive (true);
+			ShowNPCMessage(policeChiefImage, message, duration);
 		} else {
-			popUpQueue.Add(new PopUpEvent(message, NPC.POLICECHIEF));
+			popUpQueue.Add(new PopUpEvent(message, duration, NPC.POLICECHIEF));
 		}
 	}
 
@@ -103,10 +121,20 @@ public class PopUpUIManager : MonoBehaviour {
 		}
 	}
 
-	void OnGUI(){
-		if (timeSinceMessage <= MESSAGE_DISPLAY_TIME && radioOn) {
+	private void ShowNPCMessage(GameObject image, string message, float duration){
+		HideAlert();
+		showingAlert = true;
+		currentMessageDuration = duration;
+		timeSinceMessage = 0f;
+		image.SetActive (true);
+		alertMessage.text = message;
+		popUpPanel.SetActive (true);
+	}
+	
+	void Update(){
+		if (timeSinceMessage <= currentMessageDuration && radioOn) {
 			timeSinceMessage += Time.deltaTime;
-			if(timeSinceMessage >= MESSAGE_DISPLAY_TIME){
+			if(timeSinceMessage >= currentMessageDuration){
 				HideAlert();
 				showingAlert = false;
 				if(popUpQueue.Count > 0){
@@ -114,15 +142,15 @@ public class PopUpUIManager : MonoBehaviour {
 					popUpQueue.RemoveAt(0);
 					switch(popUp.speaker){
 					case NPC.FIRECHIEF:
-						ShowFireChief(popUp.message);
+						ShowFireChief(popUp.message, popUp.duration);
 						break;
 
 					case NPC.MAYOR:
-						ShowMayor(popUp.message);
+						ShowMayor(popUp.message, popUp.duration);
 						break;
 
 					case NPC.POLICECHIEF:
-						ShowPoliceChief(popUp.message);
+						ShowPoliceChief(popUp.message, popUp.duration);
 						break;
 					}
 				}

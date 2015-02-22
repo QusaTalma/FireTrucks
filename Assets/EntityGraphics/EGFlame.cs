@@ -86,7 +86,7 @@ public class EGFlame : MonoBehaviour {
 							egFlame.SetMap(map);
 							egFlame.SetSpreadPrefab(spreadPrefab);
 							
-							PopUpUIManager.Instance.ShowFireChief("Fires are spreading! get them under control!");
+							PopUpUIManager.Instance.ShowFireSpreadNPCMessage();
 							
 							tileToIgnite.OnFire = true;
 						}
@@ -107,7 +107,7 @@ public class EGFlame : MonoBehaviour {
 
 	public void PutOut(){
 		if (tile.durability <= 0) {
-			PopUpUIManager.Instance.ShowMayor("Oh dear, a building burned down");
+			PopUpUIManager.Instance.ShowBuildingBurnedDownMessage();
 		}
 
 		if (tile.OnFire) {

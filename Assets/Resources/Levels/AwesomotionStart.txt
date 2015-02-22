@@ -46,12 +46,12 @@ fffffffffffffffffffffffffffffff
 7|12|59
 6|11|61
 9
-0.000000|m|Oh Hello! You must be the new radio dispatcher.
-4.000000|f|Sorry to interupt Mr. Mayor but Chief Grumbles just informed me there's a building on fire.
-8.000000|m|The Arsonist is back?! OH DEAR!
-11.000000|f|Don't Worry. The kid just needs to find the building on fire and touch it.
-15.000000|m|But what will that do?
-19.000000|f|Well every building the kid touches will make us send a firetruck.
-23.000000|m|Do we need to send more Firetrucks?
-45.000000|m|What about now? Do we need to send more Firetrucks?
-58.000000|m|Surely now we should send more Firetrucks!
+0.000000|4.0|m|Oh Hello! You must be the new radio dispatcher.
+4.000000|4.0|f|Sorry to interupt Mr. Mayor but Chief Grumbles just informed me there's a building on fire.
+8.000000|3.0|m|The Arsonist is back?! OH DEAR!
+11.000000|4.0|f|Don't Worry. The kid just needs to find the building on fire and touch it.
+15.000000|4.0|m|But what will that do?
+19.000000|4.0|f|Well every building the kid touches will make us send a firetruck.
+23.000000|4.0|m|Do we need to send more Firetrucks?
+45.000000|3|m|What about now? Do we need to send more Firetrucks?
+58.000000|3|m|Surely now we should send more Firetrucks!
