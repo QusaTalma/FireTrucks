@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+
 public class TDTile {
 	public enum Type{
 		FILL, APPLE_CART, CONSTRUCTION, GRASS, TREE, WATER,
@@ -185,5 +186,32 @@ public class TDTile {
 		}
 
 		return type;
+	}
+
+	public bool IsOtherAdjacent(TDTile other){
+		bool xDiff = Math.Abs (this.x - other.x) == 1;
+		bool yDiff = Math.Abs (this.y - other.y) == 1;
+		return (xDiff || yDiff) && !(xDiff && yDiff);
+	}
+
+	public Vector3 FindPointAdjacentToTileWithBuffer(TDTile other, float bufferDistance, Vector3 start){
+		Vector3 point = start;
+
+		int xDiff = other.x - this.x;
+		int yDiff = other.y - this.y;
+
+		if (xDiff > 0) {
+			point.x = other.x - bufferDistance;
+		} else if (xDiff < 0) {
+			point.x = this.x + bufferDistance;
+		}
+		
+		if (yDiff > 0) {
+			point.z = -(other.y - bufferDistance);
+		} else if (yDiff < 0) {
+			point.z = -(this.y + bufferDistance);
+		}
+
+		return point;
 	}
 }

@@ -7,6 +7,12 @@ public class EGFiretruck : MonoBehaviour, EDTruckControls{
 	TGMap map;
 	Vector3 destination;
 
+	private GameObject targetFlame = null;
+	public GameObject TargetFlame{
+		set { this.targetFlame = value; }
+		get { return this.targetFlame; }
+	}
+
 	Dictionary<GameObject, Vector3> otherTrucks;
 
 	bool puttingOutFire = false;
@@ -14,6 +20,8 @@ public class EGFiretruck : MonoBehaviour, EDTruckControls{
 	bool selected = false;
 
 	Vector3 velocity = Vector3.forward;
+
+	private const float FIRE_BUFFER = 0.25f;//It's the z scale of the body of the truck
 
 	public float speed;
 	public bool returnWhenIdle;
@@ -37,7 +45,12 @@ public class EGFiretruck : MonoBehaviour, EDTruckControls{
 			SetDestination(GetNextDestination());
 
 			if(destination.Equals(new Vector3())){
-				return;
+				//If the truck is currently putting out a fire then it should drive as close to the fire as possible
+				if(puttingOutFire){
+					ApproachTargetFlame();
+				}else{
+					return;
+				}
 			}
 		}
 
@@ -47,21 +60,17 @@ public class EGFiretruck : MonoBehaviour, EDTruckControls{
 			IncrementDestinationIfOnCurrentDestinationTile();
 		}
 
-		if (puttingOutFire) {
-			return;
-		}
-
 		dist = Vector3.Distance (transform.position, destination);
 		float deltaTime = Time.deltaTime;
 		float maxMagnitude = speed * deltaTime;
 		maxMagnitude = Mathf.Min (maxMagnitude, dist);
-
+		
 		UpdateVelocity ();
-
+		
 		if(velocity.magnitude > 0){
 			transform.forward = velocity;
 		}
-
+		
 		if (!_driver.IsQueueing()) {
 			transform.Translate(Vector3.forward * maxMagnitude);
 		}else{
@@ -142,6 +151,19 @@ public class EGFiretruck : MonoBehaviour, EDTruckControls{
 		TDTile destinationTile = map.GetTileForWorldPosition (destination);
 		if (currentTile.Equals (destinationTile)) {
 			SetDestination(GetNextDestination());
+		}
+	}
+
+	private void ApproachTargetFlame(){
+		if (targetFlame != null) {
+			TDTile currentTile = map.GetTileForWorldPosition (transform.position);
+			TDTile flameTile = map.GetTileForWorldPosition(targetFlame.transform.position);
+
+			if(currentTile.IsOtherAdjacent(flameTile)){
+				destination = currentTile.FindPointAdjacentToTileWithBuffer(flameTile, FIRE_BUFFER, transform.position);
+			}else{
+				EGDispatcher.Instance.SendTruckToTile(this, flameTile.GetX(), flameTile.GetY());
+			}
 		}
 	}
 

@@ -23,12 +23,26 @@ import java.util.List;
  */
 /*****
     *Level text file format
-    *<int width>,<int height>
+    *<int width>|<int height>
     *<width x height grid of characters, each representing a tile>
     *<int % value of city needed to win>
     *<int seconds of play time>
-    *<any number of lines representing arsonist steps, format on following line>
-    *<int fireX, int fireY, float timeToPlace> //Note, these MUST be in chronological order
+    *<int number of arsonist steps>
+    *<previous number of lines representing arsonist steps, format on following line>
+    *<int fireX| int fireY| float timeToPlace> //Note, these MUST be in chronological order
+    *<int number of NPC cues in the level>
+    *<previous number of lines representing NPC cues, format on following line>
+    *<float timeToShow| float duration| string npcToShow(f=firechief, p=policechief, m=mayor)| string textToShow
+    *
+    *Update 1: 1/11/2015
+    *Added count for arson steps
+    *Added count and data for npc cues
+    *
+    *Update 2: 2/11/2015
+    *Changed delimiter from , to |
+    *
+    *Update 3: 2/22/2015
+    *Added a duration field to the NPC cues
 *****/
 public class Level {
     public static final String VALUE_DELIMITER = "|";
@@ -324,10 +338,11 @@ public class Level {
             
             String[] cueData = splitLevelData[offset].split(VALUE_DELIMITER_REGEX);
             float timeToShow = Float.parseFloat(cueData[0]);
-            String npcToShow = cueData[1];
-            String textToShow = cueData[2];
+            float duration = Float.parseFloat(cueData[1]);
+            String npcToShow = cueData[2];
+            String textToShow = cueData[3];
             
-            NPCCue cue = new NPCCue(timeToShow, npcToShow, textToShow);
+            NPCCue cue = new NPCCue(timeToShow, duration, npcToShow, textToShow);
             npcCues.add(cue);
             
             offset++;

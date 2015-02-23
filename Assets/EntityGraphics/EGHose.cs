@@ -26,11 +26,12 @@ public class EGHose : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (truck.IsActive () && !truck.IsWaitingForTraffic ()) {
+		if (truck.IsActive () && !truck.IsWaitingForTraffic () && !truck.IsPuttingOutFire()) {
 			if (waterStream != null) {
 					Destroy (waterStream);
 					waterStream = null;
 					truck.SetPuttingOutFire (false);
+					truck.TargetFlame = null;
 			}
 		} else if (!truck.IsActive () || truck.IsWaitingForTraffic ()) {
 			if (foundFlames.Count > 0) {
@@ -41,24 +42,37 @@ public class EGHose : MonoBehaviour {
 					waterStream.transform.position = transform.position;
 				}
 
-				GameObject flame = foundFlames [0];
-				while (flame == null && foundFlames.Count > 0) {
-					foundFlames.RemoveAt (0);
-					if (foundFlames.Count > 0) {
-						flame = foundFlames [0];
-					} else {
-						break;
+				for(int i=foundFlames.Count-1; i>=0; i--){
+					if(foundFlames[i] == null){
+						foundFlames.RemoveAt(i);
 					}
 				}
 
-				if (flame != null) {
-					float dist = Vector3.Distance (transform.position, flame.transform.position);
+				GameObject closestFlame = null;
+				float shortestDist = 100;
+				for(int i=0; i<foundFlames.Count; i++){
+					GameObject flame = foundFlames[i];
+					if(closestFlame == null){
+						closestFlame = flame;
+						shortestDist = Vector3.Distance(transform.position, closestFlame.transform.position);
+					}else{
+						float dist = Vector3.Distance(transform.position, flame.transform.position);
+						if(dist < shortestDist){
+							closestFlame = flame;
+							shortestDist = dist;
+						}
+					}
+				}
+
+				if (closestFlame != null) {
+					truck.TargetFlame = closestFlame;
+					float dist = Vector3.Distance (transform.position, closestFlame.transform.position);
 					Vector3 streamScale = waterStream.transform.localScale;
 					streamScale.x = dist;
 					waterStream.transform.localScale = streamScale;
 
-					float angle = Mathf.Atan2 (flame.transform.position.z - transform.position.z,
-                          flame.transform.position.x - transform.position.x);
+					float angle = Mathf.Atan2 (closestFlame.transform.position.z - transform.position.z,
+					                           closestFlame.transform.position.x - transform.position.x);
 					angle = angle * Mathf.Rad2Deg;
 
 					//Convert to local coordinate system
@@ -76,21 +90,22 @@ public class EGHose : MonoBehaviour {
 
 					waterStream.transform.Rotate (0, angle, 0);
 
-					Vector3 flameScale = flame.transform.localScale;
+					Vector3 flameScale = closestFlame.transform.localScale;
 					flameScale.x -= waterRate * Time.deltaTime;
 					flameScale.y -= waterRate * Time.deltaTime;
 					flameScale.z -= waterRate * Time.deltaTime;
 
-					flame.transform.localScale = flameScale;
+					closestFlame.transform.localScale = flameScale;
 
 					if (flameScale.x <= waterRate) {
-						EGFlame egFlame = flame.transform.gameObject.GetComponent<EGFlame> ();
+						EGFlame egFlame = closestFlame.transform.gameObject.GetComponent<EGFlame> ();
 						if (egFlame != null) {
 							egFlame.PutOut ();
 						}
-						Destroy (flame.transform.gameObject);
-						foundFlames.Remove (flame);
+						Destroy (closestFlame.transform.gameObject);
+						foundFlames.Remove (closestFlame);
 						truck.SetPuttingOutFire (false);
+						truck.TargetFlame = null;
 					}
 				}
 			} else {
@@ -99,9 +114,11 @@ public class EGHose : MonoBehaviour {
 					waterStream = null;
 				}
 				truck.SetPuttingOutFire (false);
+				truck.TargetFlame = null;
 			}
 		} else {
 			truck.SetPuttingOutFire (false);
+			truck.TargetFlame = null;
 		}
 	}
 }

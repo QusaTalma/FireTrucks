@@ -2,7 +2,6 @@
 using System.Collections;
 
 public class TruckVision : MonoBehaviour {
-	public EGFiretruck truck;
 	public EGHose hose;
 
 	void OnTriggerEnter(Collider other){

@@ -36,5 +36,5 @@
 10|7|26
 12|6|30
 2
-0.000000|m|Welcome to the island| mon!
-1.000000|f|Glad to have you on board!
+0.000000|4|m|Welcome to the island, mon!
+4.000000|4|f|Glad to have you on board!

@@ -27,9 +27,12 @@ public class NPCCueTableModel extends AbstractTableModel{
                 return "Time";
                 
             case 1:
-                return "Which NPC";
+                return "Duration";
                 
             case 2:
+                return "Which NPC";
+                
+            case 3:
                 return "Message";
         }
         
@@ -44,22 +47,8 @@ public class NPCCueTableModel extends AbstractTableModel{
 
     @Override
     public int getColumnCount() {
-        return 3;
+        return 4;
     }
-//
-//    @Override
-//    public Class<?> getColumnClass(int columnIndex) {
-//        switch(columnIndex){
-//            case 0:
-//                return Float.class;
-//            case 1:
-//                return String.class;
-//            case 2:
-//                return String.class;
-//        }
-//        
-//        return super.getColumnClass(columnIndex); //To change body of generated methods, choose Tools | Templates.
-//    }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
@@ -72,9 +61,10 @@ public class NPCCueTableModel extends AbstractTableModel{
             case 0:
                 return cue.getTimeToShow();
             case 1:
-                return cue.getNpcToShow();
-                
+                return cue.getDuration();
             case 2:
+                return cue.getNpcToShow();
+            case 3:
                 return cue.getTextToShow();
         }
         
@@ -91,14 +81,22 @@ public class NPCCueTableModel extends AbstractTableModel{
                     time = Float.parseFloat(aValue.toString());
                 }catch(NumberFormatException e){}
                 cue.setTimeToShow(time);
-            break;
+                break;
                 
             case 1:
+                float duration = cue.getDuration();
+                try{
+                    duration = Float.parseFloat(aValue.toString());
+                }catch(NumberFormatException e){}
+                cue.setDuration(duration);
+                break;
+                
+            case 2:
                 String npc = aValue.toString();
                 cue.setNPCToShow(npc);
                 break;
                 
-            case 2:
+            case 3:
                 String message = aValue.toString();
                 cue.setTextToShow(message);
                 break;

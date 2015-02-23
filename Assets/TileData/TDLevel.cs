@@ -13,7 +13,7 @@ public class TDLevel {
 	 *<int fireX| int fireY| float timeToPlace> //Note, these MUST be in chronological order
 	 *<int number of NPC cues in the level>
 	 *<previous number of lines representing NPC cues, format on following line>
-	 *<float timeToShow| string npcToShow(f=firechief, p=policechief, m=mayor)| string textToShow
+	 *<float timeToShow| float duration| string npcToShow(f=firechief, p=policechief, m=mayor)| string textToShow
 	 *
 	 *Update 1: 1/11/2015
 	 *Added count for arson steps
@@ -21,6 +21,9 @@ public class TDLevel {
 	 *
 	 *Update 2: 2/11/2015
 	 *Changed delimiter from , to |
+	 *
+	 *Update 3: 2/22/2015
+	 *Added a duration field to the NPC cues
 	 *****/
 	private const char VALUE_DELIMITER = '|';
 
@@ -137,10 +140,11 @@ public class TDLevel {
 		for (int i=0; i<numCues; i++) {
 			string[] cueData = splitLevelData[offset].Split(VALUE_DELIMITER);
 			float timeToShow = float.Parse(cueData[0]);
-			string npcToShow = cueData[1];
-			string textToShow = cueData[2];
+			float duration = float.Parse(cueData[1]);
+			string npcToShow = cueData[2];
+			string textToShow = cueData[3];
 
-			npcCues.Add(new NPCCue(timeToShow, npcToShow, textToShow));
+			npcCues.Add(new NPCCue(timeToShow, duration, npcToShow, textToShow));
 
 			offset++;
 		}

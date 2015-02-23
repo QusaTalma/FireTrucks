@@ -10,6 +10,11 @@ public class NPCCue {
 		get { return timeToShow; }
 	}
 
+	private float duration;
+	public float Duration {
+		get { return duration; }
+	}
+
 	private string npcToShow;
 	public string NPCToShow{
 		get { return npcToShow; }
@@ -20,8 +25,9 @@ public class NPCCue {
 		get { return textToShow; }
 	}
 
-	public NPCCue(float timeToShow, string npcToShow, string textToShow){
+	public NPCCue(float timeToShow, float duration, string npcToShow, string textToShow){
 		this.timeToShow = timeToShow;
+		this.duration = duration;
 		this.npcToShow = npcToShow;
 		this.textToShow = textToShow;
 	}

@@ -408,10 +408,16 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
         TableColumn column1 = npcCueTable.getColumnModel().getColumn(1);
         column1.setMinWidth(100);
         column1.setMaxWidth(100);
-        JComboBox npcComboBox = new JComboBox();
+        final JComboBox npcComboBox = new JComboBox();
         npcComboBox.addItem("f");
         npcComboBox.addItem("m");
         npcComboBox.addItem("p");
+        npcComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                npcComboBox.hidePopup();
+            }
+        });
         column1.setCellEditor(new DefaultCellEditor(npcComboBox));
         
         TableColumn column2 = npcCueTable.getColumnModel().getColumn(2);
@@ -546,7 +552,7 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
         public void mouseClicked(MouseEvent e) {
             int rowClicked = npcCueTable.rowAtPoint(e.getPoint());
             if(rowClicked >= level.getNPCCues().size()){
-                NPCCue cue = new NPCCue(0f, "m", "");
+                NPCCue cue = new NPCCue(0f, NPCCue.DEFAULT_DURATION, "m", "");
                 level.addNPCCue(cue);
                 refreshList();
             }
