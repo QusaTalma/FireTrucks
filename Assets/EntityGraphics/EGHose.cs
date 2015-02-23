@@ -50,19 +50,16 @@ public class EGHose : MonoBehaviour {
 
 				GameObject closestFlame = null;
 				float shortestDist = 100;
-				int shortestIndex = 0;
 				for(int i=0; i<foundFlames.Count; i++){
 					GameObject flame = foundFlames[i];
 					if(closestFlame == null){
 						closestFlame = flame;
 						shortestDist = Vector3.Distance(transform.position, closestFlame.transform.position);
-						shortestIndex = i;
 					}else{
 						float dist = Vector3.Distance(transform.position, flame.transform.position);
 						if(dist < shortestDist){
 							closestFlame = flame;
 							shortestDist = dist;
-							shortestIndex = i;
 						}
 					}
 				}
