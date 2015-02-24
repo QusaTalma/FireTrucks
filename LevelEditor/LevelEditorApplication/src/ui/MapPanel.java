@@ -33,6 +33,7 @@ public class MapPanel extends JPanel implements Scrollable{
     public static int[] constructionRGB;
     public static int[] grassRGB;
     public static int[] treeRGB;
+    public static int[] treesOnFireRGB;
     public static int[] riverRGB;
     
     public static int[] streetRGB;
@@ -74,6 +75,7 @@ public class MapPanel extends JPanel implements Scrollable{
             greenOnFireRGB = tileSet.getRGB(TILE_SIZE*11, 0, TILE_SIZE, TILE_SIZE, null, 0, TILE_SIZE);
             yellowHouseRGB = tileSet.getRGB(TILE_SIZE*12, 0, TILE_SIZE, TILE_SIZE, null, 0, TILE_SIZE);
             yellowOnFireRGB = tileSet.getRGB(TILE_SIZE*13, 0, TILE_SIZE, TILE_SIZE, null, 0, TILE_SIZE);
+            treesOnFireRGB = tileSet.getRGB(TILE_SIZE*14, 0, TILE_SIZE, TILE_SIZE, null, 0, TILE_SIZE);
         }
     }
 
@@ -175,11 +177,15 @@ public class MapPanel extends JPanel implements Scrollable{
                         break;
 
                     case GREEN_HOUSE_ON_FIRE:
-                        tileRGB = greenOnFireRGB;
+                        tileRGB = streetRGB;
                         break;
 
                     case YELLOW_HOUSE_ON_FIRE:
                         tileRGB = yellowOnFireRGB;
+                        break;
+                        
+                    case TREES_ON_FIRE:
+                        tileRGB = treesOnFireRGB;
                         break;
                         
                     default:

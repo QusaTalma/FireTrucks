@@ -255,6 +255,8 @@ public class Level {
                 tile = Tile.GREEN_HOUSE_ON_FIRE;
             }else if(tile == Tile.YELLOW_HOUSE){
                 tile = Tile.YELLOW_HOUSE_ON_FIRE;
+            }else if(tile == Tile.TREE){
+                tile = Tile.TREES_ON_FIRE;
             }
             
             map.setTile(x, y, tile);
