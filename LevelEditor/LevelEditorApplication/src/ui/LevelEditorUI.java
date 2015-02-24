@@ -376,7 +376,8 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
                         level.getArsonPath().addStep(x, y);
                     }else if(currentTile == Tile.HOUSE_ON_FIRE || 
                             currentTile == Tile.GREEN_HOUSE_ON_FIRE ||
-                            currentTile == Tile.YELLOW_HOUSE_ON_FIRE){
+                            currentTile == Tile.YELLOW_HOUSE_ON_FIRE ||
+                            currentTile == Tile.TREES_ON_FIRE){
                         level.getArsonPath().removeStep(x, y);
                     }
                     
@@ -386,6 +387,9 @@ public class LevelEditorUI extends javax.swing.JFrame implements ArsonPathTableM
                     }else if((currentTile == Tile.YELLOW_HOUSE || currentTile == Tile.YELLOW_HOUSE_ON_FIRE) &&
                             toSet == Tile.HOUSE_ON_FIRE){
                         toSet = Tile.YELLOW_HOUSE_ON_FIRE;
+                    }else if((currentTile == Tile.TREE || currentTile == Tile.TREES_ON_FIRE) &&
+                            toSet == Tile.HOUSE_ON_FIRE){
+                        toSet = Tile.TREES_ON_FIRE;
                     }
                     
                     level.getMap().setTile(x, y, toSet);

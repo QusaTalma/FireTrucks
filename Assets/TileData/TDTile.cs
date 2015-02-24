@@ -62,7 +62,8 @@ public class TDTile {
 	public bool IsFlammable(){
 		return type == Type.BLUE_HOUSE ||
 			type == Type.GREEN_HOUSE ||
-			type == Type.YELLOW_HOUSE;
+			type == Type.YELLOW_HOUSE ||
+			type == Type.TREE;
 	}
 
 	public float GetDurability(){

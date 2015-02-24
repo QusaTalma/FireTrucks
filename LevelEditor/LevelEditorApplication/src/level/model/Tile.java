@@ -24,7 +24,8 @@ public enum Tile {
     GREEN_HOUSE(11),
     GREEN_HOUSE_ON_FIRE(12),
     YELLOW_HOUSE(13),
-    YELLOW_HOUSE_ON_FIRE(14);
+    YELLOW_HOUSE_ON_FIRE(14),
+    TREES_ON_FIRE(15);
     
     public static final String FILL_CHAR = "f";
     public static final String RIVER_CHAR = "~";
@@ -89,6 +90,9 @@ public enum Tile {
                 break;
             case 14:
                 tile = YELLOW_HOUSE_ON_FIRE;
+                break;
+            case 15:
+                tile = TREES_ON_FIRE;
                 break;
         }
         
@@ -203,6 +207,7 @@ public enum Tile {
                 retval = STREET_CHAR;
                 break;
             case TREE:
+            case TREES_ON_FIRE:
                 retval = TREE_CHAR;
                 break;
             case GREEN_HOUSE:
