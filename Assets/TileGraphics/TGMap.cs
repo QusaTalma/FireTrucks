@@ -72,6 +72,7 @@ public class TGMap : MonoBehaviour {
 		_gameSession.AddToCurrentTime (Time.deltaTime);
 		if (!_gameSession.IsActive ()) {
 			Time.timeScale = 0f;
+			PopUpUIManager.Instance.HideAlert();
 			LevelGUIManager levelManager = gameObject.GetComponent<LevelGUIManager> ();
 			if (levelManager != null) {
 				levelManager.ShowEndGameDialog ();
@@ -317,6 +318,8 @@ public class TGMap : MonoBehaviour {
 	}
 
 	public float GetCityDurabilityPercent(){
+		int current = (int)Map.GetCurrentDurability ();
+		int total = (int)Map.GetTotalDurability ();
 		return Map.GetCurrentDurability () / Map.GetTotalDurability ();
 	}
 }

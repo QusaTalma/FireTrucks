@@ -80,6 +80,7 @@ public class TDLevel {
 		int offset = 1;//Read one line for width and height
 
 		tiles = new TDTile[mapWidth, mapHeight];
+		int flamableCount = 0;
 		for (int y=offset; y<mapHeight+offset; y++) {
 			string mapRowData = splitLevelData[y];
 			for(int x=0; x<mapWidth; x++){
@@ -87,8 +88,12 @@ public class TDLevel {
 				tile.type = TDTile.GetTypeForString(mapRowData[x].ToString());
 				if(tile.type == TDTile.Type.FIREHOUSE){
 					firehouseLocation = new Vector2(x,y-offset);
-				}else if(tile.IsFlammable()){
-					totalDurability += tile.durability;
+				}
+
+				if(tile.IsFlammable()){
+					flamableCount++;
+					float tileDurability = tile.durability;
+					totalDurability += tileDurability;
 				}
 
 				tiles[x,y-offset] = tile;
