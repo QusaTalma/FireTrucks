@@ -24,6 +24,7 @@ public class TGMap : MonoBehaviour {
 	public GameObject blueHousePrefab;
 	public GameObject greenHousePrefab;
 	public GameObject yellowHousePrefab;
+	public GameObject greenTreePrefab;
 
 	public TDMap Map{
 		get { return _level.Map; }
@@ -149,46 +150,29 @@ public class TGMap : MonoBehaviour {
 		for(int x = 0; x < Map.Width; x++){
 			for(int y = 0; y < Map.Height; y++){
 				TDTile tile = Map.GetTile(x,y);
-				if(tile.type == TDTile.Type.BLUE_HOUSE){
-					GameObject house = (GameObject)Instantiate(blueHousePrefab);
-					Vector3 housePos = GetPositionForTile (Mathf.FloorToInt(x),
-					                                       Mathf.FloorToInt(y));
-					
-					housePos.x += 0.5f;
-					housePos.y = house.transform.position.y;
-					housePos.z -= 0.5f;
-					
-					house.transform.position = housePos;
+				GameObject House;
 
-					EGHouse egHouse = house.GetComponent<EGHouse>();
-					egHouse.setTile(tile);
+				if(tile.type == TDTile.Type.BLUE_HOUSE){
+					House = (GameObject)Instantiate(blueHousePrefab);
 				}else if(tile.type == TDTile.Type.GREEN_HOUSE){
-					GameObject house = (GameObject)Instantiate(greenHousePrefab);
-					Vector3 housePos = GetPositionForTile (Mathf.FloorToInt(x),
-					                                       Mathf.FloorToInt(y));
-					
-					housePos.x += 0.5f;
-					housePos.y = house.transform.position.y;
-					housePos.z -= 0.5f;
-					
-					house.transform.position = housePos;
-					
-					EGHouse egHouse = house.GetComponent<EGHouse>();
-					egHouse.setTile(tile);
+					House = (GameObject)Instantiate(greenHousePrefab);
 				}else if(tile.type == TDTile.Type.YELLOW_HOUSE){
-					GameObject house = (GameObject)Instantiate(yellowHousePrefab);
-					Vector3 housePos = GetPositionForTile (Mathf.FloorToInt(x),
-					                                       Mathf.FloorToInt(y));
-					
-					housePos.x += 0.5f;
-					housePos.y = house.transform.position.y;
-					housePos.z -= 0.5f;
-					
-					house.transform.position = housePos;
-					
-					EGHouse egHouse = house.GetComponent<EGHouse>();
-					egHouse.setTile(tile);
+					House = (GameObject)Instantiate(yellowHousePrefab);
+				}else if(tile.type == TDTile.Type.TREE){
+					House = (GameObject)Instantiate(greenTreePrefab);
+				}else{
+					continue;
 				}
+				Vector3 housePos = GetPositionForTile (Mathf.FloorToInt(x),
+				                                       Mathf.FloorToInt(y));
+				housePos.x += 0.5f;
+				housePos.y = House.transform.position.y;
+				housePos.z -= 0.5f;
+				
+				House.transform.position = housePos;
+				
+				EGHouse egHouse = House.GetComponent<EGHouse>();
+				egHouse.setTile(tile);
 			}
 		}
 	}

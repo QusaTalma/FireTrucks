@@ -136,7 +136,7 @@ public class TDTile {
 			index = STREET_INDEX;
 			break;
 		case Type.TREE:
-			index = TREE_INDEX;
+			index = GRASS_INDEX;
 			break;
 		case Type.YELLOW_HOUSE:
 			//Since there's an animated house for this show a street background
