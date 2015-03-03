@@ -124,7 +124,7 @@ public class EGDispatcher : MonoBehaviour {
 			selectedTruck.SetSelected(false);
 			selectedTruck = null;
 		} else if (_dispatcher.GetIdleTrucks().Count > 0) {
-			truckToSend = _dispatcher.PopIdleTruck ();
+			truckToSend = _dispatcher.GetClosestIdleTruck(new Vector3(x, 0, z));
 		}
 		
 		if(truckToSend != null){

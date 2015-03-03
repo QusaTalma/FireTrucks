@@ -53,6 +53,25 @@ public class EDDispatcher {
 		}
 	}
 
+	public EGFiretruck GetClosestIdleTruck(Vector3 pos){
+		EGFiretruck closest = null;
+		float shortestDist = -1;
+
+		for (int i=0; i<_idleTrucks.Count; i++) {
+			EGFiretruck truck = _idleTrucks[i];
+			float dist = Vector3.Distance(truck.transform.position, pos);
+			if(closest == null){
+				closest = truck;
+				shortestDist = dist;
+			}else if(dist < shortestDist){
+				closest = truck;
+				shortestDist = dist;
+			}
+		}
+
+		return closest;
+	}
+
 	public EGFiretruck PopIdleTruck(){
 		EGFiretruck poppedTruck = null;
 		if (_idleTrucks.Count > 0) {
