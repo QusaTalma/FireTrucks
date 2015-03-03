@@ -23,14 +23,14 @@ public class EGFirehouse : MonoBehaviour {
 	}
 	
 	void Update(){
-		if (lastIndex != UnifiedAnimator.FlameFrame) {
-			lastIndex = UnifiedAnimator.FlameFrame;
+//		if (lastIndex != UnifiedAnimator.FlameFrame) {
+//			lastIndex = UnifiedAnimator.FlameFrame;
 			//split into x and y indexes
-			Vector2 offset = new Vector2((float)lastIndex / UnifiedAnimator.FLAME_COLUMNS - (lastIndex / UnifiedAnimator.FLAME_COLUMNS), //x index
-			                             (lastIndex / UnifiedAnimator.FLAME_COLUMNS) / (float)UnifiedAnimator.FLAME_ROWS);          //y index
-			
-			renderer.sharedMaterial.SetTextureOffset("_MainTex", offset);
-		}
+//			Vector2 offset = new Vector2((float)lastIndex / UnifiedAnimator.FLAME_COLUMNS - (lastIndex / UnifiedAnimator.FLAME_COLUMNS), //x index
+//			                             (lastIndex / UnifiedAnimator.FLAME_COLUMNS) / (float)UnifiedAnimator.FLAME_ROWS);          //y index
+//			
+//			renderer.sharedMaterial.SetTextureOffset("_MainTex", offset);
+//		}
 		
 		if (truckCount == 0) {
 			SpawnNextTruck ();

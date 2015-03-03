@@ -69,6 +69,10 @@ public class EDDispatcher {
 			}
 		}
 
+		if (closest != null) {
+			_idleTrucks.Remove(closest);
+		}
+
 		return closest;
 	}
 

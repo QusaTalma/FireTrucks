@@ -25,9 +25,10 @@ public class EGHouse : MonoBehaviour {
 	}
 	
 	void Update(){
-		if (lastIndex != UnifiedAnimator.FlameFrame) {
-			lastIndex = UnifiedAnimator.FlameFrame;
-			float offsetX = (float)lastIndex / UnifiedAnimator.FLAME_COLUMNS - (lastIndex / UnifiedAnimator.FLAME_COLUMNS);
+//		if (lastIndex != UnifiedAnimator.FlameFrame) {
+//			lastIndex = UnifiedAnimator.FlameFrame;
+			float offsetX = 0;
+			//(float)lastIndex / UnifiedAnimator.FLAME_COLUMNS - (lastIndex / UnifiedAnimator.FLAME_COLUMNS);
 			int state = HOUSE_ROWS - 1;
 
 			if(_tile.OnFire){
@@ -43,7 +44,7 @@ public class EGHouse : MonoBehaviour {
 			Vector2 offset = new Vector2(offsetX, offsetY);
 			
 			renderer.material.SetTextureOffset("_MainTex", offset);
-		}
+//		}
 	}
 
 	public void setTile(TDTile tile){
