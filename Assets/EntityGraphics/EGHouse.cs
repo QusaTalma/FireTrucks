@@ -3,9 +3,6 @@ using System.Collections;
 
 public class EGHouse : MonoBehaviour {
 	private static int HOUSE_ROWS = 4;
-	
-	//the current frame to display
-	private int lastIndex = 0;
 
 	private TDTile _tile = null;
 	
@@ -15,36 +12,34 @@ public class EGHouse : MonoBehaviour {
 		Vector2 size = new Vector2(1f / UnifiedAnimator.FLAME_COLUMNS, 1f / HOUSE_ROWS);
 		renderer.sharedMaterial.SetTextureScale("_MainTex", size);
 
-		float offsetX = (float)lastIndex / UnifiedAnimator.FLAME_COLUMNS - (lastIndex / UnifiedAnimator.FLAME_COLUMNS);
 		int state = HOUSE_ROWS - 1;
 		float offsetY = ((float)state/HOUSE_ROWS);
 		//split into x and y indexes
-		Vector2 offset = new Vector2(offsetX, offsetY);
+		Vector2 offset = new Vector2(0, offsetY);
 		
 		renderer.material.SetTextureOffset("_MainTex", offset);
 	}
 	
 	void Update(){
-//		if (lastIndex != UnifiedAnimator.FlameFrame) {
-//			lastIndex = UnifiedAnimator.FlameFrame;
-			float offsetX = 0;
-			//(float)lastIndex / UnifiedAnimator.FLAME_COLUMNS - (lastIndex / UnifiedAnimator.FLAME_COLUMNS);
-			int state = HOUSE_ROWS - 1;
+		float offsetX = 0;
+		int state = HOUSE_ROWS - 1;
 
-			if(_tile.OnFire){
-				state = 2;
-			}else if(_tile.durability <= 0){
-				state = 0;
-			}else if(_tile.IsDamaged()){
-				state = 1;
-			}
+		if (_tile.durability == 0) {
+			Debug.Log ("House sprite state burned down");
+			state = 0;
+		}else if(_tile.OnFire){
+			state = 2; 
+		}else if(_tile.IsDamaged()){
+			Debug.Log("House damage but not burned down");
+			Debug.Log("Tile durability is " + _tile.durability.ToString());
+			state = 1;
+		}
 
-			float offsetY = ((float)state/HOUSE_ROWS);
-			//split into x and y indexes
-			Vector2 offset = new Vector2(offsetX, offsetY);
-			
-			renderer.material.SetTextureOffset("_MainTex", offset);
-//		}
+		float offsetY = ((float)state/HOUSE_ROWS);
+		//split into x and y indexes
+		Vector2 offset = new Vector2(offsetX, offsetY);
+		
+		renderer.material.SetTextureOffset("_MainTex", offset);
 	}
 
 	public void setTile(TDTile tile){
