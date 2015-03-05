@@ -6,6 +6,7 @@ Temp/
 Library/
 Obj/
 UnityGenerated/
+*.userprefs
 
 # ===================================== #
 # Visual Studio / MonoDevelop generated #
