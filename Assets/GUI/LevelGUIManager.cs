@@ -11,7 +11,6 @@ public class LevelGUIManager : MonoBehaviour {
 	public Image thermometerRed;
 	public Text flameCountLabel;
 
-	EGDispatcher _dispatcher;
 	TGMap _map;
 	
 	private static LevelGUIManager _instance = null;
@@ -28,7 +27,6 @@ public class LevelGUIManager : MonoBehaviour {
 
 	void Start(){
 		_instance = this;
-		_dispatcher = gameObject.GetComponent<EGDispatcher> ();
 		_map = gameObject.GetComponent<TGMap> ();
 		endGameDialog.gameObject.SetActive (false);
 	}

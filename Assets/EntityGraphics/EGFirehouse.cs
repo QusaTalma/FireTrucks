@@ -5,13 +5,9 @@ public class EGFirehouse : MonoBehaviour {
 	int truckCount = 0;
 
 	private EDFirehouse _firehouse;
-	private EDDispatcher _dispatcher;
 	TGMap _map;
 
 	public GameObject firetruckPrefab;
-
-	//the current frame to display
-	private static int lastIndex = 0;
 	
 	void Start()
 	{
@@ -30,10 +26,6 @@ public class EGFirehouse : MonoBehaviour {
 
 	public void SetTGMap(TGMap map){
 		_map = map;
-	}
-
-	public void SetDispatcher(EDDispatcher dispatcher){
-		_dispatcher = dispatcher;
 	}
 
 	public bool ContainsTruck(){

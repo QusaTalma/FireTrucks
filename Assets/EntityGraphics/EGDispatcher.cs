@@ -26,14 +26,10 @@ public class EGDispatcher : MonoBehaviour {
 		_instance = this;
 		_map = GetComponent<TGMap>();
 		_dispatcher = new EDDispatcher();
-		if (_firehouse != null) {
-			_firehouse.SetDispatcher(_dispatcher);
-		}
 	}
 
 	public void SetFirehouse(EGFirehouse firehouse){
 		_firehouse = firehouse;
-		_firehouse.SetDispatcher(_dispatcher);
 	}
 	
 	// Update is called once per frame
