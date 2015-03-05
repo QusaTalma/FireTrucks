@@ -42,18 +42,18 @@ public class TGMouse : MonoBehaviour {
 	void Update () {
 		EventSystem eventSys = EventSystem.current;
 		//Check for up to 5 pointers, after that it's just rediculous
-		if (eventSys.IsPointerOverGameObject() ||
-		    eventSys.IsPointerOverGameObject(0) ||
-		    eventSys.IsPointerOverGameObject(1) ||
-		    eventSys.IsPointerOverGameObject(2) ||
-		    eventSys.IsPointerOverGameObject(3) ||
-		    eventSys.IsPointerOverGameObject(4)){
-			if(Input.touchCount > 0 ||
-			   Input.GetMouseButtonDown(0)){
-				PopUpUIManager.Instance.HideAlert();
-			}
-			return;
-		}
+//		if (eventSys.IsPointerOverGameObject() ||
+//		    eventSys.IsPointerOverGameObject(0) ||
+//		    eventSys.IsPointerOverGameObject(1) ||
+//		    eventSys.IsPointerOverGameObject(2) ||
+//		    eventSys.IsPointerOverGameObject(3) ||
+//		    eventSys.IsPointerOverGameObject(4)){
+//			if(Input.touchCount > 0 ||
+//			   Input.GetMouseButtonDown(0)){
+//				PopUpUIManager.Instance.HideAlert();
+//			}
+//			return;
+//		}
 		Ray rayCast;
 		RaycastHit hitInfo;
 		float distance = Mathf.Infinity;

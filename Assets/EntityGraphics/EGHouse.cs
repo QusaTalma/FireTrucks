@@ -25,13 +25,10 @@ public class EGHouse : MonoBehaviour {
 		int state = HOUSE_ROWS - 1;
 
 		if (_tile.durability == 0) {
-			Debug.Log ("House sprite state burned down");
 			state = 0;
 		}else if(_tile.OnFire){
 			state = 2; 
 		}else if(_tile.IsDamaged()){
-			Debug.Log("House damage but not burned down");
-			Debug.Log("Tile durability is " + _tile.durability.ToString());
 			state = 1;
 		}
 
