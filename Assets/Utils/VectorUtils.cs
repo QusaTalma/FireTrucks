@@ -44,8 +44,8 @@ public class VectorUtils {
 	public static Vector3 FindClosestPointOnObject(Vector3 src, GameObject dest){
 		Vector3 closest = dest.transform.position;
 		RaycastHit hitInfo;
-		if(dest.renderer != null){
-			if(Physics.Raycast (src, dest.renderer.bounds.center - src, out hitInfo)){
+		if(dest.GetComponent<Renderer>() != null){
+			if(Physics.Raycast (src, dest.GetComponent<Renderer>().bounds.center - src, out hitInfo)){
 				closest = hitInfo.point;
 			}
 		}

@@ -15,7 +15,7 @@ public class EGFirehouse : MonoBehaviour {
 
 		//set the tile size of the texture (in UV units), based on the rows and columns
 		Vector2 size = new Vector2(1f / UnifiedAnimator.FLAME_COLUMNS, 1f / UnifiedAnimator.FLAME_ROWS);
-		renderer.sharedMaterial.SetTextureScale("_MainTex", size);
+		GetComponent<Renderer>().sharedMaterial.SetTextureScale("_MainTex", size);
 	}
 	
 	void Update(){
