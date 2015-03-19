@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using GooglePlayGames;
+using GooglePlayGames.BasicApi;
 using System.Collections;
 
 public class MainMenuController : MonoBehaviour {
@@ -7,4 +9,13 @@ public class MainMenuController : MonoBehaviour {
 		Application.LoadLevel ("LevelMenu");
 	}
 
+	public void CreditsClicked(){
+		Application.LoadLevel ("Credits");
+	}
+
+	public void SignInClicked(){
+		Social.localUser.Authenticate ((bool success) => {
+
+		});
+	}
 }
