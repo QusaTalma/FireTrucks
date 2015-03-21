@@ -72,18 +72,13 @@ public class TGMap : MonoBehaviour {
 	void Update(){
 		_gameSession.AddToCurrentTime (Time.deltaTime);
 
-		bool active = GetCityDurabilityPercent() >= PercentToWin;
+		bool active; 
 
-		if (active) {
-			GameObject[] fires = GameObject.FindGameObjectsWithTag("Fire");
-			active = fires.Length > 0;
-		}
-
-		if(arsonist.ArsonStepCount == 0){
-			GameObject[] fires = GameObject.FindGameObjectsWithTag("Fire");
-			active = fires.Length > 0;
-		}else{
-			active = true;
+		if (arsonist.ArsonStepCount == 0) {
+			GameObject[] fires = GameObject.FindGameObjectsWithTag ("Fire");
+			active = fires.Length > 0 && GetCityDurabilityPercent() >= PercentToWin;
+		} else {
+			active = GetCityDurabilityPercent() >= PercentToWin;
 		}
 		
 		if (!active) {
