@@ -25,7 +25,6 @@ public class UIFlameIndicator : MonoBehaviour {
 
 	private void PointToFlame(){
 		Vector3 camPos = Camera.main.transform.position;
-		camPos.x = camPos.x - LevelGUIManager.Instance.statusPanel.transform.localScale.x;
 		Rect cameraRect = GetCameraRect (camPos);
 		float angleToFlame = FindAngleToFlame (camPos);
 
@@ -44,7 +43,6 @@ public class UIFlameIndicator : MonoBehaviour {
 		//Calculate the half height of the screen
 		float horizExtent = Camera.main.orthographicSize * Screen.width / Screen.height;
 		horizExtent = horizExtent - transform.localScale.x*6;
-		horizExtent = horizExtent - LevelGUIManager.Instance.statusPanel.transform.localScale.x;
 		
 		return new Rect (camPos.x - horizExtent, camPos.z - vertExtent, horizExtent * 2, vertExtent * 2);
 	}

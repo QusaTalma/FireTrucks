@@ -23,8 +23,10 @@ public class EGFlame : MonoBehaviour {
 	void Update () {
 		if (tile != null) {
 			UpdateScale ();
-			UpdateSpread ();
-			DoDamage ();
+			if(transform.root.localScale.x > 0){
+				UpdateSpread ();
+				DoDamage ();
+			}
 		} else {
 			PutOut();
 			Destroy(transform.root.gameObject);
@@ -130,12 +132,10 @@ public class EGFlame : MonoBehaviour {
 
 	public bool IsOnCamera(){
 		Vector3 camPos = Camera.main.transform.position;
-		camPos.x = camPos.x - LevelGUIManager.Instance.statusPanel.transform.root.localScale.x;
 		//The orthographic size if half the height of the camera
 		float vertExtent = Camera.main.orthographicSize;
 		//Calculate the half height of the screen
 		float horizExtent = Camera.main.orthographicSize * Screen.width / Screen.height;
-		horizExtent = horizExtent - LevelGUIManager.Instance.statusPanel.transform.root.localScale.x;
 
 		Rect cameraRect = new Rect (camPos.x - horizExtent, camPos.z - vertExtent, horizExtent * 2, vertExtent * 2);
 		Vector2 myPos = new Vector2(transform.position.x, transform.position.z);

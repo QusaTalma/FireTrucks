@@ -30,8 +30,6 @@ public class TDMap {
 
 	public void SetFireHouseCoordinates(Vector2 pos){
 		fireHousePosition = pos;
-		
-		totalDurability -= _tiles [(int)fireHousePosition.x, (int)fireHousePosition.y].GetDurability ();
 		_tiles [(int)fireHousePosition.x, (int)fireHousePosition.y].type = TDTile.Type.FIREHOUSE;
 	}
 
@@ -56,13 +54,16 @@ public class TDMap {
 
 	public float GetCurrentDurability(){
 		float currentDurability = 0;
+		int flamableCount = 0;
 		for (int x = 0; x< _width; x++){
 			for( int y = 0; y < _height; y++){
 				if(_tiles[x,y].IsFlammable()){
+					flamableCount++;
 					currentDurability += _tiles[x,y].GetDurability();
 				}
 			}
 		}
+
 		return currentDurability;
 	}
 

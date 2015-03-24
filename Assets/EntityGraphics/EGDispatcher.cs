@@ -26,14 +26,10 @@ public class EGDispatcher : MonoBehaviour {
 		_instance = this;
 		_map = GetComponent<TGMap>();
 		_dispatcher = new EDDispatcher();
-		if (_firehouse != null) {
-			_firehouse.SetDispatcher(_dispatcher);
-		}
 	}
 
 	public void SetFirehouse(EGFirehouse firehouse){
 		_firehouse = firehouse;
-		_firehouse.SetDispatcher(_dispatcher);
 	}
 	
 	// Update is called once per frame
@@ -124,7 +120,7 @@ public class EGDispatcher : MonoBehaviour {
 			selectedTruck.SetSelected(false);
 			selectedTruck = null;
 		} else if (_dispatcher.GetIdleTrucks().Count > 0) {
-			truckToSend = _dispatcher.PopIdleTruck ();
+			truckToSend = _dispatcher.GetClosestIdleTruck(new Vector3(x, 0, z));
 		}
 		
 		if(truckToSend != null){

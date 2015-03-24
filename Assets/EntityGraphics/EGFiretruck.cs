@@ -21,7 +21,7 @@ public class EGFiretruck : MonoBehaviour, EDTruckControls{
 
 	Vector3 velocity = Vector3.forward;
 
-	private const float FIRE_BUFFER = 0.25f;//It's the z scale of the body of the truck
+	private const float FIRE_BUFFER = 0.3f;//It's the z scale of the body of the truck
 
 	public float speed;
 	public bool returnWhenIdle;

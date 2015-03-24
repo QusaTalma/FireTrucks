@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class LevelButton : MonoBehaviour {
-	public int levelIndex;
+	public int levelNumber;//1 indexed, not 0 indexed
 	public Text text;
 	
 	private Button button;
@@ -13,18 +13,18 @@ public class LevelButton : MonoBehaviour {
 	}
 
 	void Update () {
-		string level = LevelManager.Instance.GetLevelAtIndex (levelIndex - 1);
-		bool unlocked = levelIndex == 1 || LevelManager.Instance.IsLevelUnlocked(level);
+		string level = LevelManager.Instance.GetLevelAtIndex (levelNumber - 1);
+		bool unlocked = LevelManager.Instance.IsLevelUnlocked(level);
 		button.interactable = unlocked;
 		if (unlocked) {
-			text.text = levelIndex.ToString();
+			text.text = levelNumber.ToString();
 		} else {
 			text.text = "";
 		}
 	}
 
 	public void OnClick(){
-		string level = LevelManager.Instance.GetLevelAtIndex (levelIndex-1);
+		string level = LevelManager.Instance.GetLevelAtIndex (levelNumber-1);
 		MenuGUIManager.LoadLevel (level);
 	}
 }

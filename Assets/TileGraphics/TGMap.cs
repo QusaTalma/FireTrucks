@@ -71,8 +71,24 @@ public class TGMap : MonoBehaviour {
 
 	void Update(){
 		_gameSession.AddToCurrentTime (Time.deltaTime);
-		if (!_gameSession.IsActive ()) {
+
+		bool active = GetCityDurabilityPercent() >= PercentToWin;
+
+		if (active) {
+			GameObject[] fires = GameObject.FindGameObjectsWithTag("Fire");
+			active = fires.Length > 0;
+		}
+
+		if(arsonist.ArsonStepCount == 0){
+			GameObject[] fires = GameObject.FindGameObjectsWithTag("Fire");
+			active = fires.Length > 0;
+		}else{
+			active = true;
+		}
+		
+		if (!active) {
 			Time.timeScale = 0f;
+			PopUpUIManager.Instance.HideAlert();
 			LevelGUIManager levelManager = gameObject.GetComponent<LevelGUIManager> ();
 			if (levelManager != null) {
 				levelManager.ShowEndGameDialog ();
@@ -301,6 +317,8 @@ public class TGMap : MonoBehaviour {
 	}
 
 	public float GetCityDurabilityPercent(){
-		return Map.GetCurrentDurability () / Map.GetTotalDurability ();
+		float current = Map.GetCurrentDurability ();
+		float total = Map.GetTotalDurability ();
+		return current / total;
 	}
 }

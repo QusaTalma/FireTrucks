@@ -8,7 +8,7 @@ public class TGMouse : MonoBehaviour {
 	bool dragging = false;
 	bool singleTouchDown = false;
 	Vector3 singleTouchStart;
-	Vector3 dragOrigin;
+	Vector3 previousTouch;
 	TGMap _tileMap;
 
 	EGDispatcher _dispatcher;
@@ -18,7 +18,7 @@ public class TGMouse : MonoBehaviour {
 	private float minZ;
 	private float maxZ;
 
-	private const float DRAG_SPEED = 15;
+	private const float DRAG_THRESDHOLD = 0.1f;
 
 	void Start(){
 		_tileMap = GetComponent<TGMap>();
@@ -40,27 +40,26 @@ public class TGMouse : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		EventSystem eventSys = EventSystem.current;
+//		EventSystem eventSys = EventSystem.current;
 		//Check for up to 5 pointers, after that it's just rediculous
-		if (eventSys.IsPointerOverGameObject() ||
-		    eventSys.IsPointerOverGameObject(0) ||
-		    eventSys.IsPointerOverGameObject(1) ||
-		    eventSys.IsPointerOverGameObject(2) ||
-		    eventSys.IsPointerOverGameObject(3) ||
-		    eventSys.IsPointerOverGameObject(4)){
-			if(Input.touchCount > 0 ||
-			   Input.GetMouseButtonDown(0)){
-				PopUpUIManager.Instance.HideAlert();
-			}
-			return;
-		}
+//		if (eventSys.IsPointerOverGameObject() ||
+//		    eventSys.IsPointerOverGameObject(0) ||
+//		    eventSys.IsPointerOverGameObject(1) ||
+//		    eventSys.IsPointerOverGameObject(2) ||
+//		    eventSys.IsPointerOverGameObject(3) ||
+//		    eventSys.IsPointerOverGameObject(4)){
+//			if(Input.touchCount > 0 ||
+//			   Input.GetMouseButtonDown(0)){
+//				PopUpUIManager.Instance.HideAlert();
+//			}
+//			return;
+//		}
 		Ray rayCast;
 		RaycastHit hitInfo;
 		float distance = Mathf.Infinity;
 		bool down = false;
 		bool moved = false;
 		bool up = false;
-		Vector2 mapMovePos = new Vector2();
 		if (Input.touchCount > 0) {
 			Touch touch = Input.GetTouch (0);
 			rayCast = Camera.main.ScreenPointToRay (touch.position);
@@ -72,7 +71,6 @@ public class TGMouse : MonoBehaviour {
 
 			case TouchPhase.Moved:
 				moved = true;
-				mapMovePos = touch.position;
 				break;
 
 			case TouchPhase.Ended:
@@ -87,7 +85,6 @@ public class TGMouse : MonoBehaviour {
 				up = true;
 			}else if(singleTouchDown){
 				moved = true;
-				mapMovePos = Input.mousePosition;
 			}
 		}
 
@@ -106,7 +103,7 @@ public class TGMouse : MonoBehaviour {
 				if(down){
 					HandleTouchMapStart (hitInfo.point);
 				}else if(moved){
-					HandleTouchMapMoved (mapMovePos);
+					HandleTouchMapMoved (hitInfo.point);
 				}else if(up){
 					HandleTouchMapEnded (hitInfo.point);
 				}
@@ -150,35 +147,21 @@ public class TGMouse : MonoBehaviour {
 
 	void HandleTouchMapStart(Vector3 touchPos){
 		singleTouchStart = touchPos;
+		previousTouch = touchPos;
 		singleTouchDown = true;
 	}
 
 	void HandleTouchMapMoved(Vector3 touchPos){
 		if (!dragging) {
-			Vector3 worldTouch = Camera.main.ScreenToWorldPoint(touchPos);
-
-			int tileX = Mathf.FloorToInt (worldTouch.x / _tileMap.tileSize);
-			int tileZ = Mathf.FloorToInt (worldTouch.z / _tileMap.tileSize);
-			tileZ += 1;
-
-			int startTileX = Mathf.FloorToInt (singleTouchStart.x / _tileMap.tileSize);
-			int startTileZ = Mathf.FloorToInt (singleTouchStart.z / _tileMap.tileSize);
-			startTileZ += 1;
-
-			if (startTileX != tileX ||
-				startTileZ != tileZ) {
-				dragging = true;
-				dragOrigin = touchPos;
-			}
+			Vector3 distFromStart = singleTouchStart - touchPos;
+			dragging = distFromStart.magnitude >= DRAG_THRESDHOLD;
 		}
 
-		if (dragging) {	
-			Vector3 dragDelta = dragOrigin - touchPos;
-			Vector3 screenDelta = Camera.main.ScreenToViewportPoint(dragDelta);
-			Vector3 moveTo = new Vector3(screenDelta.x * DRAG_SPEED, 0, screenDelta.y * DRAG_SPEED);
-			Camera.main.transform.Translate(moveTo, Space.World);
+		if (dragging){
+			Vector3 dragDelta = previousTouch - touchPos;
+			Vector3 moveBy = new Vector3(dragDelta.x, 0, dragDelta.z);
 
-			dragOrigin = touchPos;
+			Camera.main.transform.Translate(moveBy, Space.World);
 		}
 	}
 

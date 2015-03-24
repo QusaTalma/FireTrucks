@@ -7,13 +7,10 @@ public class LevelGUIManager : MonoBehaviour {
 	public Button nextLevelButton;
 	public Text winText;
 	public Text loseText;
-	public Text truckCount;
-	public Text timeRemaining;
-	public Text currentPercent;
-	public Text winPercent;
 	public GameObject statusPanel;
+	public Image thermometerRed;
+	public Text flameCountLabel;
 
-	EGDispatcher _dispatcher;
 	TGMap _map;
 	
 	private static LevelGUIManager _instance = null;
@@ -30,7 +27,6 @@ public class LevelGUIManager : MonoBehaviour {
 
 	void Start(){
 		_instance = this;
-		_dispatcher = gameObject.GetComponent<EGDispatcher> ();
 		_map = gameObject.GetComponent<TGMap> ();
 		endGameDialog.gameObject.SetActive (false);
 	}
@@ -55,10 +51,29 @@ public class LevelGUIManager : MonoBehaviour {
 		}
 	}
 
-	void OnGUI(){
-		DrawTruckCount ();
-		DrawCityHealth ();
-		DrawTimeRemaining ();
+	void Update(){
+		UpdateThermometer ();
+		UpdateFlameCountLabel ();
+	}
+
+	void UpdateThermometer(){
+		//Get current and minimum %s
+		float current = _map.GetCityDurabilityPercent ();
+		float minimum = _map.PercentToWin;
+
+		//Convert the percents to a value out of 1
+		float safeRange = 1f - minimum;
+		float burnedRange = 1f - current;
+
+		//Use that ratio to calculate the fill amount
+		float fillAmount = burnedRange / safeRange;
+		thermometerRed.fillAmount = fillAmount;
+	}
+
+	void UpdateFlameCountLabel(){
+		GameObject[] fires = GameObject.FindGameObjectsWithTag("Fire");
+		int flameCount = fires.Length;
+		flameCountLabel.text = flameCount.ToString ();
 	}
 
 	public void RestartClicked(){
@@ -77,18 +92,5 @@ public class LevelGUIManager : MonoBehaviour {
 		LevelManager.Instance.CurrentLevel = nextLevel;
 		Application.LoadLevel("GamePlay");
 		Time.timeScale = 1f;
-	}
-
-	void DrawTruckCount(){
-		truckCount.text = _dispatcher.GetTruckCount ().ToString ();
-	}
-
-	void DrawCityHealth(){
-		currentPercent.text = _map.GetCityDurabilityPercent ().ToString ("P0");
-		winPercent.text = _map.PercentToWin.ToString ("P0");
-	}
-
-	void DrawTimeRemaining(){
-		timeRemaining.text = _map.GetGameSession ().GetRemainingTime ().ToString ("F0");
 	}
 }

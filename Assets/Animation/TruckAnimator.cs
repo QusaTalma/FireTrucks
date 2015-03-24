@@ -19,7 +19,7 @@ public class TruckAnimator : MonoBehaviour {
 		truck = transform.root.gameObject.GetComponent<EGFiretruck> ();
 		//set the tile size of the texture (in UV units), based on the rows and columns
 		Vector2 size = new Vector2(1f / UnifiedAnimator.FLAME_COLUMNS, 1f / NUM_STATES);
-		renderer.sharedMaterial.SetTextureScale("_MainTex", size);
+		GetComponent<Renderer>().sharedMaterial.SetTextureScale("_MainTex", size);
 	}
 	
 	void Update(){
@@ -46,7 +46,7 @@ public class TruckAnimator : MonoBehaviour {
 			//split into x and y indexes
 			Vector2 offset = new Vector2(offsetX, offsetY);
 
-			renderer.material.SetTextureOffset("_MainTex", offset);
+			GetComponent<Renderer>().material.SetTextureOffset("_MainTex", offset);
 		}
 	}
 }
