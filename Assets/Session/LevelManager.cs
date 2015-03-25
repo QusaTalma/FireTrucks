@@ -9,7 +9,7 @@ public class LevelManager {
 		get {
 			if (_instance == null) {
 				_instance = new LevelManager ();
-				_instance.UnlockLevel(1);
+				_instance.UnlockLevel(0);
 			}
 			
 			return _instance;
@@ -42,7 +42,7 @@ public class LevelManager {
 		return LEVELS.Length;
 	}
 
-	private string _currentLevel = "AwesomotionStart";
+	private string _currentLevel = "FirstLevel";
 	public string CurrentLevel{
 		get{
 			return _currentLevel;

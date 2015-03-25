@@ -72,6 +72,9 @@ public class TDTile {
 
 	public void Damage(float damage){
 		durability -= damage;
+		if (durability < 0) {
+			durability = 0;
+		}
 	}
 
 	public bool Equals(TDTile other){
