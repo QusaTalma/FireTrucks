@@ -1,65 +1,71 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Behaviors.EntityGraphics;
+using DataStructure.EntityData;
+using DataStructure.TileData;
+using Managers;
 
-public class TGArsonist : MonoBehaviour
-{
-	private TGMap _map;
-	private float elapsedTime = 0f;
+namespace Behaviors.TileGraphics{
+	public class TGArsonist : MonoBehaviour{
 
-	public GameObject flamePrefab;
+		private TGMap _map;
+		private float elapsedTime = 0f;
 
-	public bool captureShown = false;
+		public GameObject flamePrefab;
 
-	private EDArsonPath arsonPath;
-	public EDArsonPath ArsonPath{
-		set { arsonPath = value;
-			arsonStepCount = value.GetStepCount(); }
-	}
+		public bool captureShown = false;
 
-	private int arsonStepCount;
-	public int ArsonStepCount {
-		get { return arsonPath.GetStepCount (); }
-	}
-
-	public void Start(){
-		PopUpUIManager.Instance.ShowFiresStartingMessage ();
-	}
-
-	public void Update(){
-		elapsedTime += Time.deltaTime;
-
-		if (arsonPath.HasMoreSteps () && arsonPath.TimeForNextStep (elapsedTime)) {
-			TDTile tileToLight = arsonPath.PopStep ();
-			StartTileOnFire (tileToLight);
-			if(arsonPath.GetStepCount() == (int)(arsonStepCount/2)){
-				PopUpUIManager.Instance.ShowFiresHalfFinishedMessage();
-			}else if(arsonPath.GetStepCount() == (int)(arsonStepCount/4)){
-				PopUpUIManager.Instance.ShowFiresAlmostFinishedMessage();
-			}
-		} else if (!arsonPath.HasMoreSteps () && !captureShown) {
-			captureShown = true;
-			PopUpUIManager.Instance.ShowFiresFinishedMessage();
+		private EDArsonPath arsonPath;
+		public EDArsonPath ArsonPath{
+			set { arsonPath = value;
+				arsonStepCount = value.GetStepCount(); }
 		}
-	}
 
-	public void SetMap(TGMap map){
-		this._map = map;
-	}
+		private int arsonStepCount;
+		public int ArsonStepCount {
+			get { return arsonPath.GetStepCount (); }
+		}
 
-	void StartTileOnFire(TDTile tile){
-		GameObject flame = (GameObject)Instantiate (flamePrefab);
-		
-		Vector3 flamePos = _map.GetPositionForTile (tile.GetX(), tile.GetY());
-		flamePos.x += 0.5f;
-		flamePos.z -= 0.5f;
-		
-		flame.transform.position = flamePos;
-		
-		EGFlame egFlame = flame.GetComponent<EGFlame>();
-		egFlame.SetTile(tile);
-		egFlame.SetMap(_map);
-		egFlame.SetSpreadPrefab(flamePrefab);
-		
-		tile.OnFire = true;
+		public void Start(){
+			PopUpUIManager.Instance.ShowFiresStartingMessage ();
+		}
+
+		public void Update(){
+			elapsedTime += Time.deltaTime;
+
+			if (arsonPath.HasMoreSteps () && arsonPath.TimeForNextStep (elapsedTime)) {
+				TDTile tileToLight = arsonPath.PopStep ();
+				StartTileOnFire (tileToLight);
+				if(arsonPath.GetStepCount() == (int)(arsonStepCount/2)){
+					PopUpUIManager.Instance.ShowFiresHalfFinishedMessage();
+				}else if(arsonPath.GetStepCount() == (int)(arsonStepCount/4)){
+					PopUpUIManager.Instance.ShowFiresAlmostFinishedMessage();
+				}
+			} else if (!arsonPath.HasMoreSteps () && !captureShown) {
+				captureShown = true;
+				PopUpUIManager.Instance.ShowFiresFinishedMessage();
+			}
+		}
+
+		public void SetMap(TGMap map){
+			this._map = map;
+		}
+
+		void StartTileOnFire(TDTile tile){
+			GameObject flame = (GameObject)Instantiate (flamePrefab);
+			
+			Vector3 flamePos = _map.GetPositionForTile (tile.GetX(), tile.GetY());
+			flamePos.x += 0.5f;
+			flamePos.z -= 0.5f;
+			
+			flame.transform.position = flamePos;
+			
+			EGFlame egFlame = flame.GetComponent<EGFlame>();
+			egFlame.SetTile(tile);
+			egFlame.SetMap(_map);
+			egFlame.SetSpreadPrefab(flamePrefab);
+			
+			tile.OnFire = true;
+		}
 	}
 }

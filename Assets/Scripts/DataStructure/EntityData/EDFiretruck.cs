@@ -1,28 +1,32 @@
-﻿public class EDFiretruck{
-	float speed;
-	TDPath path;
+﻿using DataStructure.TileData;
 
-	public float GetSpeed(){
-		return speed;
-	}
+namespace DataStructure.EntityData{
+	public class EDFiretruck{
+		float speed;
+		TDPath path;
 
-	public void SetSpeed(float speed){
-		this.speed = speed;
-	}
+		public float GetSpeed(){
+			return speed;
+		}
 
-	public void SetPath(TDPath path){
-		this.path = path;
-	}
+		public void SetSpeed(float speed){
+			this.speed = speed;
+		}
 
-	public bool HasNextStep(){
-		return path != null && path.GetStepCount() > 0;
-	}
+		public void SetPath(TDPath path){
+			this.path = path;
+		}
 
-	public TDStep PopPathStep(){
-		return path.PopStep();
-	}
+		public bool HasNextStep(){
+			return path != null && path.GetStepCount() > 0;
+		}
 
-	public TDStep PeekPathStep(){
-		return path.PeekStep ();
+		public TDStep PopPathStep(){
+			return path.PopStep();
+		}
+
+		public TDStep PeekPathStep(){
+			return path.PeekStep ();
+		}
 	}
 }

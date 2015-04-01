@@ -9,31 +9,34 @@
 //------------------------------------------------------------------------------
 using UnityEngine;
 using System.Collections.Generic;
-public class EDFirehouse {
 
-	//Requested locations for new trucks to go to
-	private List<Vector2> _truckSpawnQueue;
+namespace DataStructure.EntityData{
+	public class EDFirehouse {
 
-	public EDFirehouse () {
-		_truckSpawnQueue = new List<Vector2> ();
-	}
+		//Requested locations for new trucks to go to
+		private List<Vector2> _truckSpawnQueue;
 
-	public List<Vector2> GetSpawnQueue(){
-		return _truckSpawnQueue;
-	}
-
-	public void AddPositionToSpawnQueue(Vector2 truckPosition){
-		_truckSpawnQueue.Add (truckPosition);
-	}
-
-	public Vector2 PopSpawnQueue(){
-		Vector2 popped = new Vector2();
-
-		if(_truckSpawnQueue.Count > 0){
-			popped = _truckSpawnQueue[0];
-			_truckSpawnQueue.Remove(popped);
+		public EDFirehouse () {
+			_truckSpawnQueue = new List<Vector2> ();
 		}
 
-		return popped;
+		public List<Vector2> GetSpawnQueue(){
+			return _truckSpawnQueue;
+		}
+
+		public void AddPositionToSpawnQueue(Vector2 truckPosition){
+			_truckSpawnQueue.Add (truckPosition);
+		}
+
+		public Vector2 PopSpawnQueue(){
+			Vector2 popped = new Vector2();
+
+			if(_truckSpawnQueue.Count > 0){
+				popped = _truckSpawnQueue[0];
+				_truckSpawnQueue.Remove(popped);
+			}
+
+			return popped;
+		}
 	}
 }

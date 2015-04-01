@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CreditsController : MonoBehaviour {
+namespace Controllers{
+	public class CreditsController : MonoBehaviour {
 
-	public void MenuClicked(){
-		Application.LoadLevel ("MainMenu");
+		public void MenuClicked(){
+			Application.LoadLevel ("MainMenu");
+		}
 	}
 }
