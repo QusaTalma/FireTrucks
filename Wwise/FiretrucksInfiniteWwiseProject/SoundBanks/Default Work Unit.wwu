@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{EE42EB0B-CC0B-4183-B7AD-CDCFFC0F7377}" SchemaVersion="69">
+	<SoundBanks>
+		<WorkUnit Name="Default Work Unit" ID="{EE42EB0B-CC0B-4183-B7AD-CDCFFC0F7377}" PersistMode="Standalone">
+			<ChildrenList>
+				<SoundBank Name="GameplayBank" ID="{DAD767E7-E0D9-4176-9DB8-CF34121F43AD}">
+					<ObjectInclusionList>
+						<ObjectRef Name="Play_mx_gameplay" ID="{B7656D04-3E63-478D-9D9E-C78BA8F67D82}" WorkUnitID="{7B0FEAF5-0578-442D-B1A0-5A83EACCDA14}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="Play_fx_fireSpawn" ID="{DDCDA12F-0852-4125-AB28-30375C184158}" WorkUnitID="{7B0FEAF5-0578-442D-B1A0-5A83EACCDA14}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="Remove_mx_gameplay_LPF" ID="{3398223C-87F0-439C-ADB8-5C7E7EAA90DF}" WorkUnitID="{7B0FEAF5-0578-442D-B1A0-5A83EACCDA14}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="Stop_mx_gameplay" ID="{F6D76E57-EC2D-4639-B84D-37EFCF412B22}" WorkUnitID="{7B0FEAF5-0578-442D-B1A0-5A83EACCDA14}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="Set_mx_gameplay_LPF" ID="{530C5265-C5D9-4EBC-BBCB-2B2F2BCA7E1E}" WorkUnitID="{7B0FEAF5-0578-442D-B1A0-5A83EACCDA14}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="Set_parameter_fire_intensity" ID="{935D68B2-926F-4979-A1C6-B034F07751A0}" WorkUnitID="{7B0FEAF5-0578-442D-B1A0-5A83EACCDA14}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="Play_fx_firetruckSpawn" ID="{957BD4B8-D8E6-4F19-99EF-CD3F2DA900F7}" WorkUnitID="{7B0FEAF5-0578-442D-B1A0-5A83EACCDA14}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="Play_fx_fire" ID="{08899BF7-C39A-4E8B-B582-B4463BA81B06}" WorkUnitID="{7B0FEAF5-0578-442D-B1A0-5A83EACCDA14}" Filter="7" Origin="Manual"/>
+					</ObjectInclusionList>
+					<ObjectExclusionList/>
+					<GameSyncExclusionList/>
+				</SoundBank>
+			</ChildrenList>
+		</WorkUnit>
+	</SoundBanks>
+</WwiseDocument>

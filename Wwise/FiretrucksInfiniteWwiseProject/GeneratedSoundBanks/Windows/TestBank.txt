@@ -1,0 +1,11 @@
+Event	ID	Name			Wwise Object Path	Notes
+	139127156	Set_Music_LPF			\Default Work Unit\Set_Music_LPF	
+	2837384057	Stop_Music			\Default Work Unit\Stop_Music	
+	2932040671	Play_Music			\Default Work Unit\Play_Music	
+	3187507146	Play_Test			\Default Work Unit\Play_Test	
+	4285570314	Remove_Music_LPF			\Default Work Unit\Remove_Music_LPF	
+
+In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
+	115151884	38 1 Fire, Match Match Being Struck-01	C:\Users\Chris\Documents\GitHub\FiretruckInfinire\Wwise\FiretrucksInfiniteWwiseProject\.cache\Windows\SFX\38 1 Fire, Match Match Being Struck-01_DDC98EF4.wem		\Actor-Mixer Hierarchy\Default Work Unit\38 1 Fire, Match Match Being Struck-01		128464
+	637133294	APC	C:\Users\Chris\Documents\GitHub\FiretruckInfinire\Wwise\FiretrucksInfiniteWwiseProject\.cache\Windows\SFX\APC_8BD76F1E.wem		\Interactive Music Hierarchy\Default Work Unit\APC\APC		43628608
+

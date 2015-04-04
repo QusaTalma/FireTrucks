@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{160B7BE2-C397-4494-B516-6A5335CDB586}" SchemaVersion="69">
+	<SoundcasterSessions>
+		<WorkUnit Name="Default Work Unit" ID="{160B7BE2-C397-4494-B516-6A5335CDB586}" PersistMode="Standalone">
+			<ChildrenList>
+				<SoundcasterSession Name="Testing" ID="{0FCC93D5-435F-4E98-9D47-962AF3617012}">
+					<ModuleList>
+						<Module>
+							<ObjectRef Name="Play_mx_gameplay" ID="{B7656D04-3E63-478D-9D9E-C78BA8F67D82}" WorkUnitID="{7B0FEAF5-0578-442D-B1A0-5A83EACCDA14}"/>
+							<Position X="0" Y="0"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Set_mx_gameplay_LPF" ID="{530C5265-C5D9-4EBC-BBCB-2B2F2BCA7E1E}" WorkUnitID="{7B0FEAF5-0578-442D-B1A0-5A83EACCDA14}"/>
+							<Position X="0" Y="1"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Play_fx_fireSpawn" ID="{DDCDA12F-0852-4125-AB28-30375C184158}" WorkUnitID="{7B0FEAF5-0578-442D-B1A0-5A83EACCDA14}"/>
+							<Position X="1" Y="0"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Remove_mx_gameplay_LPF" ID="{3398223C-87F0-439C-ADB8-5C7E7EAA90DF}" WorkUnitID="{7B0FEAF5-0578-442D-B1A0-5A83EACCDA14}"/>
+							<Position X="1" Y="1"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Stop_mx_gameplay" ID="{F6D76E57-EC2D-4639-B84D-37EFCF412B22}" WorkUnitID="{7B0FEAF5-0578-442D-B1A0-5A83EACCDA14}"/>
+							<Position X="2" Y="1"/>
+						</Module>
+					</ModuleList>
+					<RTPCValueList ShowAll="true">
+						<RTPCValue>
+							<GameParameterRef Name="parameter_fire_intensity" ID="{258BDA80-2858-48CA-ACAB-ADAA345F7C9E}"/>
+							<Value>20</Value>
+						</RTPCValue>
+					</RTPCValueList>
+					<CurrentStateList ShowAll="true"/>
+					<CurrentSwitchList ShowAll="true"/>
+				</SoundcasterSession>
+			</ChildrenList>
+		</WorkUnit>
+	</SoundcasterSessions>
+</WwiseDocument>

@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{96DBF5BB-B506-4F85-A08E-8E67E8342EFF}" SchemaVersion="69">
+	<AudioObjects>
+		<WorkUnit Name="Default Work Unit" ID="{96DBF5BB-B506-4F85-A08E-8E67E8342EFF}" PersistMode="Standalone">
+			<ChildrenList>
+				<RandomSequenceContainer Name="fx_arsonist" ID="{85B5B324-090F-4F01-BC83-ED7C996FD986}" ShortID="786218970">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{72DAC421-7FBB-4291-B7AC-A3588CE39685}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="sfx_gameplay" ID="{E337BF22-1017-4E47-AFB8-77A059E7EDB8}" WorkUnitID="{EBA0DFA9-6798-4199-AB1C-8B9B8EA5332D}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<Sound Name="match_01" ID="{E253194D-5E9A-462E-A72E-8216D49EFA3A}" ShortID="860833058" Type="SoundFX">
+							<PropertyList>
+								<Property Name="Highpass" Type="int16">
+									<ModifierList>
+										<ModifierInfo>
+											<Modifier Name="" ID="{497C78F1-E22F-48D5-BF5F-97771BB88B32}">
+												<PropertyList>
+													<Property Name="Enabled" Type="bool" Value="True"/>
+													<Property Name="Min" Type="Real64" Value="-7"/>
+												</PropertyList>
+											</Modifier>
+										</ModifierInfo>
+									</ModifierList>
+								</Property>
+								<Property Name="Lowpass" Type="int16">
+									<ModifierList>
+										<ModifierInfo>
+											<Modifier Name="" ID="{CB459F2A-B555-4408-896E-02515822CAC1}">
+												<PropertyList>
+													<Property Name="Enabled" Type="bool" Value="True"/>
+													<Property Name="Min" Type="Real64" Value="-8"/>
+												</PropertyList>
+											</Modifier>
+										</ModifierInfo>
+									</ModifierList>
+								</Property>
+								<Property Name="Pitch" Type="int32">
+									<ModifierList>
+										<ModifierInfo>
+											<Modifier Name="" ID="{0A110703-3F7C-425A-9E13-A62AABA7C7F5}">
+												<PropertyList>
+													<Property Name="Enabled" Type="bool" Value="True"/>
+													<Property Name="Max" Type="Real64" Value="90"/>
+													<Property Name="Min" Type="Real64" Value="-80"/>
+												</PropertyList>
+											</Modifier>
+										</ModifierInfo>
+									</ModifierList>
+								</Property>
+								<Property Name="Volume" Type="Real64">
+									<ModifierList>
+										<ModifierInfo>
+											<Modifier Name="" ID="{BC3247BF-D71B-44EF-91BB-1D6B2B2857F3}">
+												<PropertyList>
+													<Property Name="Enabled" Type="bool" Value="True"/>
+													<Property Name="Min" Type="Real64" Value="-5"/>
+												</PropertyList>
+											</Modifier>
+										</ModifierInfo>
+									</ModifierList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{72DAC421-7FBB-4291-B7AC-A3588CE39685}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{EBA0DFA9-6798-4199-AB1C-8B9B8EA5332D}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="38 1 Fire, Match Match Being Struck-01" ID="{4958EFA7-31DF-41D1-931D-A01BD64D68CA}" ShortID="115151884">
+									<Language>SFX</Language>
+									<AudioFile>38 1 Fire, Match Match Being Struck-01.wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="38 1 Fire, Match Match Being Struck-01" ID="{4958EFA7-31DF-41D1-931D-A01BD64D68CA}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="match_02" ID="{67742D12-B93F-422F-A2D4-1DB13606555A}" ShortID="595537571" Type="SoundFX">
+							<PropertyList>
+								<Property Name="Highpass" Type="int16">
+									<ModifierList>
+										<ModifierInfo>
+											<Modifier Name="" ID="{1FB58E45-D78D-4C0B-B07C-37FDC623C2E0}">
+												<PropertyList>
+													<Property Name="Enabled" Type="bool" Value="True"/>
+													<Property Name="Min" Type="Real64" Value="-9"/>
+												</PropertyList>
+											</Modifier>
+										</ModifierInfo>
+									</ModifierList>
+								</Property>
+								<Property Name="Lowpass" Type="int16">
+									<ModifierList>
+										<ModifierInfo>
+											<Modifier Name="" ID="{7DD164F4-D034-4518-91EB-0C22E827AD4A}">
+												<PropertyList>
+													<Property Name="Enabled" Type="bool" Value="True"/>
+													<Property Name="Min" Type="Real64" Value="-10"/>
+												</PropertyList>
+											</Modifier>
+										</ModifierInfo>
+									</ModifierList>
+								</Property>
+								<Property Name="Pitch" Type="int32">
+									<ModifierList>
+										<ModifierInfo>
+											<Modifier Name="" ID="{5F1F0039-4EBE-4E34-B17B-A11A91265843}">
+												<PropertyList>
+													<Property Name="Enabled" Type="bool" Value="True"/>
+													<Property Name="Max" Type="Real64" Value="80"/>
+													<Property Name="Min" Type="Real64" Value="-90"/>
+												</PropertyList>
+											</Modifier>
+										</ModifierInfo>
+									</ModifierList>
+								</Property>
+								<Property Name="Volume" Type="Real64">
+									<ModifierList>
+										<ModifierInfo>
+											<Modifier Name="" ID="{300D6869-1470-4EFF-B34E-08D6513C1297}">
+												<PropertyList>
+													<Property Name="Enabled" Type="bool" Value="True"/>
+													<Property Name="Min" Type="Real64" Value="-6"/>
+												</PropertyList>
+											</Modifier>
+										</ModifierInfo>
+									</ModifierList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{72DAC421-7FBB-4291-B7AC-A3588CE39685}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{EBA0DFA9-6798-4199-AB1C-8B9B8EA5332D}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="38 1 Fire, Match Match Being Struck-02" ID="{CB62638B-9F49-4332-A53F-500B80E75C50}" ShortID="1029123946">
+									<Language>SFX</Language>
+									<AudioFile>38 1 Fire, Match Match Being Struck-02.wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="38 1 Fire, Match Match Being Struck-02" ID="{CB62638B-9F49-4332-A53F-500B80E75C50}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="match_03" ID="{80231F92-439C-4A56-889D-92915B7F628F}" ShortID="561882188" Type="SoundFX">
+							<PropertyList>
+								<Property Name="Highpass" Type="int16">
+									<ModifierList>
+										<ModifierInfo>
+											<Modifier Name="" ID="{4A8C5565-9045-4BE4-8740-675B4AEC5D53}">
+												<PropertyList>
+													<Property Name="Enabled" Type="bool" Value="True"/>
+													<Property Name="Min" Type="Real64" Value="-6"/>
+												</PropertyList>
+											</Modifier>
+										</ModifierInfo>
+									</ModifierList>
+								</Property>
+								<Property Name="Lowpass" Type="int16">
+									<ModifierList>
+										<ModifierInfo>
+											<Modifier Name="" ID="{435B4E7A-DE75-4512-A3C3-B21ED8281819}">
+												<PropertyList>
+													<Property Name="Enabled" Type="bool" Value="True"/>
+													<Property Name="Min" Type="Real64" Value="-10"/>
+												</PropertyList>
+											</Modifier>
+										</ModifierInfo>
+									</ModifierList>
+								</Property>
+								<Property Name="Pitch" Type="int32">
+									<ModifierList>
+										<ModifierInfo>
+											<Modifier Name="" ID="{1E29CA5C-C6B6-4CE9-AAE2-E33CE8BE0189}">
+												<PropertyList>
+													<Property Name="Enabled" Type="bool" Value="True"/>
+													<Property Name="Max" Type="Real64" Value="90"/>
+													<Property Name="Min" Type="Real64" Value="-90"/>
+												</PropertyList>
+											</Modifier>
+										</ModifierInfo>
+									</ModifierList>
+								</Property>
+								<Property Name="Volume" Type="Real64">
+									<ModifierList>
+										<ModifierInfo>
+											<Modifier Name="" ID="{BDE6624B-797A-43FF-8251-A3E9A28ADEED}">
+												<PropertyList>
+													<Property Name="Enabled" Type="bool" Value="True"/>
+													<Property Name="Min" Type="Real64" Value="-6"/>
+												</PropertyList>
+											</Modifier>
+										</ModifierInfo>
+									</ModifierList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{72DAC421-7FBB-4291-B7AC-A3588CE39685}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{EBA0DFA9-6798-4199-AB1C-8B9B8EA5332D}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="38 1 Fire, Match Match Being Struck-03" ID="{0DE1324B-80E5-4D9D-B556-1E69F18DCBAF}" ShortID="781069821">
+									<Language>SFX</Language>
+									<AudioFile>38 1 Fire, Match Match Being Struck-03.wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="38 1 Fire, Match Match Being Struck-03" ID="{0DE1324B-80E5-4D9D-B556-1E69F18DCBAF}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+					</ChildrenList>
+				</RandomSequenceContainer>
+				<BlendContainer Name="fx_fire" ID="{5997B0D4-D20D-4D0D-8121-1F42FCC23452}" ShortID="228858677">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{72DAC421-7FBB-4291-B7AC-A3588CE39685}"/>
+						</Reference>
+						<Reference Name="Effect0" PluginName="Wwise Parametric EQ" CompanyID="0" PluginID="105" PluginType="3">
+							<ObjectRef Name="Boost_3dB_100Hz" ID="{3EA7C9BD-6F9A-4000-A227-F86B5B4328EE}" WorkUnitID="{E8613F7D-BAD3-45CD-A3ED-505576F31277}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{EBA0DFA9-6798-4199-AB1C-8B9B8EA5332D}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<Sound Name="fire_small" ID="{B2155F78-8AF4-4E72-8A6B-3E76166634E2}" ShortID="608546124" Type="SoundFX">
+							<PropertyList>
+								<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{72DAC421-7FBB-4291-B7AC-A3588CE39685}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{EBA0DFA9-6798-4199-AB1C-8B9B8EA5332D}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="2-15 Fire, Roaring Low Rumble W_High" ID="{90E6DF63-D379-481F-99BF-C5D3B9A80F9B}" ShortID="221814180">
+									<PropertyList>
+										<Property Name="CrossfadeDuration" Type="Real64" Value="50"/>
+										<Property Name="LoopBegin" Type="Real64" Value="9.14050922797375"/>
+										<Property Name="LoopEnd" Type="Real64" Value="33.0426964604826"/>
+										<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+										<Property Name="TrimBegin" Type="Real64" Value="1.90630941118169"/>
+										<Property Name="TrimEnd" Type="Real64" Value="39.7880989923563"/>
+									</PropertyList>
+									<Language>SFX</Language>
+									<AudioFile>2-15 Fire, Roaring Low Rumble W_High.wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="2-15 Fire, Roaring Low Rumble W_High" ID="{90E6DF63-D379-481F-99BF-C5D3B9A80F9B}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="fire_large" ID="{C6A64E2D-24F7-4AB8-A736-1FD7527B156B}" ShortID="320288531" Type="SoundFX">
+							<PropertyList>
+								<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>-5</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{72DAC421-7FBB-4291-B7AC-A3588CE39685}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{EBA0DFA9-6798-4199-AB1C-8B9B8EA5332D}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="19 - Fire,Forest Forest Fire Rumble And Crackle" ID="{E7281A68-FAA5-45AF-BBEE-F895A134DE3B}" ShortID="84639017">
+									<PropertyList>
+										<Property Name="CrossfadeDuration" Type="Real64" Value="20"/>
+										<Property Name="LoopBegin" Type="Real64" Value="1.21312339505339"/>
+										<Property Name="LoopEnd" Type="Real64" Value="10.082403327777"/>
+										<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+									</PropertyList>
+									<Language>SFX</Language>
+									<AudioFile>19 - Fire,Forest Forest Fire Rumble And Crackle.wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="19 - Fire,Forest Forest Fire Rumble And Crackle" ID="{E7281A68-FAA5-45AF-BBEE-F895A134DE3B}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+					</ChildrenList>
+					<BlendTrackList>
+						<BlendTrack Name="blend_fire_intensity" ID="{EFA0EF61-3CFD-4EAB-A71E-3A1D32755293}" ShortID="920245403">
+							<PropertyList>
+								<Property Name="EnableCrossFading" Type="bool" Value="True"/>
+								<Property Name="Volume" Type="Real64">
+									<RTPCList>
+										<RTPC Name="" ID="{98AB89B0-25F6-40DB-A48E-F0A6F23D8E7C}" ShortID="126251828">
+											<ReferenceList>
+												<Reference Name="ControlInput">
+													<ObjectRef Name="parameter_fire_intensity" ID="{258BDA80-2858-48CA-ACAB-ADAA345F7C9E}" WorkUnitID="{88A0A43C-79DD-485C-809B-27568DE1E520}"/>
+												</Reference>
+											</ReferenceList>
+											<Curve Name="" ID="{5CBDA1A7-9A50-4345-BBB1-50087D1F9261}">
+												<PropertyList>
+													<Property Name="Flags" Type="int32" Value="3"/>
+												</PropertyList>
+												<PointList>
+													<Point>
+														<XPos>0</XPos>
+														<YPos>-3.06457</YPos>
+														<Flags>5</Flags>
+													</Point>
+													<Point>
+														<XPos>18.50694</XPos>
+														<YPos>-0.73446</YPos>
+														<Flags>0</Flags>
+													</Point>
+													<Point>
+														<XPos>20</XPos>
+														<YPos>0</YPos>
+														<Flags>37</Flags>
+													</Point>
+												</PointList>
+											</Curve>
+										</RTPC>
+									</RTPCList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="LayerCrossFadeControlInput">
+									<ObjectRef Name="parameter_fire_intensity" ID="{258BDA80-2858-48CA-ACAB-ADAA345F7C9E}" WorkUnitID="{88A0A43C-79DD-485C-809B-27568DE1E520}"/>
+								</Reference>
+							</ReferenceList>
+							<BlendTrackAssocList>
+								<BlendTrackAssoc>
+									<ItemRef Name="fire_small" ID="{B2155F78-8AF4-4E72-8A6B-3E76166634E2}"/>
+									<CrossfadingInfo>
+										<LeftEdgePos>1.03472222222222</LeftEdgePos>
+										<LeftFadingMode>Automatic</LeftFadingMode>
+										<RightEdgePos>19.0625</RightEdgePos>
+										<RightFadingMode>Automatic</RightFadingMode>
+									</CrossfadingInfo>
+								</BlendTrackAssoc>
+								<BlendTrackAssoc>
+									<ItemRef Name="fire_large" ID="{C6A64E2D-24F7-4AB8-A736-1FD7527B156B}"/>
+									<CrossfadingInfo>
+										<LeftEdgePos>1.84027777777778</LeftEdgePos>
+										<LeftFadingMode>Automatic</LeftFadingMode>
+										<RightEdgePos>20</RightEdgePos>
+										<RightFadingMode>Automatic</RightFadingMode>
+									</CrossfadingInfo>
+								</BlendTrackAssoc>
+							</BlendTrackAssocList>
+						</BlendTrack>
+					</BlendTrackList>
+				</BlendContainer>
+				<RandomSequenceContainer Name="fx_firetruck_spawn" ID="{7C14DCFD-1F92-4602-A80A-E91070381892}" ShortID="695851321">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{72DAC421-7FBB-4291-B7AC-A3588CE39685}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{EBA0DFA9-6798-4199-AB1C-8B9B8EA5332D}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<Sound Name="alarm bell-01" ID="{480547B5-08E0-4209-B390-88F8748EFDEB}" ShortID="635708949" Type="SoundFX">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{72DAC421-7FBB-4291-B7AC-A3588CE39685}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{EBA0DFA9-6798-4199-AB1C-8B9B8EA5332D}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="50 1 Fire Engine Bell Rings In Station_ Engine Starts, With Siren-18" ID="{38083465-90D6-4C43-83E5-1E8244A5D84D}" ShortID="1054582154">
+									<Language>SFX</Language>
+									<AudioFile>50 1 Fire Engine Bell Rings In Station_ Engine Starts, With Siren-18.wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="50 1 Fire Engine Bell Rings In Station_ Engine Starts, With Siren-18" ID="{38083465-90D6-4C43-83E5-1E8244A5D84D}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="alarm-bell-02" ID="{7FDC8836-A53C-41BA-9A4B-E1849C4ABAD5}" ShortID="60245308" Type="SoundFX">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{72DAC421-7FBB-4291-B7AC-A3588CE39685}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{EBA0DFA9-6798-4199-AB1C-8B9B8EA5332D}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="50 1 Fire Engine Bell Rings In Station_ Engine Starts, With Siren-19" ID="{61CE7629-04EE-4CA5-B824-9C65CF69352D}" ShortID="528742492">
+									<Language>SFX</Language>
+									<AudioFile>50 1 Fire Engine Bell Rings In Station_ Engine Starts, With Siren-19.wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="50 1 Fire Engine Bell Rings In Station_ Engine Starts, With Siren-19" ID="{61CE7629-04EE-4CA5-B824-9C65CF69352D}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+					</ChildrenList>
+				</RandomSequenceContainer>
+			</ChildrenList>
+		</WorkUnit>
+	</AudioObjects>
+</WwiseDocument>

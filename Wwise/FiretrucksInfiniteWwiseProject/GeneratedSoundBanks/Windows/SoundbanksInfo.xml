@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SoundBanksInfo Platform="Windows" SchemaVersion="10" SoundbankVersion="112">
+	<RootPaths>
+		<ProjectRoot>C:\Users\Chris\Documents\GitHub\FiretruckInfinire\Wwise\FiretrucksInfiniteWwiseProject\</ProjectRoot>
+		<SourceFilesRoot>C:\Users\Chris\Documents\GitHub\FiretruckInfinire\Wwise\FiretrucksInfiniteWwiseProject\.cache\Windows\</SourceFilesRoot>
+		<SoundBanksRoot>C:\Users\Chris\Documents\GitHub\FiretruckInfinire\Wwise\FiretrucksInfiniteWwiseProject\GeneratedSoundBanks\Windows\</SoundBanksRoot>
+		<ExternalSourcesInputFile></ExternalSourcesInputFile>
+		<ExternalSourcesOutputRoot>C:\Users\Chris\Documents\GitHub\FiretruckInfinire\Wwise\FiretrucksInfiniteWwiseProject\GeneratedSoundBanks\Windows</ExternalSourcesOutputRoot>
+	</RootPaths>
+	<DialogueEvents/>
+	<StreamedFiles/>
+	<SoundBanks>
+		<SoundBank Id="1355168291" Language="SFX">
+			<ShortName>Init</ShortName>
+			<Path>Init.bnk</Path>
+		</SoundBank>
+		<SoundBank Id="1822725939" Language="SFX">
+			<ShortName>GameplayBank</ShortName>
+			<Path>GameplayBank.bnk</Path>
+			<IncludedEvents>
+				<Event Id="3610873635" Name="Play_fx_fire"/>
+				<Event Id="640836156" Name="Play_fx_fireSpawn"/>
+				<Event Id="234833977" Name="Play_fx_firetruckSpawn"/>
+				<Event Id="368551784" Name="Play_mx_gameplay"/>
+				<Event Id="228867509" Name="Remove_mx_gameplay_LPF" MaxAttenuation="0.000000"/>
+				<Event Id="135109471" Name="Set_mx_gameplay_LPF" MaxAttenuation="0.000000"/>
+				<Event Id="2129491064" Name="Set_parameter_fire_intensity" MaxAttenuation="0.000000"/>
+				<Event Id="3165009754" Name="Stop_mx_gameplay" MaxAttenuation="0.000000"/>
+			</IncludedEvents>
+			<IncludedMemoryFiles>
+				<File Id="84639017" Language="SFX">
+					<ShortName>19 - Fire,Forest Forest Fire Rumble And Crackle.wav</ShortName>
+					<Path>SFX\19 - Fire,Forest Forest Fire Rumble And Crackle_B4E24D72.wem</Path>
+				</File>
+				<File Id="115151884" Language="SFX">
+					<ShortName>38 1 Fire, Match Match Being Struck-01.wav</ShortName>
+					<Path>SFX\38 1 Fire, Match Match Being Struck-01_DDC98EF4.wem</Path>
+				</File>
+				<File Id="221814180" Language="SFX">
+					<ShortName>2-15 Fire, Roaring Low Rumble W_High.wav</ShortName>
+					<Path>SFX\2-15 Fire, Roaring Low Rumble W_High_FEC27395.wem</Path>
+				</File>
+				<File Id="528742492" Language="SFX">
+					<ShortName>50 1 Fire Engine Bell Rings In Station_ Engine Starts, With Siren-19.wav</ShortName>
+					<Path>SFX\50 1 Fire Engine Bell Rings In Station_ Engine Starts, With Siren-19_DDC98EF4.wem</Path>
+				</File>
+				<File Id="759927525" Language="SFX">
+					<ShortName>mx_gameplay_music.wav</ShortName>
+					<Path>SFX\mx_gameplay_music_8BD76F1E.wem</Path>
+				</File>
+				<File Id="1054582154" Language="SFX">
+					<ShortName>50 1 Fire Engine Bell Rings In Station_ Engine Starts, With Siren-18.wav</ShortName>
+					<Path>SFX\50 1 Fire Engine Bell Rings In Station_ Engine Starts, With Siren-18_DDC98EF4.wem</Path>
+				</File>
+			</IncludedMemoryFiles>
+		</SoundBank>
+	</SoundBanks>
+</SoundBanksInfo>

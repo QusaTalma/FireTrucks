@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{7B0FEAF5-0578-442D-B1A0-5A83EACCDA14}" SchemaVersion="69">
+	<Events>
+		<WorkUnit Name="Default Work Unit" ID="{7B0FEAF5-0578-442D-B1A0-5A83EACCDA14}" PersistMode="Standalone">
+			<ChildrenList>
+				<Event Name="Play_fx_fireSpawn" ID="{DDCDA12F-0852-4125-AB28-30375C184158}">
+					<ChildrenList>
+						<Action Name="Play" ID="{9813ADA8-335A-40F9-83CF-595208C38791}" ShortID="519537823" Type="Play" Scope="One" Global="false">
+							<ElementList>
+								<Element ID="{197608C4-D6C5-4172-96A2-CCEF9FAC5640}" Global="false">
+									<ObjectRef Name="match_01" ID="{E253194D-5E9A-462E-A72E-8216D49EFA3A}" WorkUnitID="{96DBF5BB-B506-4F85-A08E-8E67E8342EFF}"/>
+								</Element>
+							</ElementList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_mx_gameplay" ID="{B7656D04-3E63-478D-9D9E-C78BA8F67D82}">
+					<ChildrenList>
+						<Action Name="Play" ID="{7E3BB00A-8C64-4722-849F-531B2E485D61}" ShortID="583554577" Type="Play" Scope="One" Global="false">
+							<ElementList>
+								<Element ID="{F8259F04-9B23-4160-8386-191933892F49}" Global="false">
+									<ObjectRef Name="mx_gameplay_music" ID="{4523D48A-6A67-45B6-97E2-F929E09F9371}" WorkUnitID="{0A870B10-601C-4B96-94A9-56AD77830526}"/>
+								</Element>
+							</ElementList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Set_mx_gameplay_LPF" ID="{530C5265-C5D9-4EBC-BBCB-2B2F2BCA7E1E}">
+					<ChildrenList>
+						<Action Name="Set Voice Low-pass Filter" ID="{277C2643-F5FB-4AE0-86C0-BB380B047092}" ShortID="853256151" Type="ChangeLPF" Scope="One" Global="false">
+							<PropertyList>
+								<Property Name="FadeCurve" Type="int16" Value="3"/>
+								<Property Name="FadeTime" Type="Real64" Value="2"/>
+								<Property Name="Lowpass" Type="int16" Value="49"/>
+							</PropertyList>
+							<ElementList>
+								<Element ID="{6F69C04B-4FB7-49B9-A8B5-B6140B429802}" Global="false">
+									<ObjectRef Name="mx_gameplay_music" ID="{4523D48A-6A67-45B6-97E2-F929E09F9371}" WorkUnitID="{0A870B10-601C-4B96-94A9-56AD77830526}"/>
+								</Element>
+							</ElementList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Remove_mx_gameplay_LPF" ID="{3398223C-87F0-439C-ADB8-5C7E7EAA90DF}">
+					<ChildrenList>
+						<Action Name="Set Voice Low-pass Filter" ID="{ADE7C76A-F930-465F-AA53-4168469FD869}" ShortID="329534675" Type="ChangeLPF" Scope="One" Global="false">
+							<PropertyList>
+								<Property Name="FadeCurve" Type="int16" Value="3"/>
+								<Property Name="FadeTime" Type="Real64" Value="2.5"/>
+							</PropertyList>
+							<ElementList>
+								<Element ID="{53E796F1-2797-4E6F-8AAF-CB32C0E5BB6A}" Global="false">
+									<ObjectRef Name="mx_gameplay_music" ID="{4523D48A-6A67-45B6-97E2-F929E09F9371}" WorkUnitID="{0A870B10-601C-4B96-94A9-56AD77830526}"/>
+								</Element>
+							</ElementList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Stop_mx_gameplay" ID="{F6D76E57-EC2D-4639-B84D-37EFCF412B22}">
+					<ChildrenList>
+						<Action Name="Stop" ID="{72FC8E54-F507-43CB-95A0-CF38D00AD6E3}" ShortID="177732637" Type="Stop" Scope="One" Global="false">
+							<ElementList>
+								<Element ID="{A25B78A9-E0C3-44AB-A388-42283AAB1036}" Global="false">
+									<ObjectRef Name="mx_gameplay_music" ID="{4523D48A-6A67-45B6-97E2-F929E09F9371}" WorkUnitID="{0A870B10-601C-4B96-94A9-56AD77830526}"/>
+								</Element>
+							</ElementList>
+						</Action>
+						<Action Name="Reset Voice High-pass Filter" ID="{BC791D2F-EFA5-4F7A-BF6D-F62D25F85216}" ShortID="198764236" Type="ResetHPF" Scope="One" Global="false">
+							<ElementList>
+								<Element ID="{11633C98-4684-49CF-893B-BDC9817F4F13}" Global="false">
+									<ObjectRef Name="mx_gameplay_music" ID="{4523D48A-6A67-45B6-97E2-F929E09F9371}" WorkUnitID="{0A870B10-601C-4B96-94A9-56AD77830526}"/>
+								</Element>
+							</ElementList>
+						</Action>
+						<Action Name="Reset Voice High-pass Filter" ID="{EA4EEF91-0222-47D4-BA69-96FD3C5C13D8}" ShortID="84901480" Type="ResetHPF" Scope="One" Global="false">
+							<ElementList>
+								<Element ID="{ACA8B8B9-6822-4D28-A196-CF5F43F62CF5}" Global="false">
+									<ObjectRef Name="mx_gameplay_music" ID="{4523D48A-6A67-45B6-97E2-F929E09F9371}" WorkUnitID="{0A870B10-601C-4B96-94A9-56AD77830526}"/>
+								</Element>
+							</ElementList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_fx_fire" ID="{08899BF7-C39A-4E8B-B582-B4463BA81B06}">
+					<ChildrenList>
+						<Action Name="Play" ID="{1EA4393B-B977-44BF-9782-FB1CE491B3BB}" ShortID="483397513" Type="Play" Scope="One" Global="false">
+							<ElementList>
+								<Element ID="{6B8CDEE3-9ED7-4A3E-B98B-9416DD4017E1}" Global="false">
+									<ObjectRef Name="fx_fire" ID="{5997B0D4-D20D-4D0D-8121-1F42FCC23452}" WorkUnitID="{96DBF5BB-B506-4F85-A08E-8E67E8342EFF}"/>
+								</Element>
+							</ElementList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Set_parameter_fire_intensity" ID="{935D68B2-926F-4979-A1C6-B034F07751A0}">
+					<ChildrenList>
+						<Action Name="Set Game Parameter" ID="{AA1EE71F-0114-4A74-A165-908E89E2AD74}" ShortID="865290782" Type="SetGameParameter" Scope="One" Global="false">
+							<ElementList>
+								<Element ID="{8751DE36-19FB-441F-B9F6-A6B2AFCC56FD}" Global="false">
+									<ObjectRef Name="parameter_fire_intensity" ID="{258BDA80-2858-48CA-ACAB-ADAA345F7C9E}" WorkUnitID="{88A0A43C-79DD-485C-809B-27568DE1E520}"/>
+								</Element>
+							</ElementList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_fx_firetruckSpawn" ID="{957BD4B8-D8E6-4F19-99EF-CD3F2DA900F7}">
+					<ChildrenList>
+						<Action Name="Play" ID="{1E2685DA-099F-4E4A-9244-801AC70E999A}" ShortID="969050439" Type="Play" Scope="One" Global="false">
+							<ElementList>
+								<Element ID="{37C50373-9826-4471-94B2-C49EF9E0AD38}" Global="false">
+									<ObjectRef Name="fx_firetruck_spawn" ID="{7C14DCFD-1F92-4602-A80A-E91070381892}" WorkUnitID="{96DBF5BB-B506-4F85-A08E-8E67E8342EFF}"/>
+								</Element>
+							</ElementList>
+						</Action>
+					</ChildrenList>
+				</Event>
+			</ChildrenList>
+		</WorkUnit>
+	</Events>
+</WwiseDocument>
