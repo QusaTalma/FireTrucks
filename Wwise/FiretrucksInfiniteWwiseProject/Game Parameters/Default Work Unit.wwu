@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{88A0A43C-79DD-485C-809B-27568DE1E520}" SchemaVersion="69">
+	<GameParameters>
+		<WorkUnit Name="Default Work Unit" ID="{88A0A43C-79DD-485C-809B-27568DE1E520}" PersistMode="Standalone">
+			<ChildrenList>
+				<GameParameter Name="parameter_fire_intensity" ID="{258BDA80-2858-48CA-ACAB-ADAA345F7C9E}">
+					<PropertyList>
+						<Property Name="InitialValue" Type="Real64" Value="0"/>
+						<Property Name="Max" Type="Real64" Value="20"/>
+					</PropertyList>
+				</GameParameter>
+			</ChildrenList>
+		</WorkUnit>
+	</GameParameters>
+</WwiseDocument>

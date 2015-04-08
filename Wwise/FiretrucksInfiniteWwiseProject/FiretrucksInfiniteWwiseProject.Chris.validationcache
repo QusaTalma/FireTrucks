@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ValidationCache Version="1" SchemaVersion="69">
+	<ValidationCacheItem File="C:\Users\Chris\Documents\GitHub\FiretruckInfinire\Wwise\FiretrucksInfiniteWwiseProject\Actor-Mixer Hierarchy\Default Work Unit.wwu" DateLow="2925334140" DateHigh="30436929"/>
+	<ValidationCacheItem File="C:\Users\Chris\Documents\GitHub\FiretruckInfinire\Wwise\FiretrucksInfiniteWwiseProject\Attenuations\Default Work Unit.wwu" DateLow="597186580" DateHigh="30436718"/>
+	<ValidationCacheItem File="C:\Users\Chris\Documents\GitHub\FiretruckInfinire\Wwise\FiretrucksInfiniteWwiseProject\Control Surface Sessions\Default Work Unit.wwu" DateLow="597336588" DateHigh="30436718"/>
+	<ValidationCacheItem File="C:\Users\Chris\Documents\GitHub\FiretruckInfinire\Wwise\FiretrucksInfiniteWwiseProject\Conversion Settings\Default Work Unit.wwu" DateLow="597236582" DateHigh="30436718"/>
+	<ValidationCacheItem File="C:\Users\Chris\Documents\GitHub\FiretruckInfinire\Wwise\FiretrucksInfiniteWwiseProject\Conversion Settings\Factory Conversion Settings.wwu" DateLow="615534336" DateHigh="30419384"/>
+	<ValidationCacheItem File="C:\Users\Chris\Documents\GitHub\FiretruckInfinire\Wwise\FiretrucksInfiniteWwiseProject\Dynamic Dialogue\Default Work Unit.wwu" DateLow="597196580" DateHigh="30436718"/>
+	<ValidationCacheItem File="C:\Users\Chris\Documents\GitHub\FiretruckInfinire\Wwise\FiretrucksInfiniteWwiseProject\Effects\Default Work Unit.wwu" DateLow="2925394144" DateHigh="30436929"/>
+	<ValidationCacheItem File="C:\Users\Chris\Documents\GitHub\FiretruckInfinire\Wwise\FiretrucksInfiniteWwiseProject\Effects\Factory Effects.wwu" DateLow="2925734163" DateHigh="30436929"/>
+	<ValidationCacheItem File="C:\Users\Chris\Documents\GitHub\FiretruckInfinire\Wwise\FiretrucksInfiniteWwiseProject\Events\Default Work Unit.wwu" DateLow="2925354142" DateHigh="30436929"/>
+	<ValidationCacheItem File="C:\Users\Chris\Documents\GitHub\FiretruckInfinire\Wwise\FiretrucksInfiniteWwiseProject\FiretrucksInfiniteWwiseProject.Chris.wsettings" DateLow="2056187876" DateHigh="30436933"/>
+	<ValidationCacheItem File="C:\Users\Chris\Documents\GitHub\FiretruckInfinire\Wwise\FiretrucksInfiniteWwiseProject\FiretrucksInfiniteWwiseProject.wproj" DateLow="3392326452" DateHigh="30436718"/>
+	<ValidationCacheItem File="C:\Users\Chris\Documents\GitHub\FiretruckInfinire\Wwise\FiretrucksInfiniteWwiseProject\Game Parameters\Default Work Unit.wwu" DateLow="2925374143" DateHigh="30436929"/>
+	<ValidationCacheItem File="C:\Users\Chris\Documents\GitHub\FiretruckInfinire\Wwise\FiretrucksInfiniteWwiseProject\Interactive Music Hierarchy\Default Work Unit.wwu" DateLow="1654504901" DateHigh="30436933"/>
+	<ValidationCacheItem File="C:\Users\Chris\Documents\GitHub\FiretruckInfinire\Wwise\FiretrucksInfiniteWwiseProject\Master-Mixer Hierarchy\Default Work Unit.wwu" DateLow="2925074126" DateHigh="30436929"/>
+	<ValidationCacheItem File="C:\Users\Chris\Documents\GitHub\FiretruckInfinire\Wwise\FiretrucksInfiniteWwiseProject\Mixing Sessions\Default Work Unit.wwu" DateLow="2926664217" DateHigh="30436929"/>
+	<ValidationCacheItem File="C:\Users\Chris\Documents\GitHub\FiretruckInfinire\Wwise\FiretrucksInfiniteWwiseProject\Modulators\Default Work Unit.wwu" DateLow="597246583" DateHigh="30436718"/>
+	<ValidationCacheItem File="C:\Users\Chris\Documents\GitHub\FiretruckInfinire\Wwise\FiretrucksInfiniteWwiseProject\Presets\Default Work Unit.wwu" DateLow="597096574" DateHigh="30436718"/>
+	<ValidationCacheItem File="C:\Users\Chris\Documents\GitHub\FiretruckInfinire\Wwise\FiretrucksInfiniteWwiseProject\Queries\Default Work Unit.wwu" DateLow="597136577" DateHigh="30436718"/>
+	<ValidationCacheItem File="C:\Users\Chris\Documents\GitHub\FiretruckInfinire\Wwise\FiretrucksInfiniteWwiseProject\Queries\Factory Queries.wwu" DateLow="615534336" DateHigh="30419384"/>
+	<ValidationCacheItem File="C:\Users\Chris\Documents\GitHub\FiretruckInfinire\Wwise\FiretrucksInfiniteWwiseProject\SoundBanks\Default Work Unit.wwu" DateLow="2050487550" DateHigh="30436933"/>
+	<ValidationCacheItem File="C:\Users\Chris\Documents\GitHub\FiretruckInfinire\Wwise\FiretrucksInfiniteWwiseProject\Soundcaster Sessions\Default Work Unit.wwu" DateLow="2925934175" DateHigh="30436929"/>
+	<ValidationCacheItem File="C:\Users\Chris\Documents\GitHub\FiretruckInfinire\Wwise\FiretrucksInfiniteWwiseProject\States\Default Work Unit.wwu" DateLow="597016570" DateHigh="30436718"/>
+	<ValidationCacheItem File="C:\Users\Chris\Documents\GitHub\FiretruckInfinire\Wwise\FiretrucksInfiniteWwiseProject\Switches\Default Work Unit.wwu" DateLow="596956566" DateHigh="30436718"/>
+	<ValidationCacheItem File="C:\Users\Chris\Documents\GitHub\FiretruckInfinire\Wwise\FiretrucksInfiniteWwiseProject\Triggers\Default Work Unit.wwu" DateLow="597176579" DateHigh="30436718"/>
+</ValidationCache>

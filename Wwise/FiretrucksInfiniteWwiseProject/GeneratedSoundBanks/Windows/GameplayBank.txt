@@ -1,0 +1,24 @@
+Event	ID	Name			Wwise Object Path	Notes
+	135109471	Set_mx_gameplay_LPF			\Default Work Unit\Set_mx_gameplay_LPF	
+	228867509	Remove_mx_gameplay_LPF			\Default Work Unit\Remove_mx_gameplay_LPF	
+	234833977	Play_fx_firetruckSpawn			\Default Work Unit\Play_fx_firetruckSpawn	
+	368551784	Play_mx_gameplay			\Default Work Unit\Play_mx_gameplay	
+	640836156	Play_fx_fireSpawn			\Default Work Unit\Play_fx_fireSpawn	
+	2129491064	Set_parameter_fire_intensity			\Default Work Unit\Set_parameter_fire_intensity	
+	3165009754	Stop_mx_gameplay			\Default Work Unit\Stop_mx_gameplay	
+	3610873635	Play_fx_fire			\Default Work Unit\Play_fx_fire	
+
+Game Parameter	ID	Name			Wwise Object Path	Notes
+	1806580411	parameter_fire_intensity			\Default Work Unit\parameter_fire_intensity	
+
+Effect plug-ins	ID	Name	Type				Notes
+	2547645744	Boost_3dB_100Hz	Wwise Parametric EQ			
+
+In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
+	84639017	fire_large	C:\Users\Chris\Documents\GitHub\FiretruckInfinire\Wwise\FiretrucksInfiniteWwiseProject\.cache\Windows\SFX\19 - Fire,Forest Forest Fire Rumble And Crackle_B4E24D72.wem		\Actor-Mixer Hierarchy\Default Work Unit\fx_fire\fire_large		4308560
+	115151884	match_01	C:\Users\Chris\Documents\GitHub\FiretruckInfinire\Wwise\FiretrucksInfiniteWwiseProject\.cache\Windows\SFX\38 1 Fire, Match Match Being Struck-01_DDC98EF4.wem		\Actor-Mixer Hierarchy\Default Work Unit\fx_arsonist\match_01		128464
+	221814180	fire_small	C:\Users\Chris\Documents\GitHub\FiretruckInfinire\Wwise\FiretrucksInfiniteWwiseProject\.cache\Windows\SFX\2-15 Fire, Roaring Low Rumble W_High_FEC27395.wem		\Actor-Mixer Hierarchy\Default Work Unit\fx_fire\fire_small		6682476
+	528742492	alarm-bell-02	C:\Users\Chris\Documents\GitHub\FiretruckInfinire\Wwise\FiretrucksInfiniteWwiseProject\.cache\Windows\SFX\50 1 Fire Engine Bell Rings In Station_ Engine Starts, With Siren-19_DDC98EF4.wem		\Actor-Mixer Hierarchy\Default Work Unit\fx_firetruck_spawn\alarm-bell-02		279556
+	759927525	mx_gameplay_music	C:\Users\Chris\Documents\GitHub\FiretruckInfinire\Wwise\FiretrucksInfiniteWwiseProject\.cache\Windows\SFX\mx_gameplay_music_8BD76F1E.wem		\Interactive Music Hierarchy\Default Work Unit\mx_gameplay_music\mx_gameplay_music		15409136
+	1054582154	alarm bell-01	C:\Users\Chris\Documents\GitHub\FiretruckInfinire\Wwise\FiretrucksInfiniteWwiseProject\.cache\Windows\SFX\50 1 Fire Engine Bell Rings In Station_ Engine Starts, With Siren-18_DDC98EF4.wem		\Actor-Mixer Hierarchy\Default Work Unit\fx_firetruck_spawn\alarm bell-01		279556
+
